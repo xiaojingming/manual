@@ -9,7 +9,7 @@ sidebar_position: 2
 
 Tab 切换到 StrictPlan 模式。并使用/new 开启新会话，避免历史上下文影响，以便取得更好效果
 
-![img](img/strict-plan/png.png)
+![img](img/strict-plan/strict.png)
 
 ## 输入需求
 
