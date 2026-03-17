@@ -9,7 +9,7 @@ Suitable for complex requirement scenarios, following workflows such as requirem
 
 Press Tab to switch to StrictPlan mode. Use `/new` to start a new session to avoid historical context interference for better results.
 
-<!-- ![img](img/strict-plan/png.png) -->
+![img](img/strict-plan/strict.png)
 
 ## Input Requirements
 

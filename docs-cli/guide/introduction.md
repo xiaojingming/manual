@@ -54,4 +54,6 @@ npm install -g @costrict/cs
 cs
 ```
 
+> **Note**: Windows Terminal supports compilation on x86, x64, and arm64 architectures, with a minimum system requirement of Windows 10 Build 18362.
+
 > 💡 For more installation options (version specification, permission troubleshooting, etc.), see [Installation](./installation). For a full feature walkthrough, see [Features](./feature).
