@@ -54,4 +54,6 @@ npm install -g @costrict/cs
 cs
 ```
 
+> **注意**: Windows Terminal 支持在 x86、x64 和 arm64 架构下编译，最低系统要求为 Windows 10 Build 18362 版本。
+
 > 💡 更多安装选项（指定版本、权限问题解决等）详见 [安装流程](./installation)，完整功能说明见 [功能介绍](./feature)。
