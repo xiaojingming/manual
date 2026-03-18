@@ -13,16 +13,15 @@ RUN apt-get update && apt-get install -y python3 make g++ libc6-dev && rm -rf /v
 COPY package.json package-lock.json ./
 
 # 设置 npm 镜像并安装依赖
+# 不使用 --prefer-offline，确保原生模块平台二进制文件正确下载
 RUN npm config set registry https://registry.npmmirror.com/ && \
-    npm ci --frozen-lockfile --prefer-offline --no-audit
-
-# 重新编译原生模块以确保正确安装
-RUN npm rebuild @node-rs/jieba
+    npm ci --frozen-lockfile --no-audit
 
 COPY . .
 
 # 构建
 RUN npm run build
+
 FROM --platform=$BUILDPLATFORM nginx:stable-alpine AS runner
 
 RUN rm /etc/nginx/conf.d/default.conf
