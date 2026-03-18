@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM node:18.20 AS builder
+FROM --platform=$BUILDPLATFORM node:20-slim AS builder
 
 WORKDIR /workshop
 
