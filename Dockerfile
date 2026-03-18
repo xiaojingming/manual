@@ -10,12 +10,12 @@ ENV CI=true
 # 安装必要的构建工具
 RUN apt-get update && apt-get install -y python3 make g++ libc6-dev && rm -rf /var/lib/apt/lists/*
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # 设置 npm 镜像并安装依赖
-# 不使用 --prefer-offline，确保原生模块平台二进制文件正确下载
+# lockfile 在 Windows 生成，不含 Linux 平台原生包，直接用 npm install 重新解析
 RUN npm config set registry https://registry.npmmirror.com/ && \
-    npm ci --frozen-lockfile --no-audit
+    npm install --no-audit
 
 COPY . .
 
