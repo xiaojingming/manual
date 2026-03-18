@@ -1,6 +1,6 @@
 # StrictSpec模式
 
-StrictSpec模式适合需要**严谨规范**的需求开发场景，通过**五个严格阶段**系统化完成特性开发，确保高质量交付。
+StrictSpec模式适合需要**严谨规范**的需求开发场景，通过**五个严格阶段**系统化完成特性开发。
 
 ## 适用场景
 
@@ -9,21 +9,8 @@ StrictSpec模式适合以下场景：
 1. **新功能开发** - 需要从零开始规划和实现的新功能
 2. **复杂需求** - 涉及多个模块、需要架构设计的复杂需求
 3. **团队协作** - 需要清晰文档和任务清单的团队项目
-4. **质量要求高** - 对代码质量和系统架构有较高要求的项目
-5. **长期维护** - 需要长期维护和演进的核心功能
 
-## 与StrictPlan模式的区别
-
-StrictSpec和StrictPlan模式的区别：
-
-| 特性     | StrictSpec                                        | StrictPlan                |
-| -------- | ------------------------------------------------- | ------------------------- |
-| 需求文档 | 详细的spec.md，包含用户故事、系统需求、成功标准等 | 相对简洁的需求文档        |
-| 架构设计 | 基于C4 Model的详细架构设计                        | 相对简化的技术方案        |
-| 任务规划 | 高层次任务清单（最多3条）                         | 详细的开发任务清单        |
-| 适用场景 | 严谨规范、质量要求高的项目                        | 快速迭代、敏捷开发的项目  |
-
-StrictSpec更适合需要**严谨规范**和**高质量交付**的项目，而StrictPlan更适合需要**快速迭代**和**敏捷开发**的项目。
+注意:该模式消耗token量大，由多个类StrictPlan模式构成，简单场景建议用单个StrictPlan或build模式。
 
 ## 工作流程概览
 
@@ -51,7 +38,7 @@ flowchart TB
     subgraph Phase5["阶段 5: 任务规划分派"]
         H --> I["启动 PlanManager"]
         I --> J["分发到 SpecPlan"]
-        J --> K[执行编码任务]
+        J --> K[执行开发任务:包含提案，任务，编码，检查等子过程]
         K --> L[更新任务状态]
         L --> J
     end
@@ -68,14 +55,24 @@ flowchart TB
 StrictSpec模式的完整文件结构：
 
 ```
-.cospec/spec/{功能名}/
-    ├── user.md         # 第一阶段：用户原始输入
-    ├── spec.md         # 第二阶段：系统需求清单
-    ├── project.md      # 第三阶段：总体设计文件
-    ├── plan.md         # 第四阶段：执行计划任务
-    └── /plan/{功能名}/
-        ├── proposal.md     # 代码修改提案
-        └── task.md         # 代码修改任务
+.cospec/
+├── spec/
+│   └── {功能名}/
+│       ├── user.md       # 第一阶段：用户原始输入
+│       ├── spec.md       # 第二阶段：系统需求清单
+│       ├── project.md    # 第三阶段：总体设计文件
+│       └── plan.md       # 第四阶段：执行计划任务
+│
+└── plan/
+    ├── changes/          # 开发中/待开发功能
+    │   └── {子功能名}/
+    │       ├── proposal.md
+    │       └── task.md
+    │
+    └── archive/          # 已归档完成的功能
+        └── {已完成子功能名}/
+            ├── proposal.md
+            └── task.md
 ```
 
 ## 选择StrictSpec模式
@@ -177,15 +174,15 @@ TaskPlan负责将需求文档和设计文档转化为高层次的任务规划：
 
 ![img](img/strict-spec/task-planning.png)
 
-## 任务规划分派阶段-StrictPlan模式
+## 任务规划分派阶段-SpecPlan模式
 
-AI会启动PlanManager agent进行任务分派，将开发任务分发给StrictPlan执行
+AI会启动PlanManager agent进行任务分派，将开发任务分发给SpecPlan执行
 
 ### 工作流程
 
 1. **理解全局** - 深入理解任务规划（plan.md）
-2. **任务分发** - 将开发任务分发给StrictPlan执行
-3. **决策响应** - 处理StrictPlan反馈的问题，做出技术决策或调整任务
+2. **任务分发** - 将开发任务分发给SpecPlan执行
+3. **决策响应** - 处理SpecPlan反馈的问题，做出技术决策或调整任务
 4. **进度追踪** - 维护plan.md，准确记录任务完成状态
 
 ### 分发任务
@@ -201,17 +198,21 @@ PlanManager会根据任务的关联性和依赖关系决定分发策略：
 
 每个任务完成后，PlanManager会立即更新plan.md文件，将任务标记为已完成（`- [x]`）
 
-![img](img/strict-spec/progress-update.png)
+![img](img/strict-spec/task-complete.png)
 
 ## 实施任务
 
 PlanManager启动SpecPlan后，SpecPlan会将任务细化为具体的编码步骤并执行
 
-出现子Agent: SpecPlan则代表唤醒了编码任务进行具体编码，双击该Agent可以看到详情
+### 工作流程
 
-### 查看详情
-
-StrictPlan具体执行流程
+1. **代码探索** - 根据当前子功能名对当前代码进行探索，寻找修改方案。
+2. **生成变更提案** - 生成`.cospec/plan/changes/{子功能名}/proposal.md`
+3. **生成编码任务** - 生成`.cospec/plan/changes/{子功能名}/task.md`
+4. **检查编码任务** - 二次检查`task.md`格式及内容
+4. **开始编码** - 分发并执行`task.md`中开发任务
+4. **检查编码** - 检查`task.md`开发任务完成情况，并打上完成标签
+5. **子功能名文档归档** - 如全部完成，则归档到`.cospec/plan/archive/{子功能名}`
 
 ![img](img/strict-spec/specplan-detail.png)
 
@@ -222,12 +223,6 @@ StrictPlan具体执行流程
 ### 生成编码任务
 
 ![img](img/strict-spec/spec-plan-task.png)
-
-### 任务完成
-
-每完成一个任务，PlanManager会在plan.md中打上完成标记
-
-![img](img/strict-spec/task-complete.png)
 
 ## 编码结束
 
