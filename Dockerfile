@@ -12,9 +12,12 @@ RUN apt-get update && apt-get install -y python3 make g++ libc6-dev && rm -rf /v
 
 COPY package.json package-lock.json ./
 
-# 设置 npm 镜像并安装依赖（添加unsafe-perm避免权限问题）
+# 设置 npm 镜像并安装依赖
 RUN npm config set registry https://registry.npmmirror.com/ && \
-    npm ci --frozen-lockfile --prefer-offline --no-audit --unsafe-perm
+    npm ci --frozen-lockfile --prefer-offline --no-audit
+
+# 重新编译原生模块以确保正确安装
+RUN npm rebuild @node-rs/jieba
 
 COPY . .
 
