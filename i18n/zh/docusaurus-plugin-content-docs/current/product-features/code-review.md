@@ -61,3 +61,38 @@ Codebase索引是一套套针对代码库进行结构化解析、关联与存储
 
 #### 创建访问令牌
 
+![alt text](img/codereview/1.png)
+
+![alt text](img/codereview/2.png)
+
+![alt text](img/codereview/3.png)
+
+![alt text](img/codereview/4.png)
+
+**注意：** 生成完token后，请不要立刻关闭该页面，因为该页面的token一旦被刷新或者关闭后无法再次获取
+
+#### 配置webhook
+
+-   配置入口如下：
+
+![alt text](img/codereview/5.png)
+
+-   配置必须参数：
+
+webhook URL: https:/xxx/code-review/api/v1/webhooks/gitlab
+
+Secret 令牌：使用上面创建的token，也 **允许留空**
+
+![alt text](img/codereview/6.png)
+
+![alt text](img/codereview/7.png)
+
+![alt text](img/codereview/8.png)
+
+![alt text](img/codereview/9.png)
+
+![alt text](img/codereview/10.png)
+
+![alt text](img/codereview/11.png)
+
+**返回200则测试成功**

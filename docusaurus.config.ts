@@ -114,6 +114,10 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
 
+  markdown: {
+    mermaid: true,
+  },
+
   themes: [
     [
       "@easyops-cn/docusaurus-search-local",
@@ -127,6 +131,7 @@ const config: Config = {
         removeDefaultStemmer: true,
       }),
     ],
+    '@docusaurus/theme-mermaid',
   ],
 };
 
