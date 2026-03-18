@@ -43,7 +43,7 @@ CoStrict的CodeReview采用的是Agent的扫描方案，不限制扫描语言。
 
 ### vibe、plan、spec三种模式的介绍？
 
-**vibe模式**: 注重人机交互代码，通过对话互动进行代码生成，注重分步骤完成工程。资料参考：[案例实践2 - 代码生成，项目从0生成 | costrict](/best-practices/best-practices2)
+**vibe模式**: 注重人机交互代码，通过对话互动进行代码生成，注重分步骤完成工程。资料参考：[案例实践2 - 代码生成，项目从0生成 | costrict](./best-practices/best-practices2)
 
 **plan模式**: 严肃编程，遵从「计划制定→分步实施」流程。适用于渐进式开发和任务管理，确保项目有序推进。适合老的项目迭代开发功能。资料参考：[Plan模式使用手册](/plugin/product-features/plan)
 

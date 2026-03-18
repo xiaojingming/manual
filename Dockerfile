@@ -7,9 +7,10 @@ RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt
 
 COPY package.json package-lock.json ./
 
-# 设置 npm 镜像并安装依赖
+# 设置 npm 镜像并安装依赖，显式补装 Linux x64 native binding（lockfile 由 Windows 生成，缺少该包）
 RUN npm config set registry https://registry.npmmirror.com/ && \
-    npm ci --frozen-lockfile --prefer-offline --no-audit
+    npm install --no-audit --prefer-offline && \
+    npm install --no-save --no-audit @node-rs/jieba-linux-x64-gnu@1.10.4
 
 COPY . .
 
