@@ -5,3 +5,4 @@ build
 .github
 *.log
 npm-debug.log*
+package-lock.json
