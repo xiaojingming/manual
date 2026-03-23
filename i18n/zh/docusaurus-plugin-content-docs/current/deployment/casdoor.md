@@ -1,84 +1,84 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
-# 登录配置文档
+# Casdoor基本配置文档
+
+此文档是从0配置casdoor,本教程大部分配置在安装后已经配置成功了，如果需要添加用户，可以见 **添加用户**
 
 ## 配置页面
 
 ### 配置页面访问
 
-访问 http://\{COSTRICT_BACKEND\}:\{PORT_CASDOOR\}, 进入管理端登录页面
+访问 http://\{COSTRICT_BACKEND\}:\{PORT_CASDOOR\}, 进入管理端登陆页面
 
 ```commandline
 默认账号： admin
 默认密码： 123
 ```
-![img.png](./img/casdoor/config-login-page.png)
 
 然后进入到管理页面
 
-#### 添加 `oauth` 认证服务
+## 添加组织
 
-选择身份认证 -> 提供商 -> `Oauth`（模板）
+添加的这个组织将会存放所有costrict用户,组织的名称并不重要，可自定义
 
-![img.png](./img/casdoor/add-oauth.png)
+![image-20260120095700101](./img/1-add_org-1.png)
 
-然后填写标准 `oauth` 的信息
+![image-20260120095741985](./img/1-add_org-2.png)
 
-![img.png](./img/casdoor/edit-oauth.png)
+## 添加应用
 
-![img.png](./img/casdoor/id-secret.png)
+这将是CoStrict登录用到的应用,应用名称并不重要，可自定义.
+![image-20260120095801365](./img/2-add_app-1.png)
 
-编辑完成拉到最下面点击 `保存 & 退出`
 
-### 添加 sms 认证服务
+![image-20260120102644577](./img/2-add_app-2.png)
 
-首先选择身份认证 -> 提供商 -> SMS（模板）
 
-![img.png](./img/casdoor/add-sms.png)
+> 客户端ID和客户端密钥对应部署目录`configure.sh`  `OIDC_CLIENT_ID` `OIDC_CLIENT_SECRET`两个变量,如：
 
-只需要填写地域节点配置
-
-![img.png](./img/casdoor/config-sms.png)
-
-### 登录配置
-
-首先看下正常启用的用户登录页面
-
-![img.png](./img/casdoor/login-page.png)
-
-密码登录是测试使用的, 内置了一个可以直接使用的账号密码
-
-```commandline
-账号： demo
-密码： test123
+```
+9e2fc5d4fbcd52ef4f6f
+ab5d8ba28b0e6c0d6e971247cdc1deb269c9eea3
 ```
 
-配置登录：选择身份认证 -> 应用 -> loginApp（模板）
+> 其中 组织是前面新建的组织
 
-![img.png](./img/casdoor/config-login.png)
+![image-20260120101039642](./img/2-add_app-3.png)
 
-首先修改登录页面的图标
 
-![img_1.png](./img/casdoor/edit-login-logo.png)
 
-点击删除按钮去掉密码登录方式
+重定向url,请修改ip和port,可部署目录`configure.sh` 文件中的 `COSTRICT_BACKEND_BASEURL` 的ip端口一致(注意，根据情况选择使用http/https,完整按照本教程，则是使用http 不要用变量，是真实的ip端口)
 
-![img.png](./img/casdoor/remove-password-login.png)
+一键部署已经默认设置了通配符，为保证安全，可以修改此处
 
-也可以去除oauth登录方式（短信验证哪里是无法去除的）
+```
+http://ip:port/oidc-auth/api/v1/plugin/login/callback
+http://ip:port/oidc-auth/api/v1/manager/bind/account/callback
+http://ip:port/oidc-auth/api/v1/manager/login/callback
+```
 
-![img.png](./img/casdoor/remove-oauth-login.png)
+![image-20260120100515628](./img/2-add_app-4.png)
 
-配置完成后拉到页面的最下方点击 `保存 & 退出`
+> 最后，保存当前应用
 
-## 组织配置
+## 添加用户
 
-> 这里主要用来配置图标和title名字
+进入组织的用户，然后点击添加
 
-![img.png](./img/casdoor/organization.png)
+![image-20260120102919337](./img/3-add_user-1.png)
 
-![img.png](./img/casdoor/edit-organization.png)
+添加demo用户，点击保存&退出。
 
-`built-in` 中的显示名称也请和user-group的一致, `logo` 和 `组织Favicon` 请替换为您自己的
+![image-20260120103025347](./img/3-add_user-2.png)
+
+添加后可以修改密码：
+![image-20260120103919026](./img/4-update_user-1.png)
+
+![image-20260120103933033](./img/4-update_user-2.png)
+
+
+如果你需要批量导入用户，请查看官方教程：[从XLSX文件导入用户](https://www.casdoor.org/zh/docs/user/overview/#%E4%BB%8Exlsx%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5%E7%94%A8%E6%88%B7)
+
+> 配置结束，之后就可以使用demo用户登录costrict了(注意是costrict不是casdoor)，如需更多配置，如：oauth,sms,github等配置，参考：v4 casdoor配置

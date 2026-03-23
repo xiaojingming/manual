@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 # How to Configure Higress
@@ -10,11 +10,11 @@ This document explains how to configure the Higress AI gateway to integrate with
 
 Default credentials:  
 Username: `admin`  
-Password: `test123`
+Password: `123`
 
 ## 2. Add a New Model Endpoint
 
-To register a newly deployed model in CoStrict’s model list, follow the three steps below.
+To register a newly deployed model in CoStrict's model list, follow the three steps below.
 
 ### 2.1 Configure an AI Service Provider
 
@@ -23,15 +23,15 @@ To register a newly deployed model in CoStrict’s model list, follow the three 
 3. In the **Create AI Service Provider** dialog, fill in the model details:
    - **LLM Provider**: e.g `OpenAI`.  
    - **Service Name**: a custom name such as `{{MODEL_PROVIDER}}`.  
-   - **Request Procotol**: select the one required by the vendor, e.g `openaiv1`.  
+   - **Request Protocol**: select the one required by the vendor, e.g `openaiv1`.  
    - **Tokens**: your model-service API key, e.g `{{MODEL_APIKEY}}`.  
    - **OpenAI Service Type**: choose **Custom OpenAI Service BaseURL**.  
-   - **Custom OpenAI Service Base URL**: enter your model’s base URL (`{{MODEL_BASEURL}}`).  
+   - **Custom OpenAI Service Base URL**: enter your model's base URL (`{{MODEL_BASEURL}}`).  
      **Include the version path**, e.g `https://zgsm.sangfor.com/v1/`.
 
-![descript](./img/higress/image1.png)
+![img](https://wdcdn.qpic.cn/MTY4ODg1NTc1NDYyNDA0MA_621408_2fKH133T6cdAY8_e_1751892112?w=1879&h=689&type=image/png)
 
-![descript](./img/higress/image2.png)
+![img](https://wdcdn.qpic.cn/MTY4ODg1NTc1NDYyNDA0MA_491553_E9UqjGwaa7i1qzHo_1751892334?w=1658&h=807&type=image/png)
 
 ### 2.2 Configure an AI Route
 
@@ -51,30 +51,28 @@ AI routes forward requests to the correct AI service provider based on request c
 
 *The rule above means: if the request path starts with `/` and the model name matches, forward the request to the specified AI service provider.*
 
-![descript](./img/higress/image3.png)
+![img](https://wdcdn.qpic.cn/MTY4ODg1NTc1NDYyNDA0MA_972784_ctv20hv-bBUGVzD5_1751892440?w=1895&h=691&type=image/png)
 
-![descript](./img/higress/image4.png)
+![img](https://wdcdn.qpic.cn/MTY4ODg1NTc1NDYyNDA0MA_257655_X701-MgnXRLZyoGM_1751892547?w=1698&h=858&type=image/png)
 
 ### 2.3 Update the Model List
 
-*This step exposes the new model in the user-facing model picker. Without it, users must manually type the full model name.*
+*Note: This step exposes the new model in the user-facing model picker. Without it, users cannot see the newly added model in the model list and must manually type the full model name to force CoStrict to use it.*
 
-1. On the **Plugin Management** page, locate the **AI Quota** card and click **Configure**.
+1. On the **Plugin Management** → **AI Quota** plugin card, click **Configure**.
 2. Switch to **YAML View** and append the new model under `spec.defaultConfig.providers`:
 
 ```yaml
-spec:
-  defaultConfig:
-    ...
-    providers:
-    - id: {{MODEL_PROVIDER}}
-      models:
-      - contextWindow: {{MODEL_CONTEXTSIZE}}
-        description: {{MODEL_DESC}}
-        maxTokens: 8192
-        name: {{MODEL_NAME}}
-        supportsComputerUse: true
-        supportsImages: false
-        supportsPromptCache: false
-        supportsReasoningBudget: false
-      type: {{MODEL_TYPE}}
+providers:
+- id: {{MODEL_PROVIDER}} # model provider, e.g. zhipu-provider, kimi-provider
+  models:
+  - contextWindow: {{MODEL_CONTEXTSIZE}} # maximum context window of the model
+    description: {{MODEL_DESC}} # description of the model, can be set freely
+    maxTokens: 8192
+    name: {{MODEL_NAME}} # model name shown to the client; also the exact-match value in the AI route
+    supportsComputerUse: true
+    supportsImages: false
+    supportsPromptCache: false
+    supportsReasoningBudget: false
+  type: {{MODEL_TYPE}} # model type, e.g. zhipu, kimi
+```

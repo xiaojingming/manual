@@ -1,8 +1,10 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
-# Login Configuration Guide
+# Casdoor Basic Configuration Guide
+
+This document describes how to configure Casdoor from scratch. Most configurations in this tutorial are already set up after installation. If you need to add users, refer to the **Add Users** section.
 
 ## Configuration Page
 
@@ -11,74 +13,74 @@ sidebar_position: 5
 Visit http://\{COSTRICT_BACKEND\}:\{PORT_CASDOOR\} to access the admin login page.
 
 ```commandline
-Default account: admin
+Default username: admin
 Default password: 123
 ```
-![descript](./img/casdoor/image1.png)
 
-Then enter the admin dashboard.
+Then proceed to the admin dashboard.
 
-#### Adding an `oauth` Authentication Provider
+## Add Organization
 
-Go to Identity → Providers → `Oauth` (template).
+The organization you create here will store all CoStrict users. The organization name is not critical and can be customized.
 
-![descript](./img/casdoor/image2.png)
+![image-20260120095700101](./img/1-add_org-1.png)
 
-Fill in the standard `oauth` information.
+![image-20260120095741985](./img/1-add_org-2.png)
 
-![descript](./img/casdoor/image3.png)
+## Add Application
 
-![descript](./img/casdoor/image4.png)
+This will be the application used for CoStrict login. The application name is not critical and can be customized.
 
-After editing, scroll to the bottom of the page and click `Save & Exit`.
+![image-20260120095801365](./img/2-add_app-1.png)
 
-### Adding an SMS Authentication Provider
 
-First, go to Identity → Providers → SMS (template).
+![image-20260120102644577](./img/2-add_app-2.png)
 
-![descript](./img/casdoor/image5.png)
 
-You only need to configure the region node settings.
+> The Client ID and Client Secret correspond to the `OIDC_CLIENT_ID` and `OIDC_CLIENT_SECRET` variables in the deployment directory's `configure.sh`, for example:
 
-![descript](./img/casdoor/image6.png)
-
-### Login Configuration
-
-First, let's look at the normally enabled user login page.
-
-![descript](./img/casdoor/image7.png)
-
-Password login is for testing purposes and includes a built-in account that can be used directly.
-
-```commandline
-Account: demo
-Password: test123
+```
+9e2fc5d4fbcd52ef4f6f
+ab5d8ba28b0e6c0d6e971247cdc1deb269c9eea3
 ```
 
-To configure login: go to Identity → Applications → loginApp (template).
+> The organization field should be set to the organization created in the previous step.
 
-![descript](./img/casdoor/image8.png)
+![image-20260120101039642](./img/2-add_app-3.png)
 
-First, modify the login page icon.
 
-![descript](./img/casdoor/image9.png)
 
-Click the delete button to remove the password login method.
+For the redirect URLs, update the IP and port to match the `COSTRICT_BACKEND_BASEURL` IP and port defined in the deployment directory's `configure.sh` file. (Note: choose http or https based on your setup. Following this tutorial completely means using http — use the actual IP and port, not variables.)
 
-![descript](./img/casdoor/image10.png)
+One-click deployment sets a wildcard by default. For better security, you may update this accordingly.
 
-You can also remove the oauth login method (SMS verification cannot be removed).
+```
+http://ip:port/oidc-auth/api/v1/plugin/login/callback
+http://ip:port/oidc-auth/api/v1/manager/bind/account/callback
+http://ip:port/oidc-auth/api/v1/manager/login/callback
+```
 
-![descript](./img/casdoor/image11.png)
+![image-20260120100515628](./img/2-add_app-4.png)
 
-After configuration, scroll to the bottom of the page and click `Save & Exit`.
+> Finally, save the current application.
 
-## Organization Configuration
+## Add Users
 
-> This section is mainly used to configure icons and title names.
+Navigate to the organization's user list, then click Add.
 
-![descript](./img/casdoor/image12.png)
+![image-20260120102919337](./img/3-add_user-1.png)
 
-![descript](./img/casdoor/image13.png)
+Add a demo user and click Save & Exit.
 
-Please ensure the display name in `built-in` matches the user-group name, and replace `logo` and `Organization Favicon` with your own.
+![image-20260120103025347](./img/3-add_user-2.png)
+
+After adding, you can update the password:
+
+![image-20260120103919026](./img/4-update_user-1.png)
+
+![image-20260120103933033](./img/4-update_user-2.png)
+
+
+If you need to import users in bulk, refer to the official documentation: [Import Users from XLSX File](https://www.casdoor.org/docs/user/overview/#import-users-from-xlsx-file)
+
+> Configuration is complete. You can now log in to CoStrict (not Casdoor) using the demo user. For additional configurations such as OAuth, SMS, GitHub, etc., refer to: v4 casdoor configuration
