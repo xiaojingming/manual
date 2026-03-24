@@ -47,6 +47,7 @@ const sidebarsCli: SidebarsConfig = {
         'config/themes',
         'config/custom-agent',
         'config/slash-command',
+        'config/custom-model',
         'config/provider',
         'config/rules',
         'config/custom-tools',
