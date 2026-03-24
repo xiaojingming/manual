@@ -51,6 +51,7 @@ const config: Config = {
 
   url: 'https://your-docusaurus-site.example.com',
   baseUrl: '/',
+  trailingSlash: false,
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
