@@ -92,5 +92,7 @@ https://modelscope.cn/models/iic/gte-reranker-modernbert-base
 
 **Software Requirements**:
 - OS: CentOS 7+ or Ubuntu 20.04+ (WSL supported)
-- Container Runtime: Docker 20.10+ (refer to [offline Docker installation](./docker-offline-install) for offline setup)
+- Container Runtime: Docker 20.10+ (refer to [offline Docker installation](./docker-offline-install.md) for offline setup)
 - Orchestration Tool: Docker Compose 2.0+
+
+
