@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Code Review
 
-CoStrict Code Review enables full repository indexing (codebase), along with a company-level coding knowledge base RAG (coming soon). It supports users in conducting code checks on functions, selected code, code files and entire project files. To identify and confirm issues, it employs a "multi-expert model inspection" + "multi-model cross-validation" strategy. Ensure a thorough review with zero oversight of vulnerabilities, fortifying the security defenses for enterprise code.
+CoStrict Code Review is an intelligent code quality inspection tool that acts as an always-on, experienced technical partner, seamlessly integrating into your development workflow and silently guarding code quality. The system employs an agent-driven scanning approach with deep semantic understanding to precisely cover four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations. In authoritative benchmarks, it achieves a comprehensive score of 63% with over 50% adoption rate for discovered defect recommendations, making your coding more focused and your submissions more confident.
 
 
 ## Trigger Methods
