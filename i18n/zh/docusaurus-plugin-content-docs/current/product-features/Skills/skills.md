@@ -1,8 +1,8 @@
 ---
-sidebar_position: 11
+sidebar_position: 8
 ---
 
-# Skills
+# SKILLS技能
 
 Skills 将特定任务的指令打包，当你的请求与 skill 的目的匹配时，CoStrict 会按需加载这些指令。与适用于所有工作的自定义指令不同，skills 仅在需要时激活——使 CoStrict 在专业任务上更加高效，而不会使基础提示词变得臃肿。
 

@@ -1,8 +1,8 @@
 ---
-sidebar_position: 12
+sidebar_position: 11
 ---
 
-# 安全扫描（Security Review）
+# 安全扫描
 
 > CoStrict Security 是一款自研的 AI 驱动安全扫描工具，帮助开发者快速发现代码中的安全漏洞和风险。
 

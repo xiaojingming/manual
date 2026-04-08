@@ -1,8 +1,8 @@
 ---
-sidebar_position: 9
+sidebar_position: 7
 ---
 
-# MCP
+# MCP Tools
 
 ### MCP Overview
 

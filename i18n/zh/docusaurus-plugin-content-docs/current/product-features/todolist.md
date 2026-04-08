@@ -1,8 +1,8 @@
 ---
-sidebar_position: 7
+sidebar_position: 4
 ---
 
-# Todo List
+# 任务清单
 
 待办事项管理是一个待办事项列表，它能够清晰的反应 CoStrict 接下来要做的事任务以及跟踪当前工作流程的进度。在以下场景中它会被自动创建：处理复杂任务时、有多个工作步骤流程或者使用 Architect 模式时。你也可以手动触发该功能，只需要在对话中要求 CoStrict ：“使用 to do list”。举例：请创建一个贪吃蛇小游戏，使用 to do list.
 
