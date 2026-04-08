@@ -4,26 +4,47 @@ sidebar_position: 10
 
 # Code Review
 
-CoStrict Code Review is an intelligent code quality inspection tool that acts as an always-on, experienced technical partner, seamlessly integrating into your development workflow and silently guarding code quality. The system employs an agent-driven scanning approach with deep semantic understanding to precisely cover four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations. In authoritative benchmarks, it achieves a comprehensive score of 63% with over 50% adoption rate for discovered defect recommendations, making your coding more focused and your submissions more confident.
+CoStrict Code Review is an intelligent code quality inspection tool that precisely covers four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations, making your coding more focused and your submissions more confident.
 
 
-## Trigger Methods
+## How to Use
 
-Users can trigger code reviews for functions, code blocks, code files, and entire code repositories.
+### Interactive Scan
 
-For code lines and functions, use the universal trigger method: right-click and select `CoStrict > Code Review`.
+#### Scan Methods
 
-![alt text](./img/12.png)
+##### Method 1: Scan Code File
 
+In the file explorer, **right-click on a file** and select **CoStrict > Code Review** to perform a code scan on the entire file.
 
-For functions, you can also click the quick action button `Code Review` at the top.
+##### Method 2: Scan Selected Code Snippet
 
-![alt text](./img/13.png)
+In the editor, **select a code snippet**, then **right-click** and choose **Code Review** to scan the selected code.
 
+##### Method 3: Scan Code Changes
 
-For code files and code repositories, open the EXPLORE panel, select a file, right-click, and choose `CoStrict > Code Review` to review that specific code file. Click `CoStrict > Review Repo` to review the entire code repository where the file is located.
-![alt text](./img/14.png)
+Click the **CoStrict icon** on the left sidebar, switch to the **Code Scan** page, and scan code changes in the current workspace.
 
+#### Scan Report
+
+##### View Report
+
+After the scan is complete, results are displayed in the sidebar panel, including:
+
+- **Scan Summary**: The number of files scanned and the total number of issues found
+- **Issue List**: Detailed information for each security issue
+  - File path and line number
+  - Severity level
+  - Issue description
+  - Fix suggestions
+
+##### Handle Defects
+
+Click on an issue to view details in the code editor. We encourage users to click the buttons in the top-right corner of the detail card according to the actual situation. There are three buttons: `Accept`, `Reject`, and `Close`:
+
+- **Accept**: Indicates that you agree with the issue identified by the AI
+- **Reject**: Indicates that you believe this is not an issue or the output is incorrect
+- **Close**: Closes the current detail window
 
 ## Execution Process & Results
 
@@ -59,14 +80,3 @@ Code Review supports filtering issues based on three dimensions: severity, issue
 - **Labels**: The AI automatically categorizes and tags issues based on their descriptions. Typically, an issue will have one or more tags. Common issue label types include: syntax errors, logic errors, memory leaks, security vulnerabilities, etc.
 
 ![alt text](./img/17.png)
-
-## Codebase Index
-
-The Codebase index is an intelligent system designed for structured parsing, association, and storage of code repositories. By establishing an efficient retrieval mechanism for code elements (such as functions, classes, variables, call relationships, etc.), CoStrict constructs the Codebase index before performing code reviews to improve the accuracy of code reviews.
-
-
-You can view the progress and specifics of the Codebase Index in the `Settings > Context` module. The CoStrict plugin defaults to checking and synchronizing the Codebase index every few minutes. If there are file changes, it will also automatically trigger index synchronization.
-
-![alt text](./img/18.png)
-
-If users need to set up excluded files, they can click the `Edit` button under the "Ignore File Settings" module to configure the index files in the `.coignore` file. The plugin will automatically filter out files listed in `.coignore` during Codebase index synchronization. This exclusion file is project-bound. If users switch projects, they will need to reconfigure the exclusion file. The system will use the default exclusion configuration if there is no exclusion file.
