@@ -16,38 +16,36 @@ sidebar_position: 1
 
 ## How to Use
 
-### Interactive Scan
-
 Perform interactive security scans through the IDE during the coding phase, providing real-time assistance to developers in identifying and fixing security issues.
 
 - Supports conversational interaction windows for instant communication and quick issue localization
 - Can incorporate prior knowledge (such as business context, threat models, etc.) to improve detection accuracy
 - Displays model reasoning process so you know exactly why an issue was reported
 
-#### Scan Methods
+### Scan Methods
 
-##### Method 1: Scan Code File
+#### Method 1: Scan Code File
 
 In the file explorer, **right-click on a file** and select **CoStrict > Security Review** to perform a security scan on the entire file.
 
 <!-- TODO: Add screenshot - Scan code file -->
 ![Scan code file](./img/IDE使用1-扫描代码文件.png)
 
-##### Method 2: Scan Selected Code Snippet
+#### Method 2: Scan Selected Code Snippet
 
 In the editor, **select a code snippet**, then **right-click** and choose **Security Review** to scan the selected code.
 
 <!-- TODO: Add screenshot - Scan code snippet -->
 ![Scan code snippet](./img/IDE使用2-扫描代码片段.png)
 
-##### Method 3: Scan Code Changes
+#### Method 3: Scan Code Changes
 
 Click the **CoStrict icon** on the left sidebar, switch to the **CODE REVIEW** page, and select **Security Review** to scan code changes in the current workspace (such as Git diffs).
 
 <!-- TODO: Add screenshot - Scan code changes -->
 ![Scan code changes](./img/IDE使用3-扫描代码变更.png)
 
-#### Scan Report
+### Scan Report
 
 After triggering a security review, the CODE REVIEW panel displays real-time progress. The scanning duration is proportional to the amount of code being processed, ranging from a few minutes to several tens of minutes. Once the scan is complete, the CODE REVIEW panel displays the results.
 
@@ -174,40 +172,3 @@ Your feedback will help make the Security Review feature smarter and more accura
 
 ![Handle defects](./img/IDE使用-处置缺陷.png)
 
-## Private Deployment Requirements
-
-### Model Configuration
-
-**Conversation Model** (shared by CoStrict Conversation, Code Review, and Security Review)
-
-| Model Name | GPU Resources (Recommended) |
-|---------|----------------|
-| GLM-4.7-FP8 or GLM-4.7-Flash | 4 x H20 or 4 x RTX4090 |
-
-### Backend Server Requirements
-
-**Hardware Requirements**
-
-| Configuration | Minimum Requirements |
-|--------|---------|
-| CPU | Intel x64 architecture, 16 cores |
-| Memory | 32GB RAM |
-| Storage | 512GB available space |
-
-**Software Requirements**
-
-| Software | Version Requirements |
-|--------|---------|
-| Operating System | CentOS 7+ or Ubuntu 18.04+ |
-| Docker | 20.10+ |
-| Docker Compose | 2.0+ |
-
-### Deployment Documentation
-
-For detailed deployment steps, please refer to: **[Deployment Checklist](https://docs.costrict.ai/plugin/deployment/deploy-checklist/)**
-
-## Get Help
-
-- Official website: https://costrict.ai
-- Download page: https://costrict.ai/download
-- Feedback: support@costrict.ai

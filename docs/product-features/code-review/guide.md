@@ -16,42 +16,40 @@ CoStrict Code Review is an intelligent code quality inspection tool that precise
 
 ## How to Use
 
-### Interactive Scan
-
 Perform interactive code quality scans through the IDE during the coding phase, providing real-time assistance to developers in identifying and fixing code issues.
 
 - Supports conversational interaction windows for instant communication and quick issue localization
 - Can incorporate prior knowledge (such as business context, coding standards, etc.) to improve detection accuracy
 - Displays model reasoning process so you know exactly why an issue was reported
 
-#### Scan Methods
+### Scan Methods
 
-##### Method 1: Scan Code File
+#### Method 1: Scan Code File
 
 In the file explorer, **right-click on a file** and select **CoStrict > Code Review** to perform a code scan on the entire file.
 
 <!-- TODO: Add screenshot - 扫描代码文件 -->
 ![Scan code file](./img/IDE使用1-扫描代码文件.png)
 
-##### Method 2: Scan Selected Code Snippet
+#### Method 2: Scan Selected Code Snippet
 
 In the editor, **select a code snippet**, then **right-click** and choose **Code Review** to scan the selected code.
 
 <!-- TODO: Add screenshot - 扫描代码片段 -->
 ![Scan code snippet](./img/IDE使用2-扫描代码片段.png)
 
-##### Method 3: Scan Code Changes
+#### Method 3: Scan Code Changes
 
 Click the **CoStrict icon** on the left sidebar, switch to the **Code Scan** page, and scan code changes in the current workspace.
 
 <!-- TODO: Add screenshot - 扫描代码变更 -->
 ![Scan code changes](./img/IDE使用3-扫描代码变更.png)
 
-#### Scan Report
+### Scan Report
 
 After triggering a code review, the CODE REVIEW panel displays real-time progress. The scanning duration is proportional to the amount of code being processed, ranging from a few minutes to several tens of minutes. Once the scan is complete, the CODE REVIEW panel displays the results.
 
-**View Issue List**
+#### View Issue List
 
 - **Scan Summary**: The number of files scanned and the total number of issues found
 - **Issue List**: File path, line number, description, and severity level, with color bars indicating severity: <span style={{color: '#E53935'}}>**Red (High)**</span>, <span style={{color: '#FDD835'}}>**Yellow (Medium)**</span>, <span style={{color: '#42A5F5'}}>**Blue (Low)**</span>
@@ -60,7 +58,7 @@ After triggering a code review, the CODE REVIEW panel displays real-time progres
 <!-- TODO: Add screenshot - 侧边栏面板 -->
 ![Sidebar panel](./img/IDE使用-侧边栏面板.png)
 
-**View Issue Details**
+#### View Issue Details
 
 Click on an issue to view details in the code editor. The corresponding problematic code line will be automatically located and highlighted, with a detailed report displayed in a floating panel below.
 
@@ -151,7 +149,7 @@ $target = preg_replace( '/[^0-9.]/', '', $target );
 <!-- TODO: Add screenshot - 完整效果 -->
 ![Complete effect](./img/IDE使用-完整效果.png)
 
-**View Defect History**
+#### View Defect History
 
 Click the clock icon in the top-right corner of the panel to view historical scan records. The history panel includes the following features:
 
@@ -164,7 +162,7 @@ After expanding a history record, you can view the code and defect details for t
 <!-- TODO: Add screenshot - 审查历史 -->
 ![Review history](./img/IDE使用-审查历史.png)
 
-**Handle Defects**
+#### Handle Defects
 
 The defect detail card provides four action buttons in the top-right corner:
 
@@ -178,70 +176,3 @@ Your feedback will help make the Code Review feature smarter and more accurate.
 <!-- TODO: Add screenshot - 处置缺陷 -->
 ![Handle defects](./img/IDE使用-处置缺陷.png)
 
-### Team Collaboration
-
-Supports deep integration with enterprise GitLab for automated quality review of merge requests, flexibly adapting to personal development and team collaboration workflows (for private deployment only)
-
-#### Create Access Token
-
-<!-- TODO: Add screenshot - 创建访问令牌 (4张) -->
-![Access token step 1](./img/1.png)
-![Access token step 2](./img/2.png)
-![Access token step 3](./img/3.png)
-![Access token step 4](./img/4.png)
-
-**Note:** After generating the token, do not close the page immediately. Once the page is refreshed or closed, the token cannot be retrieved again.
-
-#### Configure Webhook
-
-- Configuration entry:
-
-<!-- TODO: Add screenshot - webhook配置入口 -->
-![Webhook configuration](./img/5.png)
-
-- Required parameters:
-
-Webhook URL: `https://xxx/code-review/api/v1/webhooks/gitlab`
-
-Secret Token: Use the token created above, **can be left blank**
-
-<!-- TODO: Add screenshot - webhook配置步骤 (6张) -->
-![Webhook step 1](./img/6.png)
-![Webhook step 2](./img/7.png)
-![Webhook step 3](./img/8.png)
-![Webhook step 4](./img/9.png)
-![Webhook step 5](./img/10.png)
-![Webhook step 6](./img/11.png)
-
-**Return 200 indicates successful test**
-
----
-
-### Incremental Scan
-
-Incremental scan only scans the changed parts of the code, making it more efficient than full scan and suitable for quick checks during daily development.
-
-#### Use Cases
-
-- **Pre-commit Check**: Quickly check newly added or modified code before committing
-- **PR/MR Review**: Focused review of changes in merge requests
-- **Continuous Integration**: Only scan current commit changes in CI pipeline
-
-#### Enable Method
-
-Click the **CoStrict icon** on the left sidebar, switch to the **CODE REVIEW** page, and check the **Scan Changes Only** option to enable incremental scan mode.
-
-<!-- TODO: Add screenshot - 增量扫描 -->
-![Incremental scan](./img/IDE使用-增量扫描.png)
-
-Once enabled, the scan will automatically identify the scope of changes based on Git Diff, analyzing only modified, added, and deleted code lines.
-
-#### Scan Scope
-
-Incremental scan identifies the following types of changes:
-
-- **New Code**: Newly added code lines
-- **Modified Code**: Changed code lines
-- **Deleted Code**: Removed code lines (used to check if deletions introduce risks)
-
-> **Tip**: Incremental scan only analyzes code changes themselves and does not involve the complete context of cross-file references. For comprehensive analysis, please use full scan mode.
