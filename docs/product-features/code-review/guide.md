@@ -6,6 +6,14 @@ sidebar_position: 1
 
 CoStrict Code Review is an intelligent code quality inspection tool that precisely covers four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations, making your coding more focused and your submissions more confident.
 
+## System Requirements
+
+| Installation Method | Version Requirement | Supported Platforms |
+|---|---|---|
+| VSCode Plugin | >= 2.1.3 | VSCode |
+| JetBrains Plugin | >= 2.1.3 | IDEA / PyCharm / WebStorm, etc. |
+| GitLab | >= 10.8.4 | Self-hosted GitLab |
+
 ## How to Use
 
 ### Interactive Scan
