@@ -70,7 +70,7 @@ Click on an issue to view details in the code editor. The corresponding problema
 
 **<span style={{color: '#E53935'}}>[High]</span> Command Injection Vulnerability - Incomplete Blacklist Filter Allows Pipe Bypass**
 
-### Defect Analysis
+**Defect Analysis**
 
 **Root Cause:** The blacklist filtering mechanism has serious design flaws
 
@@ -80,7 +80,7 @@ Click on an issue to view details in the code editor. The corresponding problema
 
 ---
 
-### Trigger Conditions
+**Trigger Conditions**
 
 **Attacker Input:** `127.0.0.1|whoami` (Windows/Linux universal)
 
@@ -91,7 +91,7 @@ Click on an issue to view details in the code editor. The corresponding problema
 
 ---
 
-### Bypass Methods
+**Bypass Methods**
 
 | Type | Example |
 |------|---------|
@@ -101,7 +101,7 @@ Click on an issue to view details in the code editor. The corresponding problema
 
 ---
 
-### Business Impact
+**Business Impact**
 
 **Security Risks:**
 
@@ -120,7 +120,7 @@ Click on an issue to view details in the code editor. The corresponding problema
 
 ---
 
-### Fix Recommendations
+**Fix Recommendations**
 
 **Solution 1: Use Whitelist Validation (Recommended)**
 
