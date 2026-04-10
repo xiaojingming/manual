@@ -12,7 +12,6 @@ CoStrict Code Review is an intelligent code quality inspection tool that precise
 |---|---|---|
 | VSCode Plugin | >= 2.1.3 | VSCode |
 | JetBrains Plugin | >= 2.1.3 | IDEA / PyCharm / WebStorm, etc. |
-| GitLab | >= 10.8.4 | Self-hosted GitLab |
 
 ## How to Use
 
@@ -69,7 +68,7 @@ Click on an issue to view details in the code editor. The corresponding problema
 <details>
 <summary>View Complete Example</summary>
 
-## <span style={{color: '#E53935'}}>[High]</span> Command Injection Vulnerability - Incomplete Blacklist Filter Allows Pipe Bypass
+**<span style={{color: '#E53935'}}>[High]</span> Command Injection Vulnerability - Incomplete Blacklist Filter Allows Pipe Bypass**
 
 ### Defect Analysis
 
