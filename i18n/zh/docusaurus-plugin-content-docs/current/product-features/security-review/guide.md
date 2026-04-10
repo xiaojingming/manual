@@ -1,10 +1,10 @@
 ---
-sidebar_position: 11
+sidebar_position: 1
 ---
 
-# 安全审查
+# 快速上手
 
-> CoStrict Security 是一款自研的 AI 驱动安全扫描工具，帮助开发者快速发现代码中的安全漏洞和风险。
+CoStrict Security 是一款自研的 AI 驱动安全扫描工具，精准覆盖注入攻击、越权访问、敏感信息泄露、不安全配置等常见安全漏洞，并提供完整的风险溯源与可执行的修复建议，让你在代码上线前有效消除安全隐患。
 
 ---
 
@@ -27,19 +27,19 @@ sidebar_position: 11
 
 在文件浏览器中**右键点击文件**，选择 **CoStrict - Security Review** 即可对整个文件进行安全扫描。
 
-![IDE使用1-选中文件鼠标右键](./img/security-review/IDE使用1-选中文件鼠标右键.png)
+![IDE使用1-选中文件鼠标右键](./img/IDE使用1-选中文件鼠标右键.png)
 
 **方式 2：扫描选中代码片段**
 
 在编辑器中**选中代码片段**，**右键点击**选择 **Security Review** 即可对选中的代码进行安全扫描。
 
-![IDE使用2-选中代码片段鼠标右键](./img/security-review/IDE使用2-选中代码片段鼠标右键.png)
+![IDE使用2-选中代码片段鼠标右键](./img/IDE使用2-选中代码片段鼠标右键.png)
 
 **方式 3：扫描代码变更**
 
 点击左侧 **CoStrict 图标**，切换至 **CODE REVIEW** 页面，选择 **安全扫描**，即可扫描当前工作区的代码变更（如 Git 差异）。
 
-![IDE使用3-扫描代码变更](./img/security-review/IDE使用3-扫描代码变更.png)
+![IDE使用3-扫描代码变更](./img/IDE使用3-扫描代码变更.png)
 
 ### 步骤 2：查看扫描报告
 
@@ -52,7 +52,7 @@ sidebar_position: 11
   - 问题描述
   - 修复建议
 
-![IDE使用4-安全扫描报告](./img/security-review/IDE使用4-安全扫描报告.png)
+![IDE使用4-安全扫描报告](./img/IDE使用4-安全扫描报告.png)
 
 ---
 

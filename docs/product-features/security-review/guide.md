@@ -1,8 +1,8 @@
 ---
-sidebar_position: 11
+sidebar_position: 1
 ---
 
-# Security Review
+# Quick Start
 
 > CoStrict Security is a self-developed AI-powered security scanning tool that helps developers quickly identify security vulnerabilities and risks in their code.
 

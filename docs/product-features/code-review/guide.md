@@ -1,8 +1,8 @@
 ---
-sidebar_position: 10
+sidebar_position: 1
 ---
 
-# Code Review
+# Quick Start
 
 CoStrict Code Review is an intelligent code quality inspection tool that precisely covers four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations, making your coding more focused and your submissions more confident.
 
@@ -17,21 +17,21 @@ CoStrict Code Review is an intelligent code quality inspection tool that precise
 In the file explorer, **right-click on a file** and select **CoStrict > Code Review** to perform a code scan on the entire file.
 
 <!-- TODO: Add screenshot - 扫描代码文件 -->
-![Scan code file](./img/codereview/IDE使用1-扫描代码文件.png)
+![Scan code file](./img/IDE使用1-扫描代码文件.png)
 
 ##### Method 2: Scan Selected Code Snippet
 
 In the editor, **select a code snippet**, then **right-click** and choose **Code Review** to scan the selected code.
 
 <!-- TODO: Add screenshot - 扫描代码片段 -->
-![Scan code snippet](./img/codereview/IDE使用2-扫描代码片段.png)
+![Scan code snippet](./img/IDE使用2-扫描代码片段.png)
 
 ##### Method 3: Scan Code Changes
 
 Click the **CoStrict icon** on the left sidebar, switch to the **Code Scan** page, and scan code changes in the current workspace.
 
 <!-- TODO: Add screenshot - 扫描代码变更 -->
-![Scan code changes](./img/codereview/IDE使用3-扫描代码变更.png)
+![Scan code changes](./img/IDE使用3-扫描代码变更.png)
 
 #### Scan Report
 
@@ -44,7 +44,7 @@ After triggering a code review, the CODE REVIEW panel displays real-time progres
 - **Issue Filtering**: Filter by severity, issue labels, and other conditions
 
 <!-- TODO: Add screenshot - 侧边栏面板 -->
-![Sidebar panel](./img/codereview/IDE使用-侧边栏面板.png)
+![Sidebar panel](./img/IDE使用-侧边栏面板.png)
 
 **View Issue Details**
 
@@ -135,7 +135,7 @@ $target = preg_replace( '/[^0-9.]/', '', $target );
 </details>
 
 <!-- TODO: Add screenshot - 完整效果 -->
-![Complete effect](./img/codereview/IDE使用-完整效果.png)
+![Complete effect](./img/IDE使用-完整效果.png)
 
 **View Defect History**
 
@@ -148,7 +148,7 @@ Click the clock icon in the top-right corner of the panel to view historical sca
 After expanding a history record, you can view the code and defect details for that scan on the right side.
 
 <!-- TODO: Add screenshot - 审查历史 -->
-![Review history](./img/codereview/IDE使用-审查历史.png)
+![Review history](./img/IDE使用-审查历史.png)
 
 **Handle Defects**
 
@@ -162,7 +162,7 @@ The defect detail card provides four action buttons in the top-right corner:
 Your feedback will help make the Code Review feature smarter and more accurate.
 
 <!-- TODO: Add screenshot - 处置缺陷 -->
-![Handle defects](./img/codereview/IDE使用-处置缺陷.png)
+![Handle defects](./img/IDE使用-处置缺陷.png)
 
 ### Team Collaboration
 
@@ -171,10 +171,10 @@ Supports deep integration with enterprise GitLab for automated quality review of
 #### Create Access Token
 
 <!-- TODO: Add screenshot - 创建访问令牌 (4张) -->
-![Access token step 1](img/codereview/1.png)
-![Access token step 2](img/codereview/2.png)
-![Access token step 3](img/codereview/3.png)
-![Access token step 4](img/codereview/4.png)
+![Access token step 1](./img/1.png)
+![Access token step 2](./img/2.png)
+![Access token step 3](./img/3.png)
+![Access token step 4](./img/4.png)
 
 **Note:** After generating the token, do not close the page immediately. Once the page is refreshed or closed, the token cannot be retrieved again.
 
@@ -183,7 +183,7 @@ Supports deep integration with enterprise GitLab for automated quality review of
 - Configuration entry:
 
 <!-- TODO: Add screenshot - webhook配置入口 -->
-![Webhook configuration](img/codereview/5.png)
+![Webhook configuration](./img/5.png)
 
 - Required parameters:
 
@@ -192,12 +192,12 @@ Webhook URL: `https://xxx/code-review/api/v1/webhooks/gitlab`
 Secret Token: Use the token created above, **can be left blank**
 
 <!-- TODO: Add screenshot - webhook配置步骤 (6张) -->
-![Webhook step 1](img/codereview/6.png)
-![Webhook step 2](img/codereview/7.png)
-![Webhook step 3](img/codereview/8.png)
-![Webhook step 4](img/codereview/9.png)
-![Webhook step 5](img/codereview/10.png)
-![Webhook step 6](img/codereview/11.png)
+![Webhook step 1](./img/6.png)
+![Webhook step 2](./img/7.png)
+![Webhook step 3](./img/8.png)
+![Webhook step 4](./img/9.png)
+![Webhook step 5](./img/10.png)
+![Webhook step 6](./img/11.png)
 
 **Return 200 indicates successful test**
 
@@ -218,7 +218,7 @@ Incremental scan only scans the changed parts of the code, making it more effici
 Click the **CoStrict icon** on the left sidebar, switch to the **CODE REVIEW** page, and check the **Scan Changes Only** option to enable incremental scan mode.
 
 <!-- TODO: Add screenshot - 增量扫描 -->
-![Incremental scan](./img/codereview/IDE使用-增量扫描.png)
+![Incremental scan](./img/IDE使用-增量扫描.png)
 
 Once enabled, the scan will automatically identify the scope of changes based on Git Diff, analyzing only modified, added, and deleted code lines.
 
