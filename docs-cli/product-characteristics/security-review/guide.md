@@ -1,12 +1,10 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 ---
 
 # Security Review
 
 > CoStrict Security is a self-developed AI-powered security scanning tool that helps developers quickly identify security vulnerabilities and risks in their code.
-
----
 
 ## Installation Guide
 
@@ -17,9 +15,7 @@ Three installation methods are supported:
 - **VSCode Plugin** (version requirement: >= 2.4.7)
 - **JetBrains Plugin** (version requirement: >= 2.4.7, supports IDEA / PyCharm / WebStorm, etc.)
 
----
-
-## Usage
+## How to Use
 
 ### Step 1: Enter Interactive Window
 
@@ -29,7 +25,7 @@ Enter the following command in the terminal to start CoStrict:
 cs
 ```
 
-<!-- ![CLI Usage 1 - Enter interactive window](./img/security-review/CLI使用1-进入交互窗口.png) -->
+![CLI Usage 1 - Enter interactive window](./img/CLI使用1-进入交互窗口.png)
 
 ### Step 2: Select Scan Target
 
@@ -41,7 +37,7 @@ After entering the security scan, the system will ask you what you want to scan:
 | Specific file | Scan a specific file |
 | Specific directory | Scan a specific directory |
 
-<!-- ![CLI Usage 2 - Trigger security scan](./img/security-review/CLI使用2-触发安全扫描.png) -->
+![CLI Usage 2 - Trigger security scan](./img/CLI使用2-触发安全扫描.png)
 
 ### Step 3: View Scan Report
 
@@ -54,9 +50,7 @@ After the scan is complete, the system generates a detailed security scan report
   - Issue description
   - Fix suggestions
 
-<!-- ![CLI Usage 3 - Security scan report](./img/security-review/CLI使用3-安全扫描报告.png) -->
-
----
+![CLI Usage 3 - Security scan report](./img/CLI使用3-安全扫描报告.png)
 
 ## Private Deployment Requirements
 
@@ -89,8 +83,6 @@ After the scan is complete, the system generates a detailed security scan report
 ### Deployment Documentation
 
 For detailed deployment steps, please refer to: **[Deployment Checklist](https://docs.costrict.ai/plugin/deployment/deploy-checklist/)**
-
----
 
 ## Get Help
 

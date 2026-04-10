@@ -18,6 +18,12 @@ sidebar_position: 1
 
 ### Interactive Scan
 
+Perform interactive security scans through the IDE during the coding phase, providing real-time assistance to developers in identifying and fixing security issues.
+
+- Supports conversational interaction windows for instant communication and quick issue localization
+- Can incorporate prior knowledge (such as business context, threat models, etc.) to improve detection accuracy
+- Displays model reasoning process so you know exactly why an issue was reported
+
 #### Scan Methods
 
 ##### Method 1: Scan Code File
