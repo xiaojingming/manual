@@ -2,7 +2,8 @@
 sidebar_position: 1
 ---
 
-# Quick Start
+# Security Scanning
+<!-- # Quick Start -->
 
 CoStrict Security is a self-developed AI-powered security scanning tool that provides comprehensive coverage of common security vulnerabilities including injection attacks, unauthorized access, sensitive information disclosure, and insecure configurations. It delivers complete risk tracing and actionable remediation suggestions, helping you effectively eliminate security risks before deploying code.
 

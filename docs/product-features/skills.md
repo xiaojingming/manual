@@ -372,5 +372,5 @@ CoStrict adds mode-specific targeting beyond the base format:
 ## See Also​
 
 
-- [Slash Commands](../slash-command.md) - Execute commands that return content
-- [Custom Modes](../rules.md) - Create specialized modes with specific tool access
+- [Slash Commands](./slash-command.md) - Execute commands that return content
+- [Custom Modes](./rules.md) - Create specialized modes with specific tool access

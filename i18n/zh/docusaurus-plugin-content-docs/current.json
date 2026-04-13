@@ -59,6 +59,14 @@
     "message": "视频教程",
     "description": "The generated-index page title for category Tutorial Videos in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Code Review": {
+    "message": "代码审查",
+    "description": "The label for category Code Review in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Security Review": {
+    "message": "安全审查",
+    "description": "The label for category Security Review in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.Others": {
     "message": "其他",
     "description": "The label for category Others in sidebar tutorialSidebar"

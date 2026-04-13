@@ -2,7 +2,8 @@
 sidebar_position: 1
 ---
 
-# Quick Start
+# Security Scanning
+<!-- # Quick Start -->
 
 CoStrict Security is a self-developed AI-powered security scanning tool that precisely covers common security vulnerabilities such as injection attacks, unauthorized access, sensitive information leakage, and insecure configurations. It provides complete risk tracing and actionable fix recommendations to help you eliminate security risks before code goes live.
 
@@ -134,7 +135,6 @@ if ((is_numeric($octet[0])) && (is_numeric($octet[1])) &&
     // Valid IP address, safe to execute
     $cmd = shell_exec('ping -c 4 ' . $target);
 }
-```
 ```
 
 </details>
