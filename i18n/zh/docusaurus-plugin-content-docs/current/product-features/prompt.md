@@ -1,8 +1,8 @@
 ---
-sidebar_position: 8
+sidebar_position: 2
 ---
 
-# Prompt提示词
+# 提示词
 
 ### 增强提示词
 

@@ -1,8 +1,8 @@
 ---
-sidebar_position: 7
+sidebar_position: 4
 ---
 
-# Task Todo List
+# Todo List
 
 ToDo List is a task list designed to clearly reflect CoStrict's upcoming tasks and track the progress of current workflows. It is automatically created in the following scenarios: when handling complex tasks, managing multi-step workflows, or when using the Architect mode. You can also manually trigger them by asking CoStrict: "Use to do list". Example:Please create a Snake game and use the to-do list.
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 3
 ---
 
 # 斜杠命令

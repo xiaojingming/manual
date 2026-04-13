@@ -94,5 +94,9 @@
   "sidebar.cliSidebar.category.Configuration": {
     "message": "配置",
     "description": "The label for category Configuration in sidebar cliSidebar"
+  },
+  "sidebar.cliSidebar.category.Security Review": {
+    "message": "安全审查",
+    "description": "The label for category Security Review in sidebar cliSidebar"
   }
 }

@@ -1,8 +1,8 @@
 ---
-sidebar_position: 6
+sidebar_position: 9
 ---
 
-# Rules
+# RULES规则
 
 Rules可让您个性化设置CoStrict的行为方式，通过提供具体指导来塑造其响应模式、编码风格及决策流程。
 
