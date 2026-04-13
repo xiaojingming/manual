@@ -95,7 +95,14 @@ The code uses a blacklist approach to filter Shell special characters in user in
 
 #### Data Flow
 
-    POST /vulnerabilities/exec/ → $_REQUEST['ip'] → trim() → str_replace blacklist (bypassable) → shell_exec('ping ' . $target) → command injection
+```mermaid
+flowchart LR
+    A["POST /vulnerabilities/exec/"] --> B["$_REQUEST['ip']"]
+    B --> C["trim()"]
+    C --> D["str_replace blacklist<br/>(bypassable)"]
+    D --> E["shell_exec('ping ' . $target)"]
+    E --> F["Command Injection"]
+```
 
 #### Bypass Method
 
@@ -107,7 +114,7 @@ The code uses a blacklist approach to filter Shell special characters in user in
 - Remote Code Execution (RCE)
 - Sensitive Data Leakage
 - Privilege Escalation
-- Lateral Movement
+- Internal Network Penetration
 
 ## Fix Recommendations
 

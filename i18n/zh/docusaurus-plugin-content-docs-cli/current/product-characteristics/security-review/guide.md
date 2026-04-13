@@ -91,8 +91,13 @@ cs
 
 **数据流**
 
-```
-POST /vulnerabilities/exec/ → $_REQUEST['ip'] → trim() → str_replace黑名单(可绕过) → shell_exec('ping ' . $target) → 命令注入
+```mermaid
+flowchart LR
+    A["POST /vulnerabilities/exec/"] --> B["$_REQUEST['ip']"]
+    B --> C["trim()"]
+    C --> D["str_replace黑名单<br/>(可绕过)"]
+    D --> E["shell_exec('ping ' . $target)"]
+    E --> F["命令注入"]
 ```
 
 **绕过方式**

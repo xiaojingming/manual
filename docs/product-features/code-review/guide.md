@@ -28,21 +28,21 @@ Perform interactive code quality scans through the IDE during the coding phase, 
 In the file explorer, **right-click on a file** and select **CoStrict > Code Review** to perform a code scan on the entire file.
 
 <!-- TODO: Add screenshot - 扫描代码文件 -->
-![Scan code file](./img/IDE使用1-扫描代码文件.png)
+<!-- ![Scan code file](./img/IDE使用1-扫描代码文件.png) -->
 
 #### Method 2: Scan Selected Code Snippet
 
 In the editor, **select a code snippet**, then **right-click** and choose **Code Review** to scan the selected code.
 
 <!-- TODO: Add screenshot - 扫描代码片段 -->
-![Scan code snippet](./img/IDE使用2-扫描代码片段.png)
+<!-- ![Scan code snippet](./img/IDE使用2-扫描代码片段.png) -->
 
 #### Method 3: Scan Code Changes
 
 Click the **CoStrict icon** on the left sidebar, switch to the **Code Scan** page, and scan code changes in the current workspace.
 
 <!-- TODO: Add screenshot - 扫描代码变更 -->
-![Scan code changes](./img/IDE使用3-扫描代码变更.png)
+<!-- ![Scan code changes](./img/IDE使用3-扫描代码变更.png) -->
 
 ### Scan Report
 
@@ -55,7 +55,7 @@ After triggering a code review, the CODE REVIEW panel displays real-time progres
 - **Issue Filtering**: Filter by severity, issue labels, and other conditions
 
 <!-- TODO: Add screenshot - 侧边栏面板 -->
-![Sidebar panel](./img/IDE使用-侧边栏面板.png)
+<!-- ![Sidebar panel](./img/IDE使用-侧边栏面板.png) -->
 
 #### View Issue Details
 
@@ -146,7 +146,7 @@ $target = preg_replace( '/[^0-9.]/', '', $target );
 </details>
 
 <!-- TODO: Add screenshot - 完整效果 -->
-![Complete effect](./img/IDE使用-完整效果.png)
+<!-- ![Complete effect](./img/IDE使用-完整效果.png) -->
 
 #### View Defect History
 
@@ -159,7 +159,7 @@ Click the clock icon in the top-right corner of the panel to view historical sca
 After expanding a history record, you can view the code and defect details for that scan on the right side.
 
 <!-- TODO: Add screenshot - 审查历史 -->
-![Review history](./img/IDE使用-审查历史.png)
+<!-- ![Review history](./img/IDE使用-审查历史.png) -->
 
 #### Handle Defects
 
@@ -173,5 +173,5 @@ The defect detail card provides four action buttons in the top-right corner:
 Your feedback will help make the Code Review feature smarter and more accurate.
 
 <!-- TODO: Add screenshot - 处置缺陷 -->
-![Handle defects](./img/IDE使用-处置缺陷.png)
+<!-- ![Handle defects](./img/IDE使用-处置缺陷.png) -->
 
