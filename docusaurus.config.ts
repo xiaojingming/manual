@@ -16,6 +16,15 @@ const config: Config = {
       },
     ],
     [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'csc',
+        path: 'docs-csc',
+        routeBasePath: 'csc',
+        sidebarPath: './sidebars-csc.ts',
+      },
+    ],
+    [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
@@ -31,7 +40,7 @@ const config: Config = {
           },
         ],
         // 使用函数动态创建重定向规则
-        createRedirects(existingPath) {
+        createRedirects(existingPath: string) {
           // 如果是 plugin 路径,创建不带 /plugin 前缀的旧路径重定向
           if (existingPath.startsWith('/plugin/')) {
             return [existingPath.replace('/plugin/', '/')];
@@ -85,7 +94,7 @@ const config: Config = {
       logo: {
         alt: 'costrict logo',
         src: 'img/logo.svg',
-        href: '/plugin/guide/installation',
+        href: 'https://costrict.ai/',
       },
       items: [
         {
