@@ -1,0 +1,58 @@
+{
+  "sidebar.cscSidebar.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category Getting Started in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Getting Started.link.generated-index.title": {
+    "message": "Getting Started",
+    "description": "The generated-index page title for category Getting Started in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Getting Started (Detailed)": {
+    "message": "Getting Started (Detailed)",
+    "description": "The label for category Getting Started (Detailed) in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Getting Started (Detailed).link.generated-index.title": {
+    "message": "Getting Started (Detailed)",
+    "description": "The generated-index page title for category Getting Started (Detailed) in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Configuration": {
+    "message": "Configuration",
+    "description": "The label for category Configuration in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Configuration.link.generated-index.title": {
+    "message": "Configuration",
+    "description": "The generated-index page title for category Configuration in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Agent": {
+    "message": "Agent",
+    "description": "The label for category Agent in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Agent.link.generated-index.title": {
+    "message": "Agent",
+    "description": "The generated-index page title for category Agent in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Tools and Plugins": {
+    "message": "Tools and Plugins",
+    "description": "The label for category Tools and Plugins in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Tools and Plugins.link.generated-index.title": {
+    "message": "Tools and Plugins",
+    "description": "The generated-index page title for category Tools and Plugins in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Automation": {
+    "message": "Automation",
+    "description": "The label for category Automation in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Automation.link.generated-index.title": {
+    "message": "Automation",
+    "description": "The generated-index page title for category Automation in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Reference": {
+    "message": "Reference",
+    "description": "The label for category Reference in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Reference.link.generated-index.title": {
+    "message": "Reference",
+    "description": "The generated-index page title for category Reference in sidebar cscSidebar"
+  }
+}

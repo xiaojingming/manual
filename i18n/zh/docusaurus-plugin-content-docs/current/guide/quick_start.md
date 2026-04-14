@@ -8,7 +8,7 @@ sidebar_position: 2
 ### 方式1：CoStrict账号登录
 
 1. 点击侧边栏的CoStrict图标，打开CoStrict窗口
-2. 点击"登录CoStrict"，页面跳转至登录页面，支持手机号和GitHub两种登录方式，鼓励使用Github的方式登录
+2. 点击"登录CoStrict"，页面跳转至登录页面，支持手机号和GitHub两种登录方式
 3. 登录完成后返回IDE插件端即可开始使用
 
 ![img.png](install/login.png)

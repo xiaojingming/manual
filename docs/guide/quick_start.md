@@ -8,7 +8,7 @@ sidebar_position: 2
 ## Method 1: CoStrict Account Login
 
 1. Click the `CoStrict` icon in the sidebar to open the `CoStrict` window.
-2. Click`Login to Costric`. You will be redirected to the login page, which supports logging in via `mobile number` or `GitHub`. Using `GitHub` is recommended.
+2. Click`Login to Costric`. You will be redirected to the login page, which supports logging in via `mobile number` or `GitHub`.
 3. After logging in, return to the IDE to start using the `CoStrict`.
 ![img.png](./login/login.png)
 ![img.png](./login/login2.png)

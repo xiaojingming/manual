@@ -38,6 +38,7 @@ const sidebarsCli: SidebarsConfig = {
         'config/formatters',
         'config/config',
         'config/keybinds',
+        'config/language',
         'config/modes',
         'config/models',
         'config/tools',

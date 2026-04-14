@@ -1,0 +1,58 @@
+{
+  "sidebar.cscSidebar.category.Getting Started": {
+    "message": "快速开始",
+    "description": "The label for category Getting Started in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Getting Started.link.generated-index.title": {
+    "message": "快速开始",
+    "description": "The generated-index page title for category Getting Started in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Getting Started (Detailed)": {
+    "message": "详细入门",
+    "description": "The label for category Getting Started (Detailed) in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Getting Started (Detailed).link.generated-index.title": {
+    "message": "详细入门",
+    "description": "The generated-index page title for category Getting Started (Detailed) in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Configuration": {
+    "message": "配置",
+    "description": "The label for category Configuration in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Configuration.link.generated-index.title": {
+    "message": "配置",
+    "description": "The generated-index page title for category Configuration in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Agent": {
+    "message": "代理",
+    "description": "The label for category Agent in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Agent.link.generated-index.title": {
+    "message": "代理",
+    "description": "The generated-index page title for category Agent in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Tools and Plugins": {
+    "message": "工具和插件",
+    "description": "The label for category Tools and Plugins in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Tools and Plugins.link.generated-index.title": {
+    "message": "工具和插件",
+    "description": "The generated-index page title for category Tools and Plugins in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Automation": {
+    "message": "自动化",
+    "description": "The label for category Automation in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Automation.link.generated-index.title": {
+    "message": "自动化",
+    "description": "The generated-index page title for category Automation in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Reference": {
+    "message": "参考",
+    "description": "The label for category Reference in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Reference.link.generated-index.title": {
+    "message": "参考",
+    "description": "The generated-index page title for category Reference in sidebar cscSidebar"
+  }
+}
