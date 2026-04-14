@@ -4,19 +4,17 @@ sidebar_position: 7
 
 # Customize keyboard shortcuts
 
-> Customize keyboard shortcuts in Claude Code with a keybindings configuration file.
+> Customize keyboard shortcuts in CSC with a keybindings configuration file.
 
-<Note>
-  Customizable keyboard shortcuts require Claude Code v2.1.18 or later. Check your version with `claude --version`.
-</Note>
+> **Note:** Customizable keyboard shortcuts require CSC v2.1.18 or later. Check your version with `csc --version`.
 
-Claude Code supports customizable keyboard shortcuts. Run `/keybindings` to create or open your configuration file at `~/.claude/keybindings.json`.
+CSC supports customizable keyboard shortcuts. Run `/keybindings` to create or open your configuration file at `~/.claude/keybindings.json`.
 
 ## Configuration file
 
 The keybindings configuration file is an object with a `bindings` array. Each block specifies a context and a map of keystrokes to actions.
 
-<Note>Changes to the keybindings file are automatically detected and applied without restarting Claude Code.</Note>
+> **Note:** Changes to the keybindings file are automatically detected and applied without restarting CSC.
 
 | Field      | Description                                        |
 | :--------- | :------------------------------------------------- |
@@ -26,7 +24,7 @@ The keybindings configuration file is an object with a `bindings` array. Each bl
 
 This example binds `Ctrl+E` to open an external editor in the chat context, and unbinds `Ctrl+U`:
 
-```json  theme={null}
+```json
 {
   "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
   "$docs": "https://code.claude.com/docs/en/keybindings",
@@ -79,7 +77,7 @@ Actions available in the `Global` context:
 | Action                 | Default   | Description                 |
 | :--------------------- | :-------- | :-------------------------- |
 | `app:interrupt`        | Ctrl+C    | Cancel current operation    |
-| `app:exit`             | Ctrl+D    | Exit Claude Code            |
+| `app:exit`             | Ctrl+D    | Exit CSC                    |
 | `app:redraw`           | (unbound) | Force terminal redraw       |
 | `app:toggleTodos`      | Ctrl+T    | Toggle task list visibility |
 | `app:toggleTranscript` | Ctrl+O    | Toggle verbose transcript   |
@@ -295,7 +293,7 @@ Actions available in the `Settings` context:
 
 ### Voice actions
 
-Actions available in the `Chat` context when [voice dictation](/en/voice-dictation) is enabled:
+Actions available in the `Chat` context when voice dictation is enabled:
 
 | Action             | Default | Description              |
 | :----------------- | :------ | :----------------------- |
@@ -303,7 +301,7 @@ Actions available in the `Chat` context when [voice dictation](/en/voice-dictati
 
 ### Scroll actions
 
-Actions available in the `Scroll` context when [fullscreen rendering](/en/fullscreen) is enabled:
+Actions available in the `Scroll` context when fullscreen rendering is enabled:
 
 | Action                | Default              | Description                                                                                             |
 | :-------------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
@@ -333,7 +331,7 @@ Use modifier keys with the `+` separator:
 
 For example:
 
-```text  theme={null}
+```text
 ctrl+k          Single key with modifier
 shift+tab       Shift + Tab
 meta+p          Command/Meta + P
@@ -350,7 +348,7 @@ Uppercase letters with modifiers (e.g., `ctrl+K`) are treated as stylistic and d
 
 Chords are sequences of keystrokes separated by spaces:
 
-```text  theme={null}
+```text
 ctrl+k ctrl+s   Press Ctrl+K, release, then Ctrl+S
 ```
 
@@ -367,7 +365,7 @@ ctrl+k ctrl+s   Press Ctrl+K, release, then Ctrl+S
 
 Set an action to `null` to unbind a default shortcut:
 
-```json  theme={null}
+```json
 {
   "bindings": [
     {
@@ -382,7 +380,7 @@ Set an action to `null` to unbind a default shortcut:
 
 This also works for chord bindings. Unbinding every chord that shares a prefix frees that prefix for use as a single-key binding:
 
-```json  theme={null}
+```json
 {
   "bindings": [
     {
@@ -431,7 +429,7 @@ When vim mode is enabled via `/config` → Editor mode, keybindings and vim mode
 
 ## Validation
 
-Claude Code validates your keybindings and shows warnings for:
+CSC validates your keybindings and shows warnings for:
 
 * Parse errors (invalid JSON or structure)
 * Invalid context names

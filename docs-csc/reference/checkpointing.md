@@ -4,17 +4,17 @@ sidebar_position: 6
 
 # Checkpointing
 
-> Track, rewind, and summarize Claude's edits and conversation to manage session state.
+> Track, rewind, and summarize CSC's edits and conversation to manage session state.
 
-Claude Code automatically tracks Claude's file edits as you work, allowing you to quickly undo changes and rewind to previous states if anything gets off track.
+CSC automatically tracks file edits as you work, allowing you to quickly undo changes and rewind to previous states if anything gets off track.
 
 ## How checkpoints work
 
-As you work with Claude, checkpointing automatically captures the state of your code before each edit. This safety net lets you pursue ambitious, wide-scale tasks knowing you can always return to a prior code state.
+As you work with CSC, checkpointing automatically captures the state of your code before each edit. This safety net lets you pursue ambitious, wide-scale tasks knowing you can always return to a prior code state.
 
 ### Automatic tracking
 
-Claude Code tracks all changes made by its file editing tools:
+CSC tracks all changes made by its file editing tools:
 
 * Every user prompt creates a new checkpoint
 * Checkpoints persist across sessions, so you can access them in resumed conversations
@@ -39,13 +39,11 @@ The three restore options revert state: they undo code changes, conversation his
 * Messages before the selected message stay intact
 * The selected message and all subsequent messages get replaced with a compact AI-generated summary
 * No files on disk are changed
-* The original messages are preserved in the session transcript, so Claude can reference the details if needed
+* The original messages are preserved in the session transcript, so CSC can reference the details if needed
 
 This is similar to `/compact`, but targeted: instead of summarizing the entire conversation, you keep early context in full detail and only compress the parts that are using up space. You can type optional instructions to guide what the summary focuses on.
 
-<Note>
-  Summarize keeps you in the same session and compresses context. If you want to branch off and try a different approach while preserving the original session intact, use [fork](/en/how-claude-code-works#resume-or-fork-sessions) instead (`claude --continue --fork-session`).
-</Note>
+> **Note:** Summarize keeps you in the same session and compresses context. If you want to branch off and try a different approach while preserving the original session intact, use fork instead (`csc --continue --fork-session`).
 
 ## Common use cases
 
@@ -60,19 +58,19 @@ Checkpoints are particularly useful when:
 
 ### Bash command changes not tracked
 
-Checkpointing does not track files modified by bash commands. For example, if Claude Code runs:
+Checkpointing does not track files modified by bash commands. For example, if CSC runs:
 
-```bash  theme={null}
+```bash
 rm file.txt
 mv old.txt new.txt
 cp source.txt dest.txt
 ```
 
-These file modifications cannot be undone through rewind. Only direct file edits made through Claude's file editing tools are tracked.
+These file modifications cannot be undone through rewind. Only direct file edits made through CSC's file editing tools are tracked.
 
 ### External changes not tracked
 
-Checkpointing only tracks files that have been edited within the current session. Manual changes you make to files outside of Claude Code and edits from other concurrent sessions are normally not captured, unless they happen to modify the same files as the current session.
+Checkpointing only tracks files that have been edited within the current session. Manual changes you make to files outside of CSC and edits from other concurrent sessions are normally not captured, unless they happen to modify the same files as the current session.
 
 ### Not a replacement for version control
 
@@ -81,9 +79,3 @@ Checkpoints are designed for quick, session-level recovery. For permanent versio
 * Continue using version control (ex. Git) for commits, branches, and long-term history
 * Checkpoints complement but don't replace proper version control
 * Think of checkpoints as "local undo" and Git as "permanent history"
-
-## See also
-
-* [Interactive mode](/en/interactive-mode) - Keyboard shortcuts and session controls
-* [Commands](/en/commands) - Accessing checkpoints using `/rewind`
-* [CLI reference](/en/cli-reference) - Command-line options
