@@ -1,0 +1,163 @@
+---
+sidebar_position: 3
+---
+
+# Environment variables
+
+> Complete reference for environment variables that control CSC behavior.
+
+CSC supports the following environment variables to control its behavior. Set them in your shell before launching `csc`, or configure them in `settings.json` under the `env` key to apply them to every session or roll them out across your team.
+
+| Variable | Purpose |
+| :--- | :--- |
+| `API_TIMEOUT_MS` | Timeout for API requests in milliseconds (default: 600000, or 10 minutes; maximum: 2147483647). Increase this when requests time out on slow networks or when routing through a proxy. Values above the maximum overflow the underlying timer and cause requests to fail immediately |
+| `BASH_DEFAULT_TIMEOUT_MS` | Default timeout for long-running bash commands (default: 120000, or 2 minutes) |
+| `BASH_MAX_OUTPUT_LENGTH` | Maximum number of characters in bash outputs before they are middle-truncated |
+| `BASH_MAX_TIMEOUT_MS` | Maximum timeout the model can set for long-running bash commands (default: 600000, or 10 minutes) |
+| `CCR_FORCE_BUNDLE` | Set to `1` to force `csc --remote` to bundle and upload your local repository even when GitHub access is available |
+| `CLAUDECODE` | Set to `1` in shell environments CSC spawns (Bash tool, tmux sessions). Not set in hooks or status line commands. Use to detect when a script is running inside a shell spawned by CSC |
+| `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS` | Set to `1` to disable all built-in subagent types such as Explore and Plan. Only applies in non-interactive mode (the `-p` flag). Useful for SDK users who want a blank slate |
+| `CLAUDE_AGENT_SDK_MCP_NO_PREFIX` | Set to `1` to skip the `mcp__<server>__` prefix on tool names from SDK-created MCP servers. Tools use their original names. SDK usage only |
+| `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` | Set the percentage of context capacity (1-100) at which auto-compaction triggers. By default, auto-compaction triggers at approximately 95% capacity. Use lower values like `50` to compact earlier. Values above the default threshold have no effect. Applies to both main conversations and subagents. This percentage aligns with the `context_window.used_percentage` field available in the status line |
+| `CLAUDE_AUTO_BACKGROUND_TASKS` | Set to `1` to force-enable automatic backgrounding of long-running agent tasks. When enabled, subagents are moved to the background after running for approximately two minutes |
+| `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | Return to the original working directory after each Bash or PowerShell command in the main session |
+| `CLAUDE_CODE_ACCESSIBILITY` | Set to `1` to keep the native terminal cursor visible and disable the inverted-text cursor indicator. Allows screen magnifiers like macOS Zoom to track cursor position |
+| `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` | Set to `1` to load CLAUDE.md files from directories specified with `--add-dir`. By default, additional directories do not load memory files |
+| `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` | Interval in milliseconds at which credentials should be refreshed (when using `apiKeyHelper`) |
+| `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | Set the context capacity in tokens used for auto-compaction calculations. Defaults to the model's context window: 200K for standard models or 1M for extended context models. Use a lower value like `500000` on a 1M model to treat the window as 500K for compaction purposes. The value is capped at the model's actual context window. `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is applied as a percentage of this value. Setting this variable decouples the compaction threshold from the status line's `used_percentage`, which always uses the model's full context window |
+| `CLAUDE_CODE_AUTO_CONNECT_IDE` | Override automatic IDE connection. By default, CSC connects automatically when launched inside a supported IDE's integrated terminal. Set to `false` to prevent this. Set to `true` to force a connection attempt when auto-detection fails, such as when tmux obscures the parent terminal |
+| `CLAUDE_CODE_CERT_STORE` | Comma-separated list of CA certificate sources for TLS connections. `bundled` is the Mozilla CA set shipped with CSC. `system` is the operating system trust store. Default is `bundled,system`. The native binary distribution is required for system store integration. On the Node.js runtime, only the bundled set is used regardless of this value |
+| `CLAUDE_CODE_CLIENT_CERT` | Path to client certificate file for mTLS authentication |
+| `CLAUDE_CODE_CLIENT_KEY` | Path to client private key file for mTLS authentication |
+| `CLAUDE_CODE_CLIENT_KEY_PASSPHRASE` | Passphrase for encrypted CLAUDE\_CODE\_CLIENT\_KEY (optional) |
+| `CLAUDE_CODE_DEBUG_LOGS_DIR` | Override the debug log file path. Despite the name, this is a file path, not a directory. Requires debug mode to be enabled separately via `--debug` or `/debug`: setting this variable alone does not enable logging. The `--debug-file` flag does both at once. Defaults to `~/.claude/debug/<session-id>.txt` |
+| `CLAUDE_CODE_DEBUG_LOG_LEVEL` | Minimum log level written to the debug log file. Values: `verbose`, `debug` (default), `info`, `warn`, `error`. Set to `verbose` to include high-volume diagnostics like full status line command output, or raise to `error` to reduce noise |
+| `CLAUDE_CODE_DISABLE_1M_CONTEXT` | Set to `1` to disable 1M context window support. When set, 1M model variants are unavailable in the model picker. Useful for enterprise environments with compliance requirements |
+| `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | Set to `1` to disable adaptive reasoning for Opus 4.6 and Sonnet 4.6. When disabled, these models fall back to the fixed thinking budget controlled by `MAX_THINKING_TOKENS` |
+| `CLAUDE_CODE_DISABLE_ATTACHMENTS` | Set to `1` to disable attachment processing. File mentions with `@` syntax are sent as plain text instead of being expanded into file content |
+| `CLAUDE_CODE_DISABLE_AUTO_MEMORY` | Set to `1` to disable auto memory. Set to `0` to force auto memory on during the gradual rollout. When disabled, Claude does not create or load auto memory files |
+| `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | Set to `1` to disable all background task functionality, including the `run_in_background` parameter on Bash and subagent tools, auto-backgrounding, and the Ctrl+B shortcut |
+| `CLAUDE_CODE_DISABLE_CLAUDE_MDS` | Set to `1` to prevent loading any CLAUDE.md memory files into context, including user, project, and auto-memory files |
+| `CLAUDE_CODE_DISABLE_CRON` | Set to `1` to disable scheduled tasks. The `/loop` skill and cron tools become unavailable and any already-scheduled tasks stop firing, including tasks that are already running mid-session |
+| `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` | Set to `1` to strip Anthropic-specific `anthropic-beta` request headers and beta tool-schema fields (such as `defer_loading` and `eager_input_streaming`) from API requests. Use this when a proxy gateway rejects requests with errors like "Unexpected value(s) for the `anthropic-beta` header" or "Extra inputs are not permitted". Standard fields (`name`, `description`, `input_schema`, `cache_control`) are preserved |
+| `CLAUDE_CODE_DISABLE_FAST_MODE` | Set to `1` to disable fast mode |
+| `CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY` | Set to `1` to disable the "How is Claude doing?" session quality surveys. Surveys are also disabled when `DISABLE_TELEMETRY` or `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` is set |
+| `CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING` | Set to `1` to disable file checkpointing. The `/rewind` command will not be able to restore code changes |
+| `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | Set to `1` to remove built-in commit and PR workflow instructions and the git status snapshot from Claude's system prompt. Useful when using your own git workflow skills. Takes precedence over the `includeGitInstructions` setting when set |
+| `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | Set to `1` to prevent automatic remapping of Opus 4.0 and 4.1 to the current Opus version on the Anthropic API. Use when you intentionally want to pin an older model. The remap does not run on Bedrock, Vertex, or Foundry |
+| `CLAUDE_CODE_DISABLE_MOUSE` | Set to `1` to disable mouse tracking in fullscreen rendering. Keyboard scrolling with `PgUp` and `PgDn` still works. Use this to keep your terminal's native copy-on-select behavior |
+| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | Equivalent of setting `DISABLE_AUTOUPDATER`, `DISABLE_FEEDBACK_COMMAND`, `DISABLE_ERROR_REPORTING`, and `DISABLE_TELEMETRY` |
+| `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK` | Set to `1` to disable the non-streaming fallback when a streaming request fails mid-stream. Streaming errors propagate to the retry layer instead. Useful when a proxy or gateway causes the fallback to produce duplicate tool execution |
+| `CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL` | Set to `1` to skip automatic addition of the official plugin marketplace on first run |
+| `CLAUDE_CODE_DISABLE_TERMINAL_TITLE` | Set to `1` to disable automatic terminal title updates based on conversation context |
+| `CLAUDE_CODE_DISABLE_THINKING` | Set to `1` to force-disable extended thinking regardless of model support or other settings. More direct than `MAX_THINKING_TOKENS=0` |
+| `CLAUDE_CODE_EFFORT_LEVEL` | Set the effort level for supported models. Values: `low`, `medium`, `high`, `max` (Opus 4.6 only), or `auto` to use the model default. Takes precedence over `/effort` and the `effortLevel` setting |
+| `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | Set to `1` to force-enable fine-grained tool input streaming. Without this, the API buffers tool input parameters fully before sending delta events, which can delay display on large tool inputs. Anthropic API only: has no effect on Bedrock, Vertex, or Foundry |
+| `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | Set to `false` to disable prompt suggestions (the "Prompt suggestions" toggle in `/config`). These are the grayed-out predictions that appear in your prompt input after Claude responds |
+| `CLAUDE_CODE_ENABLE_TASKS` | Set to `1` to enable the task tracking system in non-interactive mode (the `-p` flag). Tasks are on by default in interactive mode |
+| `CLAUDE_CODE_ENABLE_TELEMETRY` | Set to `1` to enable OpenTelemetry data collection for metrics and logging. Required before configuring OTel exporters |
+| `CLAUDE_CODE_EXIT_AFTER_STOP_DELAY` | Time in milliseconds to wait after the query loop becomes idle before automatically exiting. Useful for automated workflows and scripts using SDK mode |
+| `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | Set to `1` to enable agent teams. Agent teams are experimental and disabled by default |
+| `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS` | Override the default token limit for file reads. Useful when you need to read larger files in full |
+| `CLAUDE_CODE_GIT_BASH_PATH` | Windows only: path to the Git Bash executable (`bash.exe`). Use when Git Bash is installed but not in your PATH |
+| `CLAUDE_CODE_GLOB_HIDDEN` | Set to `false` to exclude dotfiles from results when Claude invokes the Glob tool. Included by default. Does not affect `@` file autocomplete, `ls`, Grep, or Read |
+| `CLAUDE_CODE_GLOB_NO_IGNORE` | Set to `false` to make the Glob tool respect `.gitignore` patterns. By default, Glob returns all matching files including gitignored ones. Does not affect `@` file autocomplete, which has its own `respectGitignore` setting |
+| `CLAUDE_CODE_GLOB_TIMEOUT_SECONDS` | Timeout in seconds for Glob tool file discovery. Defaults to 20 seconds on most platforms and 60 seconds on WSL |
+| `CLAUDE_CODE_IDE_HOST_OVERRIDE` | Override the host address used to connect to the IDE extension. By default CSC auto-detects the correct address, including WSL-to-Windows routing |
+| `CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL` | Skip auto-installation of IDE extensions. Equivalent to setting `autoInstallIdeExtension` to `false` |
+| `CLAUDE_CODE_IDE_SKIP_VALID_CHECK` | Set to `1` to skip validation of IDE lockfile entries during connection. Use when auto-connect fails to find your IDE despite it running |
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | Set the maximum number of output tokens for most requests. Defaults and caps vary by model. Increasing this value reduces the effective context window available before auto-compaction triggers |
+| `CLAUDE_CODE_MAX_RETRIES` | Override the number of times to retry failed API requests (default: 10) |
+| `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` | Maximum number of read-only tools and subagents that can execute in parallel (default: 10). Higher values increase parallelism but consume more resources |
+| `CLAUDE_CODE_NEW_INIT` | Set to `1` to make `/init` run an interactive setup flow. The flow asks which files to generate, including CLAUDE.md, skills, and hooks, before exploring the codebase and writing them. Without this variable, `/init` generates a CLAUDE.md automatically without prompting |
+| `CLAUDE_CODE_NO_FLICKER` | Set to `1` to enable fullscreen rendering, a research preview that reduces flicker and keeps memory flat in long conversations |
+| `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | OAuth refresh token for Claude.ai authentication. When set, `csc auth login` exchanges this token directly instead of opening a browser. Requires `CLAUDE_CODE_OAUTH_SCOPES`. Useful for provisioning authentication in automated environments |
+| `CLAUDE_CODE_OAUTH_SCOPES` | Space-separated OAuth scopes the refresh token was issued with, such as `"user:profile user:inference user:sessions:claude_code"`. Required when `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` is set |
+| `CLAUDE_CODE_OAUTH_TOKEN` | OAuth access token for Claude.ai authentication. Alternative to `/login` for SDK and automated environments. Takes precedence over keychain-stored credentials. Generate one with `csc setup-token` |
+| `CLAUDE_CODE_OTEL_FLUSH_TIMEOUT_MS` | Timeout in milliseconds for flushing pending OpenTelemetry spans (default: 5000) |
+| `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS` | Interval for refreshing dynamic OpenTelemetry headers in milliseconds (default: 1740000 / 29 minutes) |
+| `CLAUDE_CODE_OTEL_SHUTDOWN_TIMEOUT_MS` | Timeout in milliseconds for the OpenTelemetry exporter to finish on shutdown (default: 2000). Increase if metrics are dropped at exit |
+| `CLAUDE_CODE_PERFORCE_MODE` | Set to `1` to enable Perforce-aware write protection. When set, Edit, Write, and NotebookEdit fail with a `p4 edit <file>` hint if the target file lacks the owner-write bit, which Perforce clears on synced files until `p4 edit` opens them. This prevents CSC from bypassing Perforce change tracking |
+| `CLAUDE_CODE_PLUGIN_CACHE_DIR` | Override the plugins root directory. Despite the name, this sets the parent directory, not the cache itself: marketplaces and the plugin cache live in subdirectories under this path. Defaults to `~/.claude/plugins` |
+| `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` | Timeout in milliseconds for git operations when installing or updating plugins (default: 120000). Increase this value for large repositories or slow network connections |
+| `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` | Set to `1` to keep the existing marketplace cache when a `git pull` fails instead of wiping and re-cloning. Useful in offline or airgapped environments where re-cloning would fail the same way |
+| `CLAUDE_CODE_PLUGIN_SEED_DIR` | Path to one or more read-only plugin seed directories, separated by `:` on Unix or `;` on Windows. Use this to bundle a pre-populated plugins directory into a container image. CSC registers marketplaces from these directories at startup and uses pre-cached plugins without re-cloning |
+| `CLAUDE_CODE_PROXY_RESOLVES_HOSTS` | Set to `1` to allow the proxy to perform DNS resolution instead of the caller. Opt-in for environments where the proxy should handle hostname resolution |
+| `CLAUDE_CODE_RESUME_INTERRUPTED_TURN` | Set to `1` to automatically resume if the previous session ended mid-turn. Used in SDK mode so the model continues without requiring the SDK to re-send the prompt |
+| `CLAUDE_CODE_SCRIPT_CAPS` | JSON object limiting how many times specific scripts may be invoked per session when `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` is set. Keys are substrings matched against the command text; values are integer call limits. For example, `{"deploy.sh": 2}` allows `deploy.sh` to be called at most twice. Matching is substring-based so shell-expansion tricks like `./scripts/deploy.sh $(evil)` still count against the cap. Runtime fan-out via `xargs` or `find -exec` is not detected; this is a defense-in-depth control |
+| `CLAUDE_CODE_SCROLL_SPEED` | Set the mouse wheel scroll multiplier in fullscreen rendering. Accepts values from 1 to 20. Set to `3` to match `vim` if your terminal sends one wheel event per notch without amplification |
+| `CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS` | Maximum time in milliseconds for SessionEnd hooks to complete (default: `1500`). Applies to session exit, `/clear`, and switching sessions via interactive `/resume`. Per-hook `timeout` values are also capped by this budget |
+| `CLAUDE_CODE_SHELL` | Override automatic shell detection. Useful when your login shell differs from your preferred working shell (for example, `bash` vs `zsh`) |
+| `CLAUDE_CODE_SHELL_PREFIX` | Command prefix to wrap all bash commands (for example, for logging or auditing). Example: `/path/to/logger.sh` will execute `/path/to/logger.sh <command>` |
+| `CLAUDE_CODE_SIMPLE` | Set to `1` to run with a minimal system prompt and only the Bash, file read, and file edit tools. MCP tools from `--mcp-config` are still available. Disables auto-discovery of hooks, skills, plugins, MCP servers, auto memory, and CLAUDE.md. The `--bare` CLI flag sets this |
+| `CLAUDE_CODE_SKIP_BEDROCK_AUTH` | Skip AWS authentication for Bedrock (for example, when using an LLM gateway) |
+| `CLAUDE_CODE_SKIP_FOUNDRY_AUTH` | Skip Azure authentication for Microsoft Foundry (for example, when using an LLM gateway) |
+| `CLAUDE_CODE_SKIP_MANTLE_AUTH` | Skip AWS authentication for Bedrock Mantle (for example, when using an LLM gateway) |
+| `CLAUDE_CODE_SKIP_VERTEX_AUTH` | Skip Google authentication for Vertex (for example, when using an LLM gateway) |
+| `CLAUDE_CODE_SUBAGENT_MODEL` | See model configuration |
+| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | Set to `1` to strip Anthropic and cloud provider credentials from subprocess environments (Bash tool, hooks, MCP stdio servers). The parent Claude process keeps these credentials for API calls, but child processes cannot read them, reducing exposure to prompt injection attacks that attempt to exfiltrate secrets via shell expansion. On Linux, this also runs Bash subprocesses in an isolated PID namespace so they cannot read host process environments via `/proc`; as a side effect, `ps`, `pgrep`, and `kill` cannot see or signal host processes. `claude-code-action` sets this automatically when `allowed_non_write_users` is configured |
+| `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | Set to `1` in non-interactive mode (the `-p` flag) to wait for plugin installation to complete before the first query. Without this, plugins install in the background and may not be available on the first turn. Combine with `CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS` to bound the wait |
+| `CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS` | Timeout in milliseconds for synchronous plugin installation. When exceeded, CSC proceeds without plugins and logs an error. No default: without this variable, synchronous installation waits until complete |
+| `CLAUDE_CODE_SYNTAX_HIGHLIGHT` | Set to `false` to disable syntax highlighting in diff output. Useful when colors interfere with your terminal setup |
+| `CLAUDE_CODE_TASK_LIST_ID` | Share a task list across sessions. Set the same ID in multiple CSC instances to coordinate on a shared task list |
+| `CLAUDE_CODE_TEAM_NAME` | Name of the agent team this teammate belongs to. Set automatically on agent team members |
+| `CLAUDE_CODE_TMPDIR` | Override the temp directory used for internal temp files. CSC appends `/claude-{uid}/` (Unix) or `/claude/` (Windows) to this path. Default: `/tmp` on macOS, `os.tmpdir()` on Linux/Windows |
+| `CLAUDE_CODE_USE_BEDROCK` | Use Bedrock |
+| `CLAUDE_CODE_USE_FOUNDRY` | Use Microsoft Foundry |
+| `CLAUDE_CODE_USE_MANTLE` | Use the Bedrock Mantle endpoint |
+| `CLAUDE_CODE_USE_POWERSHELL_TOOL` | Set to `1` to enable the PowerShell tool on Windows (opt-in preview). When enabled, Claude can run PowerShell commands natively instead of routing through Git Bash. Only supported on native Windows, not WSL |
+| `CLAUDE_CODE_USE_VERTEX` | Use Vertex |
+| `CLAUDE_CONFIG_DIR` | Override the configuration directory (default: `~/.claude`). All settings, credentials, session history, and plugins are stored under this path. Useful for running multiple accounts side by side: for example, `alias csc-work='CLAUDE_CONFIG_DIR=~/.claude-work csc'` |
+| `CLAUDE_ENABLE_STREAM_WATCHDOG` | Set to `1` to abort API response streams that stall with no data for 90 seconds. Useful in automated environments where a hung session would go unnoticed, or behind proxies that drop connections silently. Without this, a stalled stream can hang the session indefinitely since the request timeout only covers the initial connection. Configure the timeout with `CLAUDE_STREAM_IDLE_TIMEOUT_MS` |
+| `CLAUDE_ENV_FILE` | Path to a shell script that CSC sources before each Bash command. Use to persist virtualenv or conda activation across commands. Also populated dynamically by SessionStart, CwdChanged, and FileChanged hooks |
+| `CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX` | Prefix for auto-generated Remote Control session names when no explicit name is provided. Defaults to your machine's hostname, producing names like `myhost-graceful-unicorn`. The `--remote-control-session-name-prefix` CLI flag sets the same value for a single invocation |
+| `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | Timeout in milliseconds before the streaming idle watchdog closes a stalled connection. Default: `90000` (90 seconds). Requires `CLAUDE_ENABLE_STREAM_WATCHDOG=1`. Increase this value if long-running tools or slow networks cause premature timeout errors |
+| `DISABLE_AUTOUPDATER` | Set to `1` to disable automatic updates |
+| `DISABLE_AUTO_COMPACT` | Set to `1` to disable automatic compaction when approaching the context limit. The manual `/compact` command remains available. Use when you want explicit control over when compaction occurs |
+| `DISABLE_COMPACT` | Set to `1` to disable all compaction: both automatic compaction and the manual `/compact` command |
+| `DISABLE_COST_WARNINGS` | Set to `1` to disable cost warning messages |
+| `DISABLE_DOCTOR_COMMAND` | Set to `1` to hide the `/doctor` command. Useful for managed deployments where users should not run installation diagnostics |
+| `DISABLE_ERROR_REPORTING` | Set to `1` to opt out of Sentry error reporting |
+| `DISABLE_EXTRA_USAGE_COMMAND` | Set to `1` to hide the `/extra-usage` command that lets users purchase additional usage beyond rate limits |
+| `DISABLE_FEEDBACK_COMMAND` | Set to `1` to disable the `/feedback` command. The older name `DISABLE_BUG_COMMAND` is also accepted |
+| `DISABLE_INSTALLATION_CHECKS` | Set to `1` to disable installation warnings. Use only when manually managing the installation location, as this can mask issues with standard installations |
+| `DISABLE_INSTALL_GITHUB_APP_COMMAND` | Set to `1` to hide the `/install-github-app` command. Already hidden when using third-party providers (Bedrock, Vertex, or Foundry) |
+| `DISABLE_INTERLEAVED_THINKING` | Set to `1` to prevent sending the interleaved-thinking beta header. Useful when your LLM gateway or provider does not support interleaved thinking |
+| `DISABLE_LOGIN_COMMAND` | Set to `1` to hide the `/login` command. Useful when authentication is handled externally via API keys or `apiKeyHelper` |
+| `DISABLE_LOGOUT_COMMAND` | Set to `1` to hide the `/logout` command |
+| `DISABLE_PROMPT_CACHING` | Set to `1` to disable prompt caching for all models (takes precedence over per-model settings) |
+| `DISABLE_PROMPT_CACHING_HAIKU` | Set to `1` to disable prompt caching for Haiku models |
+| `DISABLE_PROMPT_CACHING_OPUS` | Set to `1` to disable prompt caching for Opus models |
+| `DISABLE_PROMPT_CACHING_SONNET` | Set to `1` to disable prompt caching for Sonnet models |
+| `DISABLE_TELEMETRY` | Set to `1` to opt out of Statsig telemetry (note that Statsig events do not include user data like code, file paths, or bash commands) |
+| `DISABLE_UPGRADE_COMMAND` | Set to `1` to hide the `/upgrade` command |
+| `ENABLE_CLAUDEAI_MCP_SERVERS` | Set to `false` to disable claude.ai MCP servers in CSC. Enabled by default for logged-in users |
+| `ENABLE_PROMPT_CACHING_1H_BEDROCK` | Set to `1` when using Bedrock to request a 1-hour prompt cache TTL instead of the default 5 minutes. Bedrock only |
+| `ENABLE_TOOL_SEARCH` | Controls MCP tool search. Unset: all MCP tools deferred by default, but loaded upfront when `ANTHROPIC_BASE_URL` points to a non-first-party host. Values: `true` (always defer including proxies), `auto` (threshold mode: load upfront if tools fit within 10% of context), `auto:N` (custom threshold, e.g., `auto:5` for 5%), `false` (load all upfront) |
+| `FALLBACK_FOR_ALL_PRIMARY_MODELS` | Set to any non-empty value to trigger fallback to `--fallback-model` after repeated overload errors on any primary model. By default, only Opus models trigger the fallback |
+| `FORCE_AUTOUPDATE_PLUGINS` | Set to `1` to force plugin auto-updates even when the main auto-updater is disabled via `DISABLE_AUTOUPDATER` |
+| `HTTP_PROXY` | Specify HTTP proxy server for network connections |
+| `HTTPS_PROXY` | Specify HTTPS proxy server for network connections |
+| `IS_DEMO` | Set to `1` to enable demo mode: hides your email and organization name from the header and `/status` output, and skips onboarding. Useful when streaming or recording a session |
+| `MAX_MCP_OUTPUT_TOKENS` | Maximum number of tokens allowed in MCP tool responses. CSC displays a warning when output exceeds 10,000 tokens. Tools that declare `anthropic/maxResultSizeChars` use that character limit for text content instead, but image content from those tools is still subject to this variable (default: 25000) |
+| `MAX_STRUCTURED_OUTPUT_RETRIES` | Number of times to retry when the model's response fails validation against `--json-schema` in non-interactive mode (the `-p` flag). Defaults to 5 |
+| `MAX_THINKING_TOKENS` | Override the extended thinking token budget. The ceiling is the model's max output tokens minus one. Set to `0` to disable thinking entirely. On models with adaptive reasoning (Opus 4.6, Sonnet 4.6), the budget is ignored unless adaptive reasoning is disabled via `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` |
+| `MCP_CLIENT_SECRET` | OAuth client secret for MCP servers that require pre-configured credentials. Avoids the interactive prompt when adding a server with `--client-secret` |
+| `MCP_CONNECTION_NONBLOCKING` | Set to `true` in non-interactive mode (`-p`) to skip the MCP connection wait entirely. Useful for scripted pipelines where MCP tools are not needed. Without this variable, the first query waits up to 5 seconds for `--mcp-config` server connections |
+| `MCP_OAUTH_CALLBACK_PORT` | Fixed port for the OAuth redirect callback, as an alternative to `--callback-port` when adding an MCP server with pre-configured credentials |
+| `MCP_REMOTE_SERVER_CONNECTION_BATCH_SIZE` | Maximum number of remote MCP servers (HTTP/SSE) to connect in parallel during startup (default: 20) |
+| `MCP_SERVER_CONNECTION_BATCH_SIZE` | Maximum number of local MCP servers (stdio) to connect in parallel during startup (default: 3) |
+| `MCP_TIMEOUT` | Timeout in milliseconds for MCP server startup (default: 30000, or 30 seconds) |
+| `MCP_TOOL_TIMEOUT` | Timeout in milliseconds for MCP tool execution (default: 100000000, about 28 hours) |
+| `NO_PROXY` | List of domains and IPs to which requests will be directly issued, bypassing proxy |
+| `OTEL_LOG_TOOL_CONTENT` | Set to `1` to include tool input and output content in OpenTelemetry span events. Disabled by default to protect sensitive data |
+| `OTEL_LOG_TOOL_DETAILS` | Set to `1` to include MCP server names and tool details in telemetry. Disabled by default to protect PII |
+| `OTEL_LOG_USER_PROMPTS` | Set to `1` to include user prompt text in OpenTelemetry traces and logs. Disabled by default (prompts are redacted) |
+| `OTEL_METRICS_INCLUDE_ACCOUNT_UUID` | Set to `false` to exclude account UUID from metrics attributes (default: included) |
+| `OTEL_METRICS_INCLUDE_SESSION_ID` | Set to `false` to exclude session ID from metrics attributes (default: included) |
+| `OTEL_METRICS_INCLUDE_VERSION` | Set to `true` to include CSC version in metrics attributes (default: excluded) |
+| `SLASH_COMMAND_TOOL_CHAR_BUDGET` | Override the character budget for skill metadata shown to the Skill tool. The budget scales dynamically at 1% of the context window, with a fallback of 8,000 characters. Legacy name kept for backwards compatibility |
+| `TASK_MAX_OUTPUT_LENGTH` | Maximum number of characters in subagent output before truncation (default: 32000, maximum: 160000). When truncated, the full output is saved to disk and the path is included in the truncated response |
+| `USE_BUILTIN_RIPGREP` | Set to `0` to use system-installed `rg` instead of `rg` included with CSC |
+
+Standard OpenTelemetry exporter variables (`OTEL_METRICS_EXPORTER`, `OTEL_LOGS_EXPORTER`, `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_PROTOCOL`, `OTEL_EXPORTER_OTLP_HEADERS`, `OTEL_METRIC_EXPORT_INTERVAL`, `OTEL_RESOURCE_ATTRIBUTES`, and signal-specific variants) are also supported. See monitoring for configuration details.
