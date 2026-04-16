@@ -78,6 +78,7 @@ const sidebarsCli: SidebarsConfig = {
         //   ],
         // },
         'product-characteristics/strict-spec',
+        'product-characteristics/cloud',
       ],
     },
     'best-practices',

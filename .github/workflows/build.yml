@@ -67,4 +67,8 @@ jobs:
             cd /home/zhuge/docs
             sudo docker compose pull
             sudo docker compose up -d --force-recreate
+            # 删除当前项目不再使用的旧镜像
+            sudo docker images --filter "reference=*/costrict-manual" -q | sort -u | while read img; do
+              sudo docker rmi "$img" 2>/dev/null || true
+            done
             echo "Deployment finished successfully!"
