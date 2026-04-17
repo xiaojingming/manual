@@ -3,7 +3,7 @@ sidebar_position: 6
 ---
 # CoStrict Cloud
 
-CoStrict Cloud is an AI-powered cloud workspace that lets you remotely connect to your personal devices from any browser for conversational coding and project management.
+[CoStrict Cloud](https://zgsm.sangfor.com/cloud/workspace) is an AI-powered cloud workspace that lets you remotely connect to your personal devices from any browser for conversational coding and project management.
 
 ## Getting Started
 
@@ -39,5 +39,6 @@ When a workspace is idle, click the **connect icon** on the right side of the wo
 
 ## Learn More
 
-- Visit the **Store** to discover skills, subagents, and MCP servers that extend your coding capabilities.
+- Visit the [CoStrict Cloud](https://zgsm.sangfor.com/cloud/workspace) experience Now
+- Visit the [Store](https://zgsm.sangfor.com/cloud/store) to discover skills, subagents, and MCP servers that extend your coding capabilities.
 - Go to [costrict.ai](https://costrict.ai) for full documentation and updates.

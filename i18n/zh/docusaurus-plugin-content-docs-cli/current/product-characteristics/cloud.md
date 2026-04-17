@@ -3,7 +3,7 @@ sidebar_position: 6
 ---
 # CoStrict Cloud
 
-CoStrict Cloud 是一个 AI 驱动的云端编程工作空间，让你随时随地通过浏览器远程连接个人设备，进行对话式编程与项目管理。
+[CoStrict Cloud](https://zgsm.sangfor.com/cloud/workspace) 是一个 AI 驱动的云端编程工作空间，让你随时随地通过浏览器远程连接个人设备，进行对话式编程与项目管理。
 
 ## 快速开始
 
@@ -39,5 +39,6 @@ cs cloud start
 
 ## 了解更多
 
-- 前往 **商店** 发现技能、子代理和 MCP 服务器，扩展你的编程能力。
+- 访问 [CoStrict Cloud](https://zgsm.sangfor.com/cloud/workspace) 立即体验
+- 前往 [商店](https://zgsm.sangfor.com/cloud/store) 发现技能、子代理和 MCP 服务器，扩展你的编程能力。
 - 访问 [costrict.ai](https://costrict.ai) 获取完整文档与最新动态。
