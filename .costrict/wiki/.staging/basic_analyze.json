@@ -1,0 +1,79 @@
+{
+  "classifyName": "Documentation",
+  "confidence": "高",
+  "techStack": [
+    "React 19.0.0",
+    "Docusaurus 3.8.1",
+    "TypeScript 5.6.2",
+    "@easyops-cn/docusaurus-search-local 0.51.1",
+    "prism-react-renderer 2.3.0",
+    "Node.js >=18.0",
+    "Docker",
+    "Nginx"
+  ],
+  "projectScale": "小型",
+  "entrypoints": [
+    "docusaurus.config.ts",
+    "src/components/DownloadButton/index.tsx"
+  ],
+  "modules": [
+    {
+      "name": "Plugin 文档",
+      "relatedSources": [
+        "docs/",
+        "i18n/zh/docusaurus-plugin-content-docs/current/"
+      ]
+    },
+    {
+      "name": "CLI 文档",
+      "relatedSources": [
+        "docs-cli/",
+        "i18n/zh/docusaurus-plugin-content-docs-cli/current/"
+      ]
+    },
+    {
+      "name": "国际化模块",
+      "relatedSources": [
+        "i18n/zh/code.json",
+        "i18n/zh/docusaurus-theme-classic/"
+      ]
+    },
+    {
+      "name": "配置管理",
+      "relatedSources": [
+        "docusaurus.config.ts",
+        "sidebars.ts",
+        "sidebars-cli.ts"
+      ]
+    },
+    {
+      "name": "自定义组件",
+      "relatedSources": [
+        "src/components/DownloadButton/",
+        "src/css/custom.css"
+      ]
+    },
+    {
+      "name": "部署配置",
+      "relatedSources": [
+        "Dockerfile",
+        "nginx.conf"
+      ]
+    }
+  ],
+  "complexityLevel": "低",
+  "recommendedStrategy": "快速",
+  "evidence": [
+    "基于 Docusaurus 3.8.1 构建的静态文档网站，配置集中在 docusaurus.config.ts",
+    "主要内容为 Markdown 文档（139 个 .md 文件），分布在 docs/ 和 docs-cli/ 目录",
+    "支持中英文双语国际化（i18n/zh/ 目录），默认语言为中文",
+    "包含两个独立文档集：Plugin 文档和 CLI 文档，分别配置独立侧边栏（sidebars.ts 和 sidebars-cli.ts）",
+    "仅有 1 个自定义 React 组件（src/components/DownloadButton），用于文件下载功能",
+    "使用 Docker 多阶段构建和 Nginx 部署，配置简单明了（Dockerfile 仅 18 行）",
+    "集成 @easyops-cn/docusaurus-search-local 搜索插件，支持中英文搜索",
+    "项目结构清晰，遵循 Docusaurus 标准目录结构：docs/、src/、static/、i18n/",
+    "通过 GitHub Actions 自动化部署，使用标签触发构建",
+    "包含完整的部署、计费、最佳实践等文档分类"
+  ],
+  "summary": "CoStrict 官方文档网站，基于 Docusaurus 3.8.1 构建的静态文档站点，提供 Plugin（VS Code 扩展）和 CLI（命令行工具）两部分产品文档，支持中英文双语。项目结构清晰，以 Markdown 文档为主（139 个文档文件），仅包含 1 个自定义 React 组件。技术栈简单（React 19 + TypeScript + Docusaurus），部署方案采用 Docker + Nginx，配置集中在少数几个配置文件中。整体复杂度低，易于维护和扩展。"
+}

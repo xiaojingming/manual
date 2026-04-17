@@ -8,7 +8,7 @@ sidebar_position: 1
 
 :::tip[安装要求]
 
-`CoStrict` 支持的 `VS Code` 最低版本是 `1.86.3`，建议升级到最新的 `VS Code` 版本以获得最佳的使用体验
+`CoStrict` 支持的 `VS Code` 最低版本是 `1.93.0`，建议升级到最新的 `VS Code` 版本以获得最佳的使用体验
 
 <details>
   <summary> 您可以通过快捷键 'Crtl + Shift + p', 输入 'about', 即可查看当前版本 </summary>
