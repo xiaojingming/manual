@@ -8,7 +8,7 @@ sidebar_position: 1
 
 :::tip[Installation Requirements]
 
-`CoStrict` supports the minimum VS Code version is `1.86.3`, and it is recommended to upgrade to the latest VS Code version for the best user experience.
+`CoStrict` supports the minimum VS Code version is `1.93.0`, and it is recommended to upgrade to the latest VS Code version for the best user experience.
 
 
 <details>
