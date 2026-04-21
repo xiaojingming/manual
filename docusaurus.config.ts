@@ -25,6 +25,15 @@ const config: Config = {
       },
     ],
     [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'deployment',
+        path: 'docs-deployment',
+        routeBasePath: 'plugin/deployment',
+        sidebarPath: './sidebars-deployment.ts',
+      },
+    ],
+    [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
@@ -109,6 +118,13 @@ const config: Config = {
           docsPluginId: 'cli',
           position: 'left',
           label: 'CLI',
+        },
+        {
+          type: 'doc',
+          docId: 'foreword',
+          docsPluginId: 'deployment',
+          position: 'left',
+          label: 'Private Deployment',
         },
 
         {
