@@ -69,23 +69,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Local deployment',
-      collapsible: true,
-      collapsed: true,
-      items: [
-        'deployment/foreword',
-        'deployment/introduction',
-        'deployment/higress',
-        'deployment/casdoor',
-        'deployment/auto-model-config',
-        'deployment/docker-offline-install',
-        'deployment/deploy-faq',
-        'deployment/release-notes',
-        'deployment/others',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Best Practices',
       collapsible: true,
       collapsed: true,

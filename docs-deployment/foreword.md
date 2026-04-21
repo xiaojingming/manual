@@ -45,7 +45,9 @@ All core features of CoStrict rely on large language models. You need to **prepa
 
 **Recommended Models** and **Download Links**:
 
-- **Chat model**: `GLM-4.6-FP8` or above, e.g. `GLM-4.7`, `GLM-5`
+- **Chat model**: `GLM-5.1` `GLM-5` `MiniMax-M2.7` `GLM-4.7` (Currently, GLM-5.1 is most recommended)
+
+- **Completion model**: `Qwen/Qwen3-4B`
 
 - **Embedding model**: `gte-modernbert-baseRAG/Embedding`
 
@@ -54,14 +56,18 @@ All core features of CoStrict rely on large language models. You need to **prepa
 - **Download links**:
 
 ```
+https://modelscope.cn/models/ZhipuAI/GLM-5.1-FP8
+https://modelscope.cn/models/ZhipuAI/GLM-5-FP8
+https://modelscope.cn/models/MiniMax/MiniMax-M2.7
 https://modelscope.cn/models/ZhipuAI/GLM-4.7-FP8
-https://modelscope.cn/models/iic/gte-modernbert-base
-https://modelscope.cn/models/iic/gte-reranker-modernbert-base
+https://modelscope.cn/models/Qwen/Qwen3-4B
 ```
 
 **Recommended Model Deployment Resources**:
 
-- **Chat model**: `4 * H20` (recommended for GLM-4.7-FP8; double for GLM-4.5-FP8)
+- **Chat model**: `4 * H20` (recommended for GLM-4.7-FP8; double for GLM-5)
+
+- **Completion model**: `1 * 4090` (recommended for Qwen3-4B)
 
 - **Embedding model**: `0.5 * H20` or `0.5 * RTX4090`
 

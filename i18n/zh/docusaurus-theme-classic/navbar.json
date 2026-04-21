@@ -18,5 +18,9 @@
   "item.label.CLI": {
     "message": "CLI",
     "description": "Navbar item with label CLI"
+  },
+  "item.label.Private Deployment": {
+    "message": "私有化部署",
+    "description": "Navbar item with label Private Deployment"
   }
 }
