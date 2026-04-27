@@ -5,6 +5,7 @@ const sidebarsDeployment: SidebarsConfig = {
     'foreword',
     'introduction',
     'higress',
+    'code-review',
     'casdoor',
     'auto-model-config',
     'docker-offline-install',
