@@ -4,14 +4,20 @@ const sidebarsDeployment: SidebarsConfig = {
   deploymentSidebar: [
     'foreword',
     'introduction',
-    'higress',
     'code-review',
     'casdoor',
-    'auto-model-config',
     'docker-offline-install',
     'deploy-faq',
     'release-notes',
     'others',
+    {
+      type: 'category',
+      label: 'Legacy Configuration',
+      items: [
+        'old-version-config/higress',
+        'old-version-config/auto-model-config',
+      ],
+    },
   ],
 };
 

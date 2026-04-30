@@ -168,7 +168,7 @@ review-checker calls the LLM through the Higress AI Gateway. The three key field
 
 `REVIEW_MODEL_NAME` is not a free-form display name. It must match the Higress AI Route match condition and the model `name` in the Higress model list / AI quota management *exactly*. When introducing a new model, configure the provider, route, and model list / quota on the Higress side first, then update `configure.sh`.
 
-If Higress and review-deploy live on different Docker networks, replace the `higress` host with a reachable address. See [How to Configure Higress](./higress.md) for the gateway-side configuration.
+If Higress and review-deploy live on different Docker networks, replace the `higress` host with a reachable address. See [How to Configure Higress](./old-version-config/higress.md) for the gateway-side configuration.
 
 ### GitLab Integration
 
@@ -484,5 +484,5 @@ Missing Nacos configuration can cause chat-rag to fail at startup. Such issues b
 ## See Also
 
 - [Backend Deployment](./introduction.md)
-- [How to Configure Higress](./higress.md)
+- [How to Configure Higress](./old-version-config/higress.md)
 - [review-deploy repository](https://github.com/zgsm-sangfor/review-deploy)

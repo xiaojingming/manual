@@ -1,0 +1,6 @@
+{
+  "sidebar.deploymentSidebar.category.Legacy Configuration": {
+    "message": "旧版本配置",
+    "description": "The label for Legacy Configuration in sidebar deploymentSidebar"
+  }
+}
