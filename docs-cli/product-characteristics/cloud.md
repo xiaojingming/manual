@@ -58,6 +58,66 @@ Once connected, you can use the following core capabilities:
 
 ---
 
+## Skill Store
+
+🧩 Skill Store (Knowledge Hub)
+
+URL: [https://zgsm.sangfor.com/cloud/store](https://zgsm.sangfor.com/cloud/store) — a one-stop platform for extending AI programming capabilities, offering four core types of extensions:
+
+### 1. Four Modules
+
+| Module | Purpose | Typical Scenarios |
+|---|---|---|
+| Skill | A capability package that encapsulates instructions, templates, and workflows for specific tasks, which the AI automatically matches and executes | Standardized processes such as requirements analysis, backend development, frontend design, and deployment operations |
+| Sub-agent | An "expert role" focused on a single responsibility, callable by the main AI to collaborate on complex tasks | Role-based agents such as senior Java backend engineer, code audit expert, and test engineer |
+| Command | Shortcut commands executable directly in the CLI / conversation, encapsulating scripts / command templates for common operations | One-click deployment, environment initialization, log troubleshooting, and other repetitive operations |
+| MCP Server | A standardized tool connector based on the Model Context Protocol, allowing the AI to securely call external services / data | Connecting to external resources such as databases, third-party APIs, and cloud services |
+
+### 2. Key Information on Skill Cards
+
+- **Title / Description**: Explains the skill's purpose and scenario (e.g., azure-servicebus-py is a Python message queue development tool package).
+- **Category**: Quickly filter by scenario (requirements analysis, backend development, frontend development, deployment operations, etc.).
+- **Risk Level**: Marked as "No Risk / Low Risk / Medium Risk" to help judge suitability for production.
+- **Tags**: Such as development design, for keyword-based filtering.
+- **Source Platform / Score**: Indicates community source and popularity to identify high-quality resources.
+- **Favorites / Update Time**: Reflects community recognition and maintenance status; prioritize recently updated, highly favorited skills.
+
+### 3. Value
+
+- **Out-of-the-box professional capabilities**: No need to write complex prompts; load with one click to give the AI professional capabilities in specific domains.
+- **Reduce reinvention costs**: Reuse community-curated best practices to improve development efficiency.
+- **Flexible workflow extension**: Through sub-agents and MCP servers, adapt the AI to complex business scenarios.
+
+---
+
+## Metrics Dashboard
+
+![Metrics Dashboard](../guide/img/kanban/kanban-index.png)
+
+### Core Value Proposition
+
+Use real data to quantify the productivity gains from AI-assisted development, transforming "AI efficiency" from a subjective impression into a measurable, trackable, and optimizable productivity metric.
+
+### Key Capabilities
+
+1. **Automatic Collection, Zero Distraction**
+   - The client automatically collects AI conversation data from the IDE and Git commit data; developers do not need to take any extra action.
+2. **Intelligent Estimation, Dual-Track Comparison**
+   - AI analyzes code complexity to estimate "time required for traditional development"
+   - Combines time-series algorithms to calculate "actual time spent with AI assistance"
+   - Automatically generates an efficiency ratio (traditional time / actual time)
+3. **Multi-Dimensional Drill-Down**
+   - Aggregate layer by layer: Task → Commit → Repository → Project → User → Organization
+4. **Manual Calibration for Trustworthiness**
+   - Supports manual correction of AI-estimated and actual time spent, with reasons recorded to ensure data reliability
+5. **Virtual Groups and Multi-Level Organizations**
+   - Supports custom virtual groups (e.g., cross-project teams)
+   - Adapts to multi-level organizational structures (org1~org9) to meet the needs of large enterprises
+
+> **Note:** The metrics dashboard involves organizational performance data. Contact your administrator to request access permissions.
+
+---
+
 ## Common Operations
 
 ### Start the Cloud Service
@@ -79,7 +139,7 @@ cs cloud restart
 ### Normal Startup Log Example
 
 ```
-➜  share cs cloud start
+➜  cs cloud start
   ✓ Device registered
   device_id: 21484ad96b82e1468cba65be0e55a666df1aba78834ffdeee19404a5e72b0ce9
   ✓ Device token validated
