@@ -118,6 +118,14 @@ const config: Config = {
           docsPluginId: 'cli',
           position: 'left',
           label: 'CLI',
+          activeBaseRegex: '/cli/(?!product-characteristics/cloud)',
+        },
+        {
+          to: '/cli/product-characteristics/cloud',
+          position: 'left',
+          label: 'Cloud',
+          activeBaseRegex: '/cli/product-characteristics/cloud',
+          className: 'navbar-cloud-new-badge',
         },
         {
           type: 'doc',
