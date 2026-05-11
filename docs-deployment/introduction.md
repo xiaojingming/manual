@@ -177,9 +177,17 @@ models:
 
 ### Optional: Identity Authentication System Configuration (Casdoor)
 
-If there are no special requirements (e.g., integrating with third-party authentication systems), please skip this step, skip this step, skip this step.
+<span style={{color: 'red', fontWeight: 'bold'}}> If there are no special requirements (e.g., integrating with third-party authentication systems), please skip this step, skip this step, skip this step.</span>
 
-For the first testing trial, also skip this step, skip this step, skip this step.
+<br></br>
+
+<span style={{color: 'red', fontWeight: 'bold'}}>For the first testing trial, also skip this step, skip this step, skip this step.</span>
+
+<br></br>
+
+<span style={{color: 'red', fontWeight: 'bold'}}>If you are unsure whether you should skip this step, please just skip it.</span>
+
+<br></br>
 
 Access the Casdoor management interface at the following address:
 
@@ -196,10 +204,10 @@ Basic user setup reference: [Casdoor Basic Settings](./casdoor.md)
 
 1. Install the CoStrict VSCode extension
 2. Open the "Provider" page in the extension settings
-3. Select the API provider as "CoStrict"
-4. Configure the backend service address:
+3. Select the API provider as "CoStrict"(The first login may have already selected the default option.)
+4. Configure the backend service address(That is, the third URL output by the installation script.):
    ```
-   CoStrict Base URL: {COSTRICT_BACKEND_BASEURL}
+   CoStrict Base URL: http://****:****
    ```
 5. Click "Login CoStrict" to complete authentication
 
