@@ -77,6 +77,7 @@ const sidebars: SidebarsConfig = {
         'best-practices/best-practices2',
         'best-practices/best-practices3',
         'best-practices/user-manual',
+        'best-practices/best-practices5',
       ],
     },
     'FAQ',
