@@ -10,6 +10,7 @@ const sidebarsDeployment: SidebarsConfig = {
     'deploy-faq',
     'release-notes',
     'others',
+    'how-to-test-model',
     {
       type: 'category',
       label: 'Legacy Configuration',

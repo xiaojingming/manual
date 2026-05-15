@@ -138,6 +138,7 @@ models:
       # 最大输出, 比contextWindow小 (一般32K够用了),请用阿拉伯数字.
       maxTokens: 32000
       # 上下文窗口,找模型提供者给,如果模型提供者给你的值小于16000,请换更大的模型，请用阿拉伯数字.
+      # 警告,这个数字不是想调大就调大的，请必须填写模型真实支持的上下文长度.
       contextWindow: 200000
     # 模型的key相关
     privateConfig:
@@ -147,7 +148,7 @@ models:
       addr: http://127.0.0.1:6666/v1/chat/completions
       # 自定义头,可以添加任意多个
       extraHeaders:
-        # 认证头一般放这里,请询问模型提供者值是多少
+        # 认证头一般放这里,请询问模型提供者值是多少，请注意，请填写请求模型的实际认证头，不要简写，略写。
         Authorization: "sk-xxxxxxxx"
       # 是否跳过ssl校验,一般只有服务是https且采用自签名的ssl证书才需要设置，请询问模型提供者。
       skipSSLVerify: false
@@ -177,6 +178,11 @@ models:
         Authorization: sk-***
       skipSSLVerify: false
 ```
+
+如何测试是否配置成功
+
+1. 根据当前文档，继续完成后续步骤，安装CoStrict插件后，尝试和模型对话。
+2. 参考文档：[如何测试模型](./how-to-test-model.md)
 
 ### 可选：身份认证系统配置 (Casdoor)
 
