@@ -71,7 +71,6 @@
 .navbar__logo {
   height: 28px;
   width: auto;
-  display: block;
   contain: layout;
 }
 
