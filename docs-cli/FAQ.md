@@ -22,7 +22,7 @@ Depends on the terminal used. Usually, press Shift + right-click to bring up a m
 
 Use the left and right arrow keys to switch.
 
-<!-- ![img](img/FAQ/png-17700999595561.png) -->
+{/* ![img](img/FAQ/png-17700999595561.png) */}
 
 ## 3. Linux GLIB Version Issue Causing Execution Failure
 

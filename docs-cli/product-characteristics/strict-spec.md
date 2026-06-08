@@ -79,17 +79,17 @@ Complete file structure of StrictSpec mode:
 
 In the TUI interface, switch to StrictSpec mode using Tab, and use /new to start a new session to avoid historical context interference for better results
 
-<!-- ![img](img/strict-spec/select-mode.png) -->
+{/* ![img](img/strict-spec/select-mode.png) */}
 
 ## Input Requirement
 
 You can directly input your requirements
 
-<!-- ![img](img/strict-spec/input-requirement.png) -->
+{/* ![img](img/strict-spec/input-requirement.png) */}
 
 ## Start Process
 
-<!-- ![img](img/strict-spec/strict-spec.png) -->
+{/* ![img](img/strict-spec/strict-spec.png) */}
 
 
 ## User Input Recording Phase
@@ -99,7 +99,7 @@ AI will record the user's original requirements in full to the user.md file
 Output path: `.cospec/spec/{feature-name}/user.md`
 
 
-<!-- ![img](img/strict-spec/user-input-record.png) -->
+{/* ![img](img/strict-spec/user-input-record.png) */}
 
 ## Requirement Clarification Phase
 
@@ -109,11 +109,11 @@ AI will start the Requirement agent for requirement design, transforming vague i
 
 The Requirement agent will ask questions to clarify requirements as needed:
 
-<!-- ![img](img/strict-spec/requirement-clarification.png) -->
+{/* ![img](img/strict-spec/requirement-clarification.png) */}
 
 It is recommended to use left/right arrow keys `←` `→` or mouse click to switch questions to avoid accidentally switching modes with Tab. After selecting each question, switch to Confirm and press Enter to submit
 
-<!-- ![img](img/strict-spec/submit-answer.png) -->
+{/* ![img](img/strict-spec/submit-answer.png) */}
 
 ### Output Document
 
@@ -121,7 +121,7 @@ Output path: `.cospec/spec/{feature-name}/spec.md`
 
 ### Output Requirement Document
 
-<!-- ![img](img/strict-spec/spec.png) -->
+{/* ![img](img/strict-spec/spec.png) */}
 
 ## Architecture Design Phase
 
@@ -141,7 +141,7 @@ DesignAgent performs architecture design based on the C4 Model methodology:
 
 DesignAgent will display the architecture design diagram to the user and request confirmation:
 
-<!-- ![img](img/strict-spec/design-confirmation.png) -->
+{/* ![img](img/strict-spec/design-confirmation.png) */}
 
 ### Output Document
 
@@ -154,7 +154,7 @@ The document includes:
 - Component Diagram (C4 Component)
 - Architecture Decision Records (ADR)
 
-<!-- ![img](img/strict-spec/design.png) -->
+{/* ![img](img/strict-spec/design.png) */}
 
 ## Development Task Planning Phase
 
@@ -172,7 +172,7 @@ TaskPlan is responsible for transforming requirement documents and design docume
 
 Output path: `.cospec/spec/{feature-name}/plan.md`
 
-<!-- ![img](img/strict-spec/task-planning.png) -->
+{/* ![img](img/strict-spec/task-planning.png) */}
 
 ## Task Planning Dispatch Phase - SpecPlan Mode
 
@@ -192,13 +192,13 @@ PlanManager will determine dispatch strategy based on task correlation and depen
 - **Low correlation** tasks are dispatched separately
 - **High correlation** multiple tasks can be dispatched together (such as creating different parts of the same page)
 
-<!-- ![img](img/strict-spec/task-distribution.png) -->
+{/* ![img](img/strict-spec/task-distribution.png) */}
 
 ### Progress Update
 
 After each task is completed, PlanManager will immediately update the plan.md file, marking the task as completed (`- [x]`)
 
-<!-- ![img](img/strict-spec/task-complete.png) -->
+{/* ![img](img/strict-spec/task-complete.png) */}
 
 ## Implement Tasks
 
@@ -214,18 +214,18 @@ After PlanManager starts SpecPlan, SpecPlan will refine tasks into specific codi
 6. **Check Coding** - Check completion of development tasks in `task.md` and add completion tags
 7. **Sub-feature Document Archiving** - If all completed, archive to `.cospec/plan/archive/{sub-feature-name}`
 
-<!-- ![img](img/strict-spec/specplan-detail.png) -->
+{/* ![img](img/strict-spec/specplan-detail.png) */}
 
 ### Generate Proposal
 
-<!-- ![img](img/strict-spec/proposal.png) -->
+{/* ![img](img/strict-spec/proposal.png) */}
 
 ### Generate Coding Task
 
-<!-- ![img](img/strict-spec/spec-plan-task.png) -->
+{/* ![img](img/strict-spec/spec-plan-task.png) */}
 
 ## Coding Complete
 
 All tasks in plan.md are marked as complete
 
-<!-- ![img](img/strict-spec/all-complete.png) -->
+{/* ![img](img/strict-spec/all-complete.png) */}

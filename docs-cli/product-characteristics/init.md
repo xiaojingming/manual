@@ -9,12 +9,12 @@ This will generate an [AGENTS.md](https://AGENTS.md) file containing information
 
 Generate once, reuse multiple times. You can manually edit and modify this file to add your own rules.
 
-<!-- ![img](img/init/png.png) -->
+{/* ![img](img/init/png.png) */}
 
 ![img](img/init/png-17700918603891.png)
 
 
 
-<!-- ![img](img/init/png-17700918603902.png) -->
+{/* ![img](img/init/png-17700918603902.png) */}
 
 

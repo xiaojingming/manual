@@ -138,7 +138,7 @@ CSC also discovers `CLAUDE.md` and `CLAUDE.local.md` files in subdirectories und
 
 If you work in a large monorepo where other teams' CLAUDE.md files get picked up, use `claudeMdExcludes` to skip them.
 
-Block-level HTML comments (`<!-- maintainer notes -->`) in CLAUDE.md files are stripped before the content is injected into CSC's context. Use them to leave notes for human maintainers without spending context tokens on them. Comments inside code blocks are preserved. When you open a CLAUDE.md file directly with the Read tool, comments remain visible.
+Block-level HTML comments (`{/* maintainer notes */}`) in CLAUDE.md files are stripped before the content is injected into CSC's context. Use them to leave notes for human maintainers without spending context tokens on them. Comments inside code blocks are preserved. When you open a CLAUDE.md file directly with the Read tool, comments remain visible.
 
 #### Load from additional directories
 

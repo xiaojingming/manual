@@ -12,7 +12,7 @@ In **build** mode, enter `/project-wiki`, press Enter to execute, and wait for c
 
 ![image-20260307115432486](img/project-wiki/image-20260307115432486.png)
 
-<!-- ![image-20260307115452974](img/project-wiki/image-20260307115452974.png) -->
+{/* ![image-20260307115452974](img/project-wiki/image-20260307115452974.png) */}
 
 Final output example:
 

@@ -26,7 +26,7 @@ npm install -g @costrict/csc --registry=https://registry.npmjs.org/
 
 After installation, you can use the csc command.
 
-![csc](.\assets\csc.png)
+![csc](./assets/csc.png)
 
 ## What you can do
 

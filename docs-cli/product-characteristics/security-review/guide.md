@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 
 # Security Scanning
-<!-- # Quick Start -->
+{/* # Quick Start */}
 
 CoStrict Security is a self-developed AI-powered security scanning tool that provides comprehensive coverage of common security vulnerabilities including injection attacks, unauthorized access, sensitive information disclosure, and insecure configurations. It delivers complete risk tracing and actionable remediation suggestions, helping you effectively eliminate security risks before deploying code.
 
@@ -29,8 +29,8 @@ Enter the following command in the terminal to start CoStrict:
 cs
 ```
 
-<!-- TODO: Add screenshot - 进入交互窗口 -->
-<!-- ![CLI Usage 1 - Enter interactive window](./img/CLI使用1-进入交互窗口.png) -->
+{/* TODO: Add screenshot - 进入交互窗口 */}
+{/* ![CLI Usage 1 - Enter interactive window](./img/CLI使用1-进入交互窗口.png) */}
 
 ### Step 2: Select Scan Target
 
@@ -42,8 +42,8 @@ After entering the security scan, the system will ask you what you want to scan.
 | Specific directory | Scan all code files in a specified directory and its subdirectories, suitable for reviewing specific modules or components |
 | Specific branch | Scan code changes in a specified Git branch, suitable for reviewing branch code before merging |
 
-<!-- TODO: Add screenshot - 指定审查范围 -->
-<!-- ![Select scan target](./img/CLI使用2-指定审查范围.png) -->
+{/* TODO: Add screenshot - 指定审查范围 */}
+{/* ![Select scan target](./img/CLI使用2-指定审查范围.png) */}
 
 ### Step 3: View Scan Report
 
@@ -137,5 +137,5 @@ if ((is_numeric($octet[0])) && (is_numeric($octet[1])) &&
 
 </details>
 
-<!-- TODO: Add screenshot - 安全扫描报告 -->
-<!-- ![CLI Usage 3 - Security scan report](./img/CLI使用3-安全扫描报告.png) -->
+{/* TODO: Add screenshot - 安全扫描报告 */}
+{/* ![CLI Usage 3 - Security scan report](./img/CLI使用3-安全扫描报告.png) */}

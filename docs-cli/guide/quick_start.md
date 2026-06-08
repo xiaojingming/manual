@@ -16,7 +16,7 @@ cs auth login
 
 - Log in through the browser. (If the browser does not open automatically, manually copy the URL to the browser to log in)
 
-<!-- ![image-20260203110234558](img/quick_start/image-20260203110234558.png) -->
+{/* ![image-20260203110234558](img/quick_start/image-20260203110234558.png) */}
 
 - Return to the terminal and wait for the login to complete (usually within a few seconds).
 

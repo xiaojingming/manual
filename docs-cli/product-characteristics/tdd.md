@@ -11,7 +11,7 @@ Return to **Build** mode (press Tab key to switch) and execute the **/test** com
 
 After the previous coding process ends, AI will recommend whether to test immediately based on the specific situation. After selecting, you can start testing with the same effect as /test.
 
-<!-- ![img](img/tdd/png-17700915168521.png) -->
+{/* ![img](img/tdd/png-17700915168521.png) */}
 
 ## /test Command Automation Process Description
 
@@ -55,7 +55,7 @@ After retrieval is completed, the core three parts of test guidance will be incl
 
 3) Test execution method (using knowledge like npm run test, bun test tests/play.test.ts).
 
-<!-- ![img](img/tdd/png-17700915168524.png) -->
+{/* ![img](img/tdd/png-17700915168524.png) */}
 
 After confirmation, the results will be saved in `<project>.cospec/TEST_GUIDE.md` for subsequent reuse.
 
@@ -73,6 +73,6 @@ You can also manually write this document to customize the test plan. It can be 
 
 This version has LSP functionality (refer to section 4.4.9). It is recommended to install the corresponding environment for better and faster convergence.
 
-<!-- ![img](img/tdd/png-17700915168535.png) -->
+{/* ![img](img/tdd/png-17700915168535.png) */}
 
 

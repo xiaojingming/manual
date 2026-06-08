@@ -64,6 +64,6 @@ Equivalent regular expression:
 
 description must be 1-1024 characters. Make sure it's specific enough for the agent to select correctly.
 
-<!-- ## Testing -->
+{/* ## Testing */}
 
-<!-- ![img](img/skills/png.png) -->
+{/* ![img](img/skills/png.png) */}

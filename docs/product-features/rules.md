@@ -14,7 +14,7 @@ Global Rules Directory: Apply to all projects automatically.
 
 - Linux/macOS: <u>/.roo/rules/ and</u> /.roo/rules-\{modeSlug\}/
 
-<!-- -->
+{/* */}
 
 - Windows: %USERPROFILE%\\roo\rules\\ and %USERPROFILE%\\roo\rules-\{modeSlug\}\\
 
@@ -88,11 +88,11 @@ Without Global Rules: You had to maintain separate rule files in each project:
 
 - Copy the same rules to every new project
 
-<!-- -->
+{/* */}
 
 - Update rules manually across multiple projects
 
-<!-- -->
+{/* */}
 
 - No consistency between projects
 
@@ -100,15 +100,15 @@ With Global Rules: Create rules once and use them everywhere:
 
 - Set up your preferred coding standards globally
 
-<!-- -->
+{/* */}
 
 - Customize specific rules per project when needed
 
-<!-- -->
+{/* */}
 
 - Maintain consistency across all your work
 
-<!-- -->
+{/* */}
 
 - Easy to update rules for all projects at once
 
@@ -344,39 +344,39 @@ Rules:
 
 - File Location: The preferred method uses directories within .roo/ (.roo/rules/ and .roo/rules-\{modeSlug\}/).
 
-<!-- -->
+{/* */}
 
 - Recursive Reading: Rules directories are read recursively, including all files in subdirectories
 
-<!-- -->
+{/* */}
 
 - File Filtering: System automatically excludes cache and temporary files (.DS_Store, *.bak,* .cache, *.log,* .tmp, Thumbs.db, etc.)
 
-<!-- -->
+{/* */}
 
 - Empty Files: Empty or missing rule files are silently skipped
 
-<!-- -->
+{/* */}
 
 - Source Headers: Directory-based rules include per-file headers \# Rules from \{absolute path\}:, while file-based rules include \# Rules from \{filename\}: headers
 
-<!-- -->
+{/* */}
 
 - Aggregation: Both global and workspace rules directories are aggregated for mode-specific and generic rules (not either-or)
 
-<!-- -->
+{/* */}
 
 - Sorting: Files are sorted by basename only, case-insensitive
 
-<!-- -->
+{/* */}
 
 - Header Paths: Header paths are absolute and follow symlinks
 
-<!-- -->
+{/* */}
 
 - Rule Interaction: Mode-specific rules complement global rules rather than replacing them
 
-<!-- -->
+{/* */}
 
 - Symbolic Links: Fully supported for both files and directories, with a maximum resolution depth of 5 to prevent infinite loops
 
@@ -386,35 +386,35 @@ CoStrict also supports loading rules from an AGENTS.md (or AGENT.md as fallback)
 
 - Purpose: Provides agent-specific rules and guidelines for AI behavior
 
-<!-- -->
+{/* */}
 
 - Location: Must be in the workspace root directory
 
-<!-- -->
+{/* */}
 
 - Loading: Automatically loaded by default. To disable AGENTS.md loading, set "zgsm.useAgentRules": false in your VSCode settings
 
-<!-- -->
+{/* */}
 
 - Setting: zgsm.useAgentRules (default: true)
 
-<!-- -->
+{/* */}
 
 - Preference: If both exist, AGENTS.md is preferred over AGENT.md
 
-<!-- -->
+{/* */}
 
 - Priority: Loaded after mode-specific rules and .rooignore, before generic rules from both ~/.roo/rules and .roo/rules
 
-<!-- -->
+{/* */}
 
 - Header: Added to system prompt with header \# Agent Rules Standard (AGENTS.md): or (AGENT.md): accordingly
 
-<!-- -->
+{/* */}
 
 - Empty Files: Empty or whitespace-only AGENTS.md is ignored
 
-<!-- -->
+{/* */}
 
 - Symbolic Links: Symbolic links to files or directories are resolved before reading
 
@@ -426,27 +426,27 @@ This feature allows teams to maintain standardized AI agent behavior rules that 
 
 - "Always use spaces for indentation, with a width of 4 spaces"
 
-<!-- -->
+{/* */}
 
 - "Use camelCase for variable names"
 
-<!-- -->
+{/* */}
 
 - "Write unit tests for all new functions"
 
-<!-- -->
+{/* */}
 
 - "Explain your reasoning before providing code"
 
-<!-- -->
+{/* */}
 
 - "Focus on code readability and maintainability"
 
-<!-- -->
+{/* */}
 
 - "Prioritize using the most common library in the community"
 
-<!-- -->
+{/* */}
 
 - "When adding new features to websites, ensure they are responsive and accessible"
 

@@ -157,7 +157,7 @@ Credits obtained through traffic packages are always available during the validi
 
 Credits acquisition history provides a complete record of all obtained Credits, including the reason for acquisition, quantity, and effective and expiration dates, making it easy for you to track the source of Credits.
 
-<!-- ![Credits Log Example](./img/usage/image1.png) -->
+{/* ![Credits Log Example](./img/usage/image1.png) */}
 
 ### Credits Log Contains the Following Information
 
