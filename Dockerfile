@@ -16,6 +16,9 @@ RUN pnpm config set registry https://registry.npmmirror.com/ && \
 
 COPY . .
 
+# 移除无效的 workspace 配置（单包项目不需要，缺少 packages 字段会导致 pnpm 报错）
+RUN rm -f pnpm-workspace.yaml
+
 # 构建时设置环境变量优化内存使用
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CI=true
