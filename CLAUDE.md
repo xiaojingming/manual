@@ -6,14 +6,16 @@ This file provides guidance to CoStrict when working with code in this repositor
 
 This is the **costrict documentation site**, a Docusaurus 3 project hosting four separate documentation sets:
 
-| Docs Set | Source Directory | Route Base | Sidebar Config |
-|----------|------------------|------------|----------------|
-| Plugin | `docs/` | `/plugin` | `sidebars.ts` |
-| CLI | `docs-cli/` | `/cli` | `sidebars-cli.ts` |
-| CSC | `docs-csc/` | `/csc` | `sidebars-csc.ts` |
-| Private Deployment | `docs-deployment/` | `/plugin/deployment` | `sidebars-deployment.ts` |
+| Docs Set | Source Directory | Route Base | Sidebar Config | Plugin ID |
+|----------|------------------|------------|----------------|-----------|
+| Plugin | `docs/` | `/plugin` | `sidebars.ts` | `default` (classic preset) |
+| CLI | `docs-cli/` | `/cli` | `sidebars-cli.ts` | `cli` |
+| CSC | `docs-csc/` | `/csc` | `sidebars-csc.ts` | `csc` |
+| Private Deployment | `docs-deployment/` | `/plugin/deployment` | `sidebars-deployment.ts` | `deployment` |
 
-The site supports Chinese (`zh`, default) and English (`en`) via Docusaurus i18n. Search is provided by `@easyops-cn/docusaurus-search-local` with Chinese (`zh`) + English (`en`) indexing.
+The site supports Chinese (`zh`, default) and English (`en`) via Docusaurus i18n. Search is provided by `@easyops-cn/docusaurus-search-local` with `language: ["en", "zh"]`, `indexPages: true`, and `removeDefaultStemmer: true`.
+
+Mermaid diagrams are enabled (`markdown.mermaid: true` + `@docusaurus/theme-mermaid`).
 
 ## Common Commands
 
@@ -51,12 +53,23 @@ There are no unit tests or lint scripts. The quality gates are:
 
 ### Multi-Plugin Docs Setup
 
-The default Docusaurus `classic` preset mounts the Plugin docs at `/plugin`. Three additional `@docusaurus/plugin-content-docs` instances are registered manually in `docusaurus.config.ts` for CLI, CSC, and Deployment docs. Each plugin has its own `routeBasePath`, `path`, and `sidebarPath`.
+The default Docusaurus `classic` preset mounts the Plugin docs at `/plugin`. Three additional `@docusaurus/plugin-content-docs` instances are registered manually in `docusaurus.config.ts` for CLI, CSC, and Deployment docs. Each plugin has its own `routeBasePath`, `path`, `sidebarPath`, and `id`.
+
+The plugin IDs (`cli`, `csc`, `deployment`) determine the i18n translation directory names under `i18n/zh/` (e.g., `docusaurus-plugin-content-docs-cli`).
 
 **Redirects:** `@docusaurus/plugin-client-redirects` handles backward compatibility:
 - `/` → `/plugin/guide/installation`
 - `/FAQ` → `/plugin/FAQ`
 - Any `/plugin/*` path also creates a redirect from `/*` (legacy paths without `/plugin` prefix).
+
+### Navbar Structure
+
+The navbar (defined in `docusaurus.config.ts`) has five left-side items plus a locale dropdown:
+- **Plugin** — `type: 'doc'` pointing to `guide/installation`
+- **CLI** — `type: 'doc'` pointing to `guide/introduction` with `docsPluginId: 'cli'`. Uses `activeBaseRegex: '/cli/(?!product-characteristics/cloud)'` to avoid matching Cloud paths.
+- **Cloud** — `to: '/cli/product-characteristics/cloud'` (a plain link, not a doc ref). Uses `activeBaseRegex: '/cli/product-characteristics/cloud'` and a custom `className: 'navbar-cloud-new-badge'`.
+- **Private Deployment** — `type: 'doc'` pointing to `foreword` with `docsPluginId: 'deployment'`
+- **Locale dropdown** — `type: 'localeDropdown'` on the right
 
 ### i18n Structure
 
@@ -79,6 +92,10 @@ Sidebars are **explicitly declared** in TypeScript, not auto-generated from the 
 - `sidebars-deployment.ts` — Deployment docs navigation
 
 Adding a new doc requires registering it in the corresponding sidebar file. IDs are relative to the docs plugin root (e.g., `guide/installation` maps to `docs/guide/installation.md`).
+
+### Broken Links Policy
+
+`docusaurus.config.ts` sets `onBrokenLinks: 'warn'` and `onBrokenMarkdownLinks: 'warn'`. Broken links will log warnings but will **not** fail the build.
 
 ## Documentation Conventions
 
@@ -103,7 +120,7 @@ sidebar_position: 3
 
 - `docs/`, `docs-cli/`, `docs-csc/`, `docs-deployment/` must be **English only**.
 - Chinese content belongs exclusively in the `i18n/zh/` mirror paths.
-- A `pre-push` Git hook (and CI workflow `check-chinese-content.yml`) scans `docs/**` for Chinese characters and blocks the push if any are found.
+- A `pre-push` Git hook (`scripts/pre-push`) and the CI workflow `.github/workflows/check-chinese-content.yml` scan `docs/**` for Chinese characters and block the push if any are found.
 - PR titles and commits are validated against Conventional Commits via `.github/semantic.yml`. Allowed types: `feat`, `fix`, `docs`, `refactor`, `chore`, `perf`, `ci`, `test`.
 
 ### Images and Static Assets
@@ -123,14 +140,17 @@ Global styles and theme overrides are in `src/css/custom.css`.
 ## Build & Deployment
 
 - **Docker:** Multi-stage `Dockerfile` (`builder` → `runner`). Uses `nginx:stable-alpine` to serve static files. `nginx.conf` contains SPA `try_files` fallbacks for `/plugin/` and `/cli/` routes, plus 301 redirects from legacy paths to `/plugin/`.
-- **CI/CD:** GitHub Actions (`.github/workflows/build.yml`) triggers on version tags (`v*.*.*`), builds the Docker image, pushes to Docker Hub, and deploys via SSH.
+- **CI/CD:**
+  - `.github/workflows/build.yml` triggers on version tags (`v*.*.*`), builds the Docker image, pushes to Docker Hub, and deploys via SSH.
+  - `.github/workflows/check-chinese-content.yml` runs on PRs and pushes to `main`/`master` when `docs/**` changes.
 - **Node version:** >= 18.0 (Docker build uses Node 20).
+- **Docusaurus v4 compatibility:** `future: { v4: true }` is enabled in `docusaurus.config.ts`.
 
 ## Important Files
 
 | File | Purpose |
 |------|---------|
-| `docusaurus.config.ts` | Site config, plugins, navbar, themes |
+| `docusaurus.config.ts` | Site config, plugins, navbar, themes, redirects |
 | `sidebars.ts` / `sidebars-cli.ts` / `sidebars-csc.ts` / `sidebars-deployment.ts` | Sidebar navigation definitions |
 | `test-chinese-check.js` | Standalone script to detect Chinese characters in `docs/` |
 | `scripts/pre-push` | Git hook enforcing the Chinese-content rule |
