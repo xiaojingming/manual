@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 
 # Code Review
-<!-- # Quick Start -->
+{/* # Quick Start */}
 
 CoStrict Code Review is an intelligent code quality inspection tool that precisely covers four categories of defects: logical defects, security vulnerabilities, static defects, and memory issues. It provides complete defect tracing with actionable fix recommendations, making your coding more focused and your submissions more confident.
 

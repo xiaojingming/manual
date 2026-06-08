@@ -138,7 +138,7 @@ CSC 还会发现当前工作目录下子目录中的 `CLAUDE.md` 和 `CLAUDE.loc
 
 如果你在大型 monorepo 中工作，其他团队的 CLAUDE.md 文件会被拾取，请使用 `claudeMdExcludes` 跳过它们。
 
-CLAUDE.md 文件中的块级 HTML 注释（`<!-- maintainer notes -->`）在内容注入 CSC 的上下文之前被剥离。使用它们为人类维护者留下笔记，而不会在它们上面花费上下文 token。代码块内的注释会被保留。当你直接使用 Read 工具打开 CLAUDE.md 文件时，注释仍然可见。
+CLAUDE.md 文件中的块级 HTML 注释（`{/* maintainer notes */}`）在内容注入 CSC 的上下文之前被剥离。使用它们为人类维护者留下笔记，而不会在它们上面花费上下文 token。代码块内的注释会被保留。当你直接使用 Read 工具打开 CLAUDE.md 文件时，注释仍然可见。
 
 #### 从其他目录加载
 

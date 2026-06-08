@@ -26,7 +26,7 @@ npm install -g @costrict/csc --registry=https://registry.npmjs.org/
 
 After installation, you can use the csc command.
 
-![csc](.\assets\csc.png)
+![csc](./assets/csc.png)
 
 ## Step 2: Start your first session
 
@@ -60,7 +60,7 @@ You can log in using any of these account types:
 
 ### **Option 1: CoStrict Enterprise Login (Recommended)**
 
-![login](.\assets\login.png)
+![login](./assets/login.png)
 
 > Once logged in, your credentials are stored and you won't need to log in again. To switch accounts later, use the `/login` command.
 
@@ -100,7 +100,7 @@ Skip the interactive login and edit ~/.claude/settings.json directly:
 > /model  # Start switching models
 ```
 
-![models](.\assets\models.png)
+![models](./assets/models.png)
 
 
 

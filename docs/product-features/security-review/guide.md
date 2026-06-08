@@ -3,7 +3,7 @@ sidebar_position: 1
 ---
 
 # Security Scanning
-<!-- # Quick Start -->
+{/* # Quick Start */}
 
 CoStrict Security is a self-developed AI-powered security scanning tool that precisely covers common security vulnerabilities such as injection attacks, unauthorized access, sensitive information leakage, and insecure configurations. It provides complete risk tracing and actionable fix recommendations to help you eliminate security risks before code goes live.
 
@@ -28,19 +28,19 @@ Perform interactive security scans through the IDE during the coding phase, prov
 
 In the file explorer, **right-click on a file** and select **CoStrict > Security Review** to perform a security scan on the entire file.
 
-<!-- TODO: Add screenshot - Scan code file -->
+{/* TODO: Add screenshot - Scan code file */}
 
 #### Method 2: Scan Selected Code Snippet
 
 In the editor, **select a code snippet**, then **right-click** and choose **Security Review** to scan the selected code.
 
-<!-- TODO: Add screenshot - Scan code snippet -->
+{/* TODO: Add screenshot - Scan code snippet */}
 
 #### Method 3: Scan Code Changes
 
 Click the **CoStrict icon** on the left sidebar, switch to the **CODE REVIEW** page, and select **Security Review** to scan code changes in the current workspace (such as Git diffs).
 
-<!-- TODO: Add screenshot - Scan code changes -->
+{/* TODO: Add screenshot - Scan code changes */}
 
 ### Scan Report
 
@@ -52,7 +52,7 @@ After triggering a security review, the AGENT panel displays the scanning proces
 | `[target_file]-report-[vulnerability_index].json` | Per-File Vulnerability Report | Detailed vulnerabilities for individual files, suitable for integration into custom review workflows |
 | `full_report.jsonl` | Combined Report | A consolidated file of all scan results in JSONL format, suitable for engineering workflow integration |
 
-<!-- TODO: Add screenshot - Security scan report -->
+{/* TODO: Add screenshot - Security scan report */}
 
 <details>
 <summary>View Report Example</summary>

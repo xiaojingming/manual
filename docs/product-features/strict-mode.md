@@ -36,16 +36,16 @@ Spec Mode supports visualization and editing of the task process, allowing devel
 
 During execution, corresponding documents can be edited to collaborate with AI.
 
-<!-- ![descript](./img/strict-mode/image2.png) -->
+{/* ![descript](./img/strict-mode/image2.png) */}
 
 ### 3.2 Automatic Process Synchronization
 
 Following the **"Requirement Clarification → Design → Task Decomposition → Self-Testing with Self-Repair"** workflow, when requirement documents are updated, clicking update will automatically synchronize to the design stage.
 
-<!-- ![descript](./img/strict-mode/image3.png) -->
+{/* ![descript](./img/strict-mode/image3.png) */}
 
 ### 3.3 Independent Execution of Subtasks
 
 Each task decomposed from requirements can be executed and tested independently, making tasks more controllable.
 
-<!-- ![descript](./img/strict-mode/image4.png) -->
+{/* ![descript](./img/strict-mode/image4.png) */}

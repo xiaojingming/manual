@@ -36,7 +36,7 @@ cs web                                    # Default: http://127.0.0.1:4096/
 cs web --hostname 0.0.0.0 --port 8080    # Custom host and port
 ```
 
-<!-- ![Web UI](img/feature/png-17700885881302.png) -->
+{/* ![Web UI](img/feature/png-17700885881302.png) */}
 
 ### Docker Container
 
