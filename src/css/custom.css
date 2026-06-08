@@ -217,6 +217,11 @@
     height: auto;
   }
 
+  /* Hide navbar items on mobile (restore Infima default overridden above) */
+  .navbar__item {
+    display: none;
+  }
+
   .navbar__items--right {
     gap: 0.5rem;
   }

@@ -53,22 +53,3 @@ jobs:
             NODE_OPTIONS=--max-old-space-size=6144
           shm-size: 2gb
           no-cache: true
-
-      - name: Deploy to Server
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            set -e
-            echo "Connected to server!"
-            cd /home/zhuge/docs
-            sudo docker compose pull
-            sudo docker compose up -d --force-recreate
-            # 删除当前项目不再使用的旧镜像
-            sudo docker images --filter "reference=*/costrict-manual" -q | sort -u | while read img; do
-              sudo docker rmi "$img" 2>/dev/null || true
-            done
-            echo "Deployment finished successfully!"
