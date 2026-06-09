@@ -3,6 +3,7 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebarsCsc: SidebarsConfig = {
   cscSidebar: [
     'overview',
+    'release-notes',
     'quickstart',
     {
       type: 'category',
