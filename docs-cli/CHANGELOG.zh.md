@@ -4,6 +4,31 @@
 
 ---
 
+## [4.2.0] - 2026-06-09
+
+### ✨ 新功能
+- **Legacy Compatibility**: 为会话扫描、文件历史、粘贴缓存、统计缓存、会话环境、insights 和 transcript reader 全面添加旧版 `~/.claude/` 目录回退支持。
+- **Session Management**: `applySortAndLimit` 现在对会话 ID 去重，并确保主目录优先。
+
+### 🐛 问题修复
+- **API**: 在流式 API 错误时触发 `session.error`，并支持流消息跟踪。
+- **Legacy Compatibility**: 为用户 `CLAUDE.md` 和规则发现添加旧版回退。
+- **Legacy Compatibility**: `stats.ts` 和 `cleanup.ts` 现在扫描旧版 `~/.claude/projects/` 以获取会话统计和清理。
+- **Legacy Compatibility**: 将硬编码的 `~/.claude/history.jsonl` 路径替换为配置主目录解析。
+- **Legacy Compatibility**: 在 `findMostRecentBackup` 中添加旧版 `~/.claude/backups/` 回退。
+- **Legacy Compatibility**: 为市场配置添加旧版 `~/.claude/plugins/` 回退。
+- **Legacy Compatibility**: 为 6 个子系统和内存目录添加旧版 `~/.claude/` 读取回退。
+- **Memory Panel**: 修复 `/memory` 面板中 `CLAUDE.md`/`AGENTS.md` 的路径不匹配问题。
+
+### 🏗️ 构建与 CI
+- **Workspace**: 将 workspace scope 从 `@ant`/`@anthropic-ai` 迁移到 `@costrict`。
+
+### 🧹 清理与杂项
+- 简化 `package.json` 中的 self-verify 脚本。
+- 移除 `listSessionsImpl.ts` 中未使用的 `basename` 导入。
+
+---
+
 ## [4.1.12] - 2026-06-08
 
 ### ✨ 新功能

@@ -4,6 +4,31 @@ All notable changes to the CSC (CoStrict CLI) project are documented in this fil
 
 ---
 
+## [4.2.0] - 2026-06-09
+
+### ✨ New Features
+- **Legacy Compatibility**: Added comprehensive legacy `~/.claude/` directory fallback across session scanning, file history, paste cache, stats cache, session env, insights, and transcript reader.
+- **Session Management**: `applySortAndLimit` now deduplicates session IDs with primary priority.
+
+### 🐛 Bug Fixes
+- **API**: Emit `session.error` on streamed API errors with stream message tracking.
+- **Legacy Compatibility**: Added legacy fallback for user `CLAUDE.md` and rules discovery.
+- **Legacy Compatibility**: `stats.ts` and `cleanup.ts` now scan legacy `~/.claude/projects/` for session stats and cleanup.
+- **Legacy Compatibility**: Replaced hardcoded `~/.claude/history.jsonl` path with config-home resolution.
+- **Legacy Compatibility**: Added legacy `~/.claude/backups/` fallback in `findMostRecentBackup`.
+- **Legacy Compatibility**: Added legacy `~/.claude/plugins/` fallback for marketplace config.
+- **Legacy Compatibility**: Added legacy `~/.claude/` read fallback for 6 subsystems and memory directory.
+- **Memory Panel**: Resolved `CLAUDE.md`/`AGENTS.md` path mismatch in `/memory` panel.
+
+### 🏗️ Build & CI
+- **Workspace**: Updated workspace scope from `@ant`/`@anthropic-ai` to `@costrict`.
+
+### 🧹 Cleanup & Chores
+- Simplified self-verify scripts in `package.json`.
+- Removed unused `basename` import in `listSessionsImpl.ts`.
+
+---
+
 ## [4.1.12] - 2026-06-08
 
 ### ✨ New Features
