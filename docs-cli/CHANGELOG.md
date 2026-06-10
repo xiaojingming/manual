@@ -4,6 +4,25 @@ All notable changes to the CSC (CoStrict CLI) project are documented in this fil
 
 ---
 
+## [4.2.1] - 2026-06-10
+
+### ✨ New Features
+- **Agent Detail Panel**: Enhanced agent row display with context usage and model information.
+
+### 🐛 Bug Fixes
+- **Agent Panel**: Corrected model name display and refined context row layout.
+- **Agent Panel**: Replaced Chinese label with English in completed agent row.
+- **UI**: Added spacing above slash command suggestion panel.
+- **Session Resume**: Improved error handling and exit diagnostics.
+
+### 🏗️ Build & CI
+- **Matrix Tactical**: Removed `[STAT]` label and cost display from statusline.
+
+### 🔒 Security
+- **Dependencies**: Upgraded vulnerable dependencies (`shell-quote`, `exporter-prometheus`, `tmp`).
+
+---
+
 ## [4.2.0] - 2026-06-09
 
 ### ✨ New Features
