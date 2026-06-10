@@ -4,6 +4,25 @@
 
 ---
 
+## [4.2.1] - 2026-06-10
+
+### ✨ 新功能
+- **Agent Detail Panel**: agent row 增强显示上下文使用量和模型信息。
+
+### 🐛 问题修复
+- **Agent Panel**: 修正模型名称显示并优化 context row 布局。
+- **Agent Panel**: 将 completed agent row 中的中文标签替换为英文。
+- **UI**: 为 slash command suggestion panel 添加上方间距。
+- **Session Resume**: 改进错误处理和退出诊断。
+
+### 🏗️ 构建与 CI
+- **Matrix Tactical**: 从 statusline 中移除 `[STAT]` 标签和 cost 显示。
+
+### 🔒 安全
+- **依赖升级**: 升级漏洞依赖（`shell-quote`、`exporter-prometheus`、`tmp`）。
+
+---
+
 ## [4.2.0] - 2026-06-09
 
 ### ✨ 新功能
