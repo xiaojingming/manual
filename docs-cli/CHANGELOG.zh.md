@@ -4,6 +4,46 @@
 
 ---
 
+## [4.2.3] - 2026-06-15
+
+### ✨ 新功能
+- **`/goal` 命令**: 新增 `/goal` 目标管理命令，支持设置、清除和显示当前会话目标；目标回合跟踪与达成检测集成到 query loop。
+- **目标状态持久化**: `/goal` 状态在 `--resume` / `--continue` 会话恢复时自动还原。
+- **Assistant Prompt 兼容回退**: 为 assistant prompt 加载添加 `~/.claude/` legacy 目录回退，提升历史配置兼容性。
+- **Provider 模型上下文窗口**: 暴露 provider 模型的 token 上限，便于下游进行上下文管理。
+- **登录与模型显示**: 修复自动模型显示异常和登出后凭据清理问题。
+
+### 🐛 问题修复
+- **依赖安全**: 强制 `esbuild >= 0.28.1`，修复 GHSA-gv7w-rqvm-qjhr 漏洞。
+- **Assistant Prompt**: 修复 assistant prompt 在 legacy 目录下找不到 prompt 的问题。
+
+### 🧹 清理与杂项
+- 为 `/goal` 新增完整单元测试覆盖：参数解析与别名清除、`goalHook` prompt 构造、`goalState` CRUD 与持久化、`StatusLine` 目标指示器渲染。
+- `package.json` 版本号升级至 `4.2.3`。
+
+---
+
+## [4.2.2] - 2026-06-12
+
+### ✨ 新功能
+- **Session Warm Pool**: 引入 session warm pool + context prewarm，降低首条消息延迟。
+- **Message Routing**: 增强消息路由，支持 compaction 后 token 计算。
+- **Knowledge Hub**: 新增版本更新检测、`Update All` 批量更新及 UI 状态指示器。
+
+### 🐛 问题修复
+- **Batch Worker**: 修复父进程退出后 worker 未退起的孤儿进程问题，增加优雅退出 grace period。
+- **Ink**: 修复 Ctrl+Z 挂起/恢复时触发的无限循环。
+- **Session**: 为 session resume 和文件加载添加 `~/.claude/` legacy 目录回退。
+
+### 🔒 安全
+- **依赖升级**: 强制 `@grpc/grpc-js >= 1.14.4`，修复高危安全漏洞。
+
+### 🧹 清理与杂项
+- `package.json` 版本号升级至 `4.2.2`。
+- `.worktrees/` 加入 `.gitignore`。
+
+---
+
 ## [4.2.1] - 2026-06-10
 
 ### ✨ 新功能
