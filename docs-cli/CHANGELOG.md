@@ -4,6 +4,46 @@ All notable changes to the CSC (CoStrict CLI) project are documented in this fil
 
 ---
 
+## [4.2.3] - 2026-06-15
+
+### ✨ New Features
+- **`/goal` command**: Added `/goal` goal-management command supporting setting, clearing, and displaying the current session goal; goal turn tracking and achievement detection integrated into the query loop.
+- **Goal state persistence**: `/goal` state is automatically restored when resuming a session via `--resume` / `--continue`.
+- **Assistant prompt compatibility fallback**: Added `~/.claude/` legacy-directory fallback for assistant prompt loading to improve historical-config compatibility.
+- **Provider model context windows**: Exposed provider model token limits for downstream context management.
+- **Login & model display**: Fixed automatic model display anomalies and credential cleanup after logout.
+
+### 🐛 Bug Fixes
+- **Dependency security**: Enforced `esbuild >= 0.28.1` to fix GHSA-gv7w-rqvm-qjhr vulnerability.
+- **Assistant prompt**: Fixed assistant prompt not being found under the legacy directory.
+
+### 🧹 Cleanup & Chores
+- Added full unit-test coverage for `/goal`: argument parsing and alias clearing, `goalHook` prompt construction, `goalState` CRUD and persistence, and `StatusLine` goal indicator rendering.
+- Bumped `package.json` version to `4.2.3`.
+
+---
+
+## [4.2.2] - 2026-06-12
+
+### ✨ New Features
+- **Session warm pool**: Introduced session warm pool plus context prewarm to reduce first-message latency.
+- **Message routing**: Enhanced message routing to support token calculation after compaction.
+- **Knowledge Hub**: Added version-update detection, `Update All` bulk updates, and UI status indicators.
+
+### 🐛 Bug Fixes
+- **Batch worker**: Fixed orphaned worker processes after parent exit by adding a graceful shutdown grace period.
+- **Ink**: Fixed infinite loop triggered by Ctrl+Z suspend/resume.
+- **Session**: Added `~/.claude/` legacy-directory fallback for session resume and file loading.
+
+### 🔒 Security
+- **Dependency upgrade**: Enforced `@grpc/grpc-js >= 1.14.4` to fix a high-severity security vulnerability.
+
+### 🧹 Cleanup & Chores
+- Bumped `package.json` version to `4.2.2`.
+- Added `.worktrees/` to `.gitignore`.
+
+---
+
 ## [4.2.1] - 2026-06-10
 
 ### ✨ New Features
