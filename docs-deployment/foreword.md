@@ -36,10 +36,11 @@ All core features of CoStrict rely on large language models. You need to **prepa
 
 ```
 1. Chat model     (provide a complete http://chat_model_ip:chat_model_port/v1/chat/completions interface)
-2. Embedding model (provide a complete http://embedding_model_ip:embedding_model_port/v1/embeddings interface)
-3. Rerank model   (provide a complete http://rerank_model_ip:rerank_model_port/v1/rerank interface)
+
 4. Completion model (provide a complete http://completion_model_ip:completion_model_port/v1/completions interface)
 ```
+
+Currently, CoStrict only supports chat and completion models.
 
 **Note**: Provide and record accurate `model name`, `API KEY`, and `context length` information for use during service deployment configuration.
 
@@ -48,10 +49,6 @@ All core features of CoStrict rely on large language models. You need to **prepa
 - **Chat model**: `GLM-5.1` `GLM-5` `MiniMax-M2.7` `GLM-4.7` (Currently, GLM-5.1 is most recommended)
 
 - **Completion model**: `Qwen/Qwen3-4B`
-
-- **Embedding model**: `gte-modernbert-baseRAG/Embedding`
-
-- **Rerank model**: `gte-reranker-modernbert-baseRAG/Rerank`
 
 - **Download links**:
 
@@ -68,10 +65,6 @@ https://modelscope.cn/models/Qwen/Qwen3-4B
 - **Chat model**: `4 * H20` (recommended for GLM-4.7-FP8; double for GLM-5)
 
 - **Completion model**: `1 * 4090` (recommended for Qwen3-4B)
-
-- **Embedding model**: `0.5 * H20` or `0.5 * RTX4090`
-
-- **Rerank model**: `0.5 * H20` or `0.5 * RTX4090`
 
 **Trial Reminder**:
 
