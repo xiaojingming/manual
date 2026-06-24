@@ -47,6 +47,14 @@
     "message": "自动化",
     "description": "The generated-index page title for category Automation in sidebar cscSidebar"
   },
+  "sidebar.cscSidebar.category.Release Notes": {
+    "message": "版本更新",
+    "description": "The label for category Release Notes in sidebar cscSidebar"
+  },
+  "sidebar.cscSidebar.category.Release Notes.link.generated-index.title": {
+    "message": "版本更新",
+    "description": "The generated-index page title for category Release Notes in sidebar cscSidebar"
+  },
   "sidebar.cscSidebar.category.Reference": {
     "message": "参考",
     "description": "The label for category Reference in sidebar cscSidebar"
