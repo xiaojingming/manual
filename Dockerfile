@@ -31,6 +31,12 @@ COPY nginx.conf /etc/nginx/conf.d/
 
 COPY --from=builder /workshop/build /usr/share/nginx/html
 
+# Eliminate duplicate static assets across locales (saves ~35MB+)
+RUN rm -rf /usr/share/nginx/html/en/videos \
+    && ln -s /usr/share/nginx/html/videos /usr/share/nginx/html/en/videos \
+    && rm -rf /usr/share/nginx/html/en/img \
+    && ln -s /usr/share/nginx/html/img /usr/share/nginx/html/en/img
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
