@@ -68,6 +68,15 @@ const sidebarsCsc: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Release Notes',
+      collapsible: true,
+      collapsed: false,
+      items: [
+        'release-notes/csc-4-2',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Reference',
       collapsible: true,
       collapsed: true,
