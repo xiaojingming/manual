@@ -189,12 +189,14 @@ project_root/
 - Docker 部署失败查看容器日志，使用 `docker compose logs`
 
 ### 图片优化规范
-- 新增PNG/JPG图片后，应运行 `npm run convert-images` 生成WebP版本
-- 保留原PNG/JPG文件作为备份，不要删除
+- 新增PNG/SVG图片后，应运行 `npm run convert-images` 生成WebP版本并自动更新 Markdown 引用
+- 转换完成后应运行 `npm run convert-images -- --clean` 删除原始 PNG/SVG 文件，避免仓库体积膨胀
 - 图片命名使用小写连字符式，如 `quick-start.png`，WebP文件自动命名为 `quick-start.webp`
-- 建议图片体积控制在500KB以内，超过500KB的图片会被优先转换
 - WebP质量默认为80%，可在命令中通过 `--quality` 参数调整（范围1-100）
-- 使用 `npm run build:optimized` 替代 `npm run build` 可在构建前自动转换新增图片
+- 脚本会扫描以下8个目录（英文源 + i18n 中文镜像）：docs/、docs-cli/、docs-csc/、docs-deployment/ 及其对应的 i18n/zh/ 副本
+- 引用更新只处理 Markdown `![alt](path)` 语法，排除 `https?://` 外部链接和 `{/* */}` MDX 注释行
+- 使用 `npm run convert-images:check` 可仅扫描并预览，不做实际修改
+- 使用 `npm run convert-images -- --verify` 可校验 WebP 文件与 Markdown 引用的一致性
 
 ## 常用命令
 
@@ -220,9 +222,13 @@ node test-chinese-check.js  # 检查 docs 文件夹是否包含中文
 npm run install-hooks  # 安装 Git pre-push 钩子
 
 # 图片转换
-npm run convert-images          # 转换所有PNG/JPG图片为WebP格式（增量转换）
-npm run convert-images:check    # 仅扫描图片并输出报告，不转换
-npm run build:optimized         # 优化构建：先转换图片再构建站点
+npm run convert-images              # 转换PNG/SVG为WebP + 更新Markdown引用（增量，已转换的跳过）
+npm run convert-images:check        # 仅扫描并输出报告，不实际修改（--dry-run）
+npm run convert-images -- --clean   # 转换 + 更新引用 + 删除原始PNG/SVG文件
+npm run convert-images -- --verify  # 校验WebP文件与Markdown引用的一致性
+npm run convert-images -- --refs-only  # 仅更新Markdown引用，跳过转换
+npm run convert-images -- --no-refs    # 仅转换，跳过引用更新
+npm run convert-images -- --quality=90  # 指定WebP质量（默认80）
 
 # Docker 相关
 docker build -t costrict-manual .  # 构建 Docker 镜像
