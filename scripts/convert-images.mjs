@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Convert PNG/SVG images to WebP format and update markdown references.
- * Usage: node scripts/convert-images.mjs [--quality=80] [--dry-run] [--refs-only] [--no-refs]
+ * Usage: node scripts/convert-images.mjs [--quality=80] [--dry-run] [--refs-only] [--no-refs] [--clean]
  */
 
 import sharp from 'sharp';
@@ -24,13 +24,14 @@ const EXCLUDE_DIRS = ['node_modules', '.docusaurus', 'build'];
 
 function parseArgs() {
   const args = process.argv.slice(2);
-  const opts = { quality: 80, dryRun: false, verbose: false, refsOnly: false, noRefs: false, verify: false };
+  const opts = { quality: 80, dryRun: false, verbose: false, refsOnly: false, noRefs: false, verify: false, clean: false };
   for (const arg of args) {
     if (arg === '--dry-run' || arg === '-c') opts.dryRun = true;
     else if (arg === '--verbose' || arg === '-v') opts.verbose = true;
     else if (arg === '--refs-only') opts.refsOnly = true;
     else if (arg === '--no-refs') opts.noRefs = true;
     else if (arg === '--verify') opts.verify = true;
+    else if (arg === '--clean') opts.clean = true;
     else if (arg.startsWith('--quality=')) opts.quality = parseInt(arg.split('=')[1], 10);
     else if (arg === '-q' || arg === '--quality') {
       // next arg is value, handled simply via parse
@@ -79,7 +80,7 @@ async function convertAllImages(opts) {
 
   console.log(`\nFound ${allFiles.length} PNG/SVG files across ${SOURCE_DIRS.length} directories\n`);
 
-  const stats = { converted: 0, skipped: 0, errors: 0, totalInputSize: 0, totalOutputSize: 0 };
+  const stats = { converted: 0, skipped: 0, errors: 0, deleted: 0, totalInputSize: 0, totalOutputSize: 0 };
 
   for (const inputPath of allFiles) {
     const ext = path.extname(inputPath).toLowerCase();
@@ -91,6 +92,16 @@ async function convertAllImages(opts) {
       const outMtime = fs.statSync(outputPath).mtime;
       if (outMtime > srcMtime) {
         stats.skipped++;
+        // Delete source file even when skipping re-conversion
+        if (opts.clean) {
+          try {
+            fs.unlinkSync(inputPath);
+            stats.deleted++;
+            if (opts.verbose) console.log(`  [deleted] ${inputPath}`);
+          } catch (err) {
+            console.error(`  [delete error] ${inputPath}: ${err.message}`);
+          }
+        }
         continue;
       }
     }
@@ -111,6 +122,16 @@ async function convertAllImages(opts) {
       if (opts.verbose) {
         const saved = ((1 - result.outputSize / result.inputSize) * 100).toFixed(0);
         console.log(`  ${inputPath}  ${formatBytes(result.inputSize)} → ${formatBytes(result.outputSize)}  (-${saved}%)`);
+      }
+      // Delete source file after successful conversion
+      if (opts.clean) {
+        try {
+          fs.unlinkSync(inputPath);
+          stats.deleted++;
+          if (opts.verbose) console.log(`  [deleted] ${inputPath}`);
+        } catch (err) {
+          console.error(`  [delete error] ${inputPath}: ${err.message}`);
+        }
       }
     } catch (err) {
       stats.errors++;
@@ -180,7 +201,7 @@ async function updateMarkdownReferences(opts) {
   return stats;
 }
 
-async function verifyConversion() {
+async function verifyConversion({ skipOrphan } = {}) {
   const issues = [];
 
   // Collect all .webp files on disk
@@ -223,11 +244,13 @@ async function verifyConversion() {
     }
   }
 
-  // 1. Orphan .webp: no source .png/.svg
-  for (const wp of webpFiles) {
-    const stem = wp.replace(/\.webp$/, '');
-    if (!fs.existsSync(stem + '.png') && !fs.existsSync(stem + '.svg')) {
-      issues.push({ type: 'orphan', msg: `Orphan .webp (no source): ${wp}` });
+  // 1. Orphan .webp: no source .png/.svg (skip when --clean is used — source deletion is intentional)
+  if (!skipOrphan) {
+    for (const wp of webpFiles) {
+      const stem = wp.replace(/\.webp$/, '');
+      if (!fs.existsSync(stem + '.png') && !fs.existsSync(stem + '.svg')) {
+        issues.push({ type: 'orphan', msg: `Orphan .webp (no source): ${wp}` });
+      }
     }
   }
 
@@ -288,6 +311,7 @@ async function main() {
   else if (opts.refsOnly) modes.push('refs-only');
   else if (opts.noRefs) modes.push('convert-only');
   else modes.push('convert + refs');
+  if (opts.clean) modes.push('(clean)');
   if (opts.dryRun) modes.push('(dry-run)');
   console.log(`Mode: ${modes.join(' ')}`);
 
@@ -306,6 +330,7 @@ async function main() {
     console.log(`  Converted: ${imgStats.converted}`);
     console.log(`  Skipped:   ${imgStats.skipped}`);
     console.log(`  Errors:    ${imgStats.errors}`);
+    if (imgStats.deleted > 0) console.log(`  Deleted:   ${imgStats.deleted} (source files removed)`);
     if (imgStats.totalInputSize > 0 && imgStats.totalOutputSize > 0) {
       const saved = ((1 - imgStats.totalOutputSize / imgStats.totalInputSize) * 100).toFixed(0);
       console.log(`  Input:     ${formatBytes(imgStats.totalInputSize)}`);
@@ -326,7 +351,7 @@ async function main() {
 
   // Step 3: Verify after conversion
   if (!opts.dryRun) {
-    await verifyConversion();
+    await verifyConversion({ skipOrphan: opts.clean });
   }
 
   console.log('');
