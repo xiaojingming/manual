@@ -13,7 +13,7 @@ const sidebarsCsc: SidebarsConfig = {
         'getting-started/features-overview',
         'getting-started/how-claude-code-works',
         'getting-started/common-workflows',
-        'getting-started/claude-directory',
+        'getting-started/costrict-directory',
         'getting-started/best-practices',
         'getting-started/permission-modes',
         'getting-started/memory',
@@ -70,7 +70,7 @@ const sidebarsCsc: SidebarsConfig = {
       type: 'category',
       label: 'Release Notes',
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       items: [
         'release-notes/csc-4-2',
       ],

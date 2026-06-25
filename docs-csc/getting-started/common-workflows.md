@@ -197,7 +197,7 @@ Suppose you want to use specialized AI subagents to handle specific tasks more e
 
 > **💡 Tip:**
 >
-> * Create project-specific subagents in `.claude/agents/` for team sharing
+> * Create project-specific subagents in `.costrict/agents/` for team sharing
 > * Use descriptive `description` fields to enable automatic delegation
 > * Limit tool access to what each subagent actually needs
 > * Check the subagents documentation for detailed examples
@@ -265,7 +265,7 @@ When you accept a plan, CSC automatically names the session from the plan conten
 ### Configure Plan Mode as default
 
 ```json
-// .claude/settings.json
+// .costrict/settings.json
 {
   "permissions": {
     "defaultMode": "plan"
@@ -460,7 +460,7 @@ Use @ to quickly include files or directories without waiting for CSC to read th
 > **💡 Tip:**
 >
 > * File paths can be relative or absolute
-> * @ file references add `CLAUDE.md` in the file's directory and parent directories to context
+> * @ file references add `AGENTS.md` in the file's directory and parent directories to context
 > * Directory references show file listings, not contents
 > * You can reference multiple files in a single message (for example, "@file1.js and @file2.js")
 
@@ -566,7 +566,7 @@ Use the `--worktree` (`-w`) flag to create an isolated worktree and start CSC in
 
 ```bash
 # Start CSC in a worktree named "feature-auth"
-# Creates .claude/worktrees/feature-auth/ with a new branch
+# Creates .costrict/worktrees/feature-auth/ with a new branch
 csc --worktree feature-auth
 
 # Start another session in a separate worktree
@@ -580,7 +580,7 @@ If you omit the name, CSC generates a random one automatically:
 csc --worktree
 ```
 
-Worktrees are created at `<repo>/.claude/worktrees/<name>` and branch from the default remote branch, which is where `origin/HEAD` points. The worktree branch is named `worktree-<name>`.
+Worktrees are created at `<repo>/.costrict/worktrees/<name>` and branch from the default remote branch, which is where `origin/HEAD` points. The worktree branch is named `worktree-<name>`.
 
 The base branch is not configurable through a CSC flag or setting. `origin/HEAD` is a reference stored in your local `.git` directory that Git set once when you cloned. If the repository's default branch later changes on GitHub or GitLab, your local `origin/HEAD` keeps pointing at the old one, and worktrees will branch from there. To re-sync your local reference with whatever the remote currently considers its default:
 
@@ -609,7 +609,7 @@ Subagent worktrees orphaned by a crash or an interrupted parallel run are remove
 
 To clean up worktrees outside of a CSC session, use manual worktree management.
 
-> **💡 Tip:** Add `.claude/worktrees/` to your `.gitignore` to prevent worktree contents from appearing as untracked files in your main repository.
+> **💡 Tip:** Add `.costrict/worktrees/` to your `.gitignore` to prevent worktree contents from appearing as untracked files in your main repository.
 
 ### Copy gitignored files to worktrees
 
@@ -662,7 +662,7 @@ When you kick off a long-running task and switch to another window, you can set 
 
 1. **Add the hook to your settings**
 
-    Open `~/.claude/settings.json` and add a `Notification` hook that calls your platform's native notification command:
+    Open `~/.costrict/settings.json` and add a `Notification` hook that calls your platform's native notification command:
 
     ### macOS
 
@@ -830,7 +830,7 @@ Pick a scheduling option based on where you want the task to run:
 
 | Option                                                 | Where it runs                     | Best for                                                                                                      |
 | :----------------------------------------------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------------ |
-| Cloud scheduled tasks       | Anthropic-managed infrastructure  | Tasks that should run even when your computer is off. Configure at claude.ai/code.  |
+| Cloud scheduled tasks       | CoStrict-managed infrastructure  | Tasks that should run even when your computer is off. Configure at costrict.ai.  |
 | Desktop scheduled tasks | Your machine, via the desktop app | Tasks that need direct access to local files, tools, or uncommitted changes.                                  |
 | GitHub Actions                   | Your CI pipeline                  | Tasks tied to repo events like opened PRs, or cron schedules that should live alongside your workflow config. |
 | `/loop`                         | The current CLI session           | Quick polling while a session is open. Tasks are cancelled when you exit.                                     |

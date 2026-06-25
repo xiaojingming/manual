@@ -8,7 +8,7 @@ sidebar_position: 7
 
 > **Note:** Customizable keyboard shortcuts require CSC v2.1.18 or later. Check your version with `csc --version`.
 
-CSC supports customizable keyboard shortcuts. Run `/keybindings` to create or open your configuration file at `~/.claude/keybindings.json`.
+CSC supports customizable keyboard shortcuts. Run `/keybindings` to create or open your configuration file at `~/.costrict/keybindings.json`.
 
 ## Configuration file
 
@@ -26,8 +26,8 @@ This example binds `Ctrl+E` to open an external editor in the chat context, and 
 
 ```json
 {
-  "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
-  "$docs": "https://code.claude.com/docs/en/keybindings",
+  "$schema": "https://www.schemastore.org/csc-keybindings.json",
+  "$docs": "https://costrict.ai/docs/en/keybindings",
   "bindings": [
     {
       "context": "Chat",

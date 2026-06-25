@@ -34,9 +34,9 @@ csc -p "What does the auth module do?"
 
 ### Start faster with bare mode
 
-Add `--bare` to reduce startup time by skipping auto-discovery of Hooks, Skills, Plugins, MCP servers, auto memory, and CLAUDE.md. Without it, `csc -p` loads the same context an interactive session would, including anything configured in the working directory or `~/.claude`.
+Add `--bare` to reduce startup time by skipping auto-discovery of Hooks, Skills, Plugins, MCP servers, auto memory, and AGENTS.md. Without it, `csc -p` loads the same context an interactive session would, including anything configured in the working directory or `~/.costrict`.
 
-Bare mode is useful for CI and scripts where you need the same result on every machine. A hook in a teammate's `~/.claude` or an MCP server in the project's `.mcp.json` won't run, because bare mode never reads them. Only flags you pass explicitly take effect.
+Bare mode is useful for CI and scripts where you need the same result on every machine. A hook in a teammate's `~/.costrict` or an MCP server in the project's `.mcp.json` won't run, because bare mode never reads them. Only flags you pass explicitly take effect.
 
 This example runs a one-off summarize task in bare mode and pre-approves the Read tool so the call completes without a permission prompt:
 

@@ -89,7 +89,7 @@ Agent teams support two display modes:
 
 > **Note:** `tmux` has known limitations on certain operating systems and traditionally works best on macOS. Using `tmux -CC` in iTerm2 is the suggested entrypoint into `tmux`.
 
-The default is `"auto"`, which uses split panes if you're already running inside a tmux session, and in-process otherwise. The `"tmux"` setting enables split-pane mode and auto-detects whether to use tmux or iTerm2 based on your terminal. To override, set `teammateMode` in your global config at `~/.claude.json`:
+The default is `"auto"`, which uses split panes if you're already running inside a tmux session, and in-process otherwise. The `"tmux"` setting enables split-pane mode and auto-detects whether to use tmux or iTerm2 based on your terminal. To override, set `teammateMode` in your global config at `~/.costrict.json`:
 
 ```json
 {
@@ -208,8 +208,8 @@ The system manages task dependencies automatically. When a teammate completes a 
 
 Teams and tasks are stored locally:
 
-* **Team config**: `~/.claude/teams/{team-name}/config.json`
-* **Task list**: `~/.claude/tasks/{team-name}/`
+* **Team config**: `~/.costrict/teams/{team-name}/config.json`
+* **Task list**: `~/.costrict/tasks/{team-name}/`
 
 CSC generates both of these automatically when you create a team and updates them as teammates join, go idle, or leave. The team config holds runtime state such as session IDs and tmux pane IDs, so don't edit it by hand or pre-author it: your changes are overwritten on the next state update.
 
@@ -217,7 +217,7 @@ To define reusable teammate roles, use Subagents definitions instead.
 
 The team config contains a `members` array with each teammate's name, agent ID, and agent type. Teammates can read this file to discover other team members.
 
-There is no project-level equivalent of the team config. A file like `.claude/teams/teams.json` in your project directory is not recognized as configuration; Claude treats it as an ordinary file.
+There is no project-level equivalent of the team config. A file like `.costrict/teams/teams.json` in your project directory is not recognized as configuration; CSC treats it as an ordinary file.
 
 ### Use Subagents definitions for teammates
 
@@ -239,7 +239,7 @@ Teammates start with the lead's permission settings. If the lead runs with `--da
 
 ### Context and communication
 
-Each teammate has its own context window. When spawned, a teammate loads the same project context as a regular session: CLAUDE.md, MCP servers, and Skills. It also receives the spawn prompt from the lead. The lead's conversation history does not carry over.
+Each teammate has its own context window. When spawned, a teammate loads the same project context as a regular session: AGENTS.md, MCP servers, and Skills. It also receives the spawn prompt from the lead. The lead's conversation history does not carry over.
 
 **How teammates share information:**
 
@@ -295,7 +295,7 @@ With multiple independent investigators actively trying to disprove each other, 
 
 ### Give teammates enough context
 
-Teammates load project context automatically, including CLAUDE.md, MCP servers, and Skills, but they don't inherit the lead's conversation history. See Context and communication for details. Include task-specific details in the spawn prompt:
+Teammates load project context automatically, including AGENTS.md, MCP servers, and Skills, but they don't inherit the lead's conversation history. See Context and communication for details. Include task-specific details in the spawn prompt:
 
 ```text
 Spawn a security reviewer teammate with the prompt: "Review the authentication module
@@ -397,7 +397,7 @@ Agent teams are experimental. Current limitations to be aware of:
 * **Permissions set at spawn**: all teammates start with the lead's permission mode. You can change individual teammate modes after spawning, but you can't set per-teammate modes at spawn time.
 * **Split panes require tmux or iTerm2**: the default in-process mode works in any terminal. Split-pane mode isn't supported in VS Code's integrated terminal, Windows Terminal, or Ghostty.
 
-> **💡 Tip:** **`CLAUDE.md` works normally**: teammates read `CLAUDE.md` files from their working directory. Use this to provide project-specific guidance to all teammates.
+> **💡 Tip:** **`AGENTS.md` works normally**: teammates read `AGENTS.md` files from their working directory. Use this to provide project-specific guidance to all teammates.
 
 ## Next steps
 

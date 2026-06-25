@@ -16,7 +16,7 @@ CSC supports two ways to add custom Skills, Subagents, and Hooks:
 
 | Approach                                                    | Skill names          | Best for                                                                                        |
 | :---------------------------------------------------------- | :------------------- | :---------------------------------------------------------------------------------------------- |
-| **Standalone** (`.claude/` directory)                       | `/hello`             | Personal workflows, project-specific customizations, quick experiments                          |
+| **Standalone** (`.costrict/` directory)                       | `/hello`             | Personal workflows, project-specific customizations, quick experiments                          |
 | **Plugins** (directories with `.claude-plugin/plugin.json`) | `/plugin-name:hello` | Sharing with teammates, distributing to community, versioned releases, reusable across projects |
 
 **Use standalone configuration when**:
@@ -34,7 +34,7 @@ CSC supports two ways to add custom Skills, Subagents, and Hooks:
 * You're distributing through a marketplace
 * You're okay with namespaced Skills like `/my-plugin:hello` (namespacing prevents conflicts between Plugins)
 
-> **Tip:** Start with standalone configuration in `.claude/` for quick iteration, then convert to a Plugin when you're ready to share.
+> **Tip:** Start with standalone configuration in `.costrict/` for quick iteration, then convert to a Plugin when you're ready to share.
 
 ## Quickstart
 
@@ -123,7 +123,7 @@ Once CSC starts, try your new Skill:
 /my-first-plugin:hello
 ```
 
-You'll see Claude respond with a greeting. Run `/help` to see your Skill listed under the Plugin namespace.
+You'll see CSC respond with a greeting. Run `/help` to see your Skill listed under the Plugin namespace.
 
 > **Note:** **Why namespacing?** Plugin Skills are always namespaced (like `/my-first-plugin:hello`) to prevent conflicts when multiple Plugins have Skills with the same name. To change the namespace prefix, update the `name` field in `plugin.json`.
 
@@ -149,7 +149,7 @@ Run `/reload-plugins` to pick up the changes, then try the Skill with your name:
 /my-first-plugin:hello Alex
 ```
 
-Claude will greet you by name. For more on passing arguments to Skills, see Skills.
+CSC will greet you by name. For more on passing arguments to Skills, see Skills.
 
 You've successfully created and tested a Plugin with these key components:
 
@@ -185,7 +185,7 @@ Once you're comfortable with basic Plugins, you can create more sophisticated ex
 
 ### Add Skills to your Plugin
 
-Plugins can include Agent Skills to extend Claude's capabilities. Skills are model-invoked: Claude automatically uses them based on the task context.
+Plugins can include Agent Skills to extend CSC's capabilities. Skills are model-invoked: CSC automatically uses them based on the task context.
 
 Add a `skills/` directory at your Plugin root with Skill folders containing `SKILL.md` files:
 
@@ -219,7 +219,7 @@ After installing the Plugin, run `/reload-plugins` to load the Skills. For compl
 
 > **Tip:** For common languages like TypeScript, Python, and Rust, install the pre-built LSP Plugins from the official marketplace. Create custom LSP Plugins only when you need support for languages not already covered.
 
-LSP (Language Server Protocol) Plugins give Claude real-time code intelligence. If you need to support a language that doesn't have an official LSP Plugin, you can create your own by adding an `.lsp.json` file to your Plugin:
+LSP (Language Server Protocol) Plugins give CSC real-time code intelligence. If you need to support a language that doesn't have an official LSP Plugin, you can create your own by adding an `.lsp.json` file to your Plugin:
 
 ```json
 {
@@ -298,16 +298,16 @@ Once your Plugin is in a marketplace, others can install it using the instructio
 
 ### Submit your Plugin to the official marketplace
 
-To submit a Plugin to the official Anthropic marketplace, use one of the in-app submission forms:
+To submit a Plugin to the official CoStrict marketplace, use one of the in-app submission forms:
 
-* **Claude.ai**: claude.ai/settings/plugins/submit
-* **Console**: platform.claude.com/plugins/submit
+* **CSC Website**: costrict.ai/settings/plugins/submit
+* **Console**: costrict.ai/plugins/submit
 
 > **Note:** For complete technical specifications, debugging techniques, and distribution strategies, see Plugins reference.
 
 ## Convert existing configurations to Plugins
 
-If you already have Skills or Hooks in your `.claude/` directory, you can convert them into a Plugin for easier sharing and distribution.
+If you already have Skills or Hooks in your `.costrict/` directory, you can convert them into a Plugin for easier sharing and distribution.
 
 ### Migration steps
 
@@ -335,13 +335,13 @@ Copy your existing configurations to the Plugin directory:
 
 ```bash
 # Copy commands
-cp -r .claude/commands my-plugin/
+cp -r .costrict/commands my-plugin/
 
 # Copy agents (if any)
-cp -r .claude/agents my-plugin/
+cp -r .costrict/agents my-plugin/
 
 # Copy skills (if any)
-cp -r .claude/skills my-plugin/
+cp -r .costrict/skills my-plugin/
 ```
 
 #### Migrate Hooks
@@ -352,7 +352,7 @@ If you have Hooks in your settings, create a Hooks directory:
 mkdir my-plugin/hooks
 ```
 
-Create `my-plugin/hooks/hooks.json` with your Hooks configuration. Copy the `hooks` object from your `.claude/settings.json` or `settings.local.json`, since the format is the same. The command receives Hook input as JSON on stdin, so use `jq` to extract the file path:
+Create `my-plugin/hooks/hooks.json` with your Hooks configuration. Copy the `hooks` object from your `.costrict/settings.json` or `settings.local.json`, since the format is the same. The command receives Hook input as JSON on stdin, so use `jq` to extract the file path:
 
 ```json
 {
@@ -379,11 +379,11 @@ Test each component: run your commands, check Subagents appear in `/agents`, and
 
 ### What changes when migrating
 
-| Standalone (`.claude/`)       | Plugin                           |
+| Standalone (`.costrict/`)       | Plugin                           |
 | :---------------------------- | :------------------------------- |
 | Only available in one project | Can be shared via marketplaces   |
-| Files in `.claude/commands/`  | Files in `plugin-name/commands/` |
+| Files in `.costrict/commands/`  | Files in `plugin-name/commands/` |
 | Hooks in `settings.json`      | Hooks in `hooks/hooks.json`      |
 | Must manually copy to share   | Install with `/plugin install`   |
 
-> **Note:** After migrating, you can remove the original files from `.claude/` to avoid duplicates. The Plugin version will take precedence when loaded.
+> **Note:** After migrating, you can remove the original files from `.costrict/` to avoid duplicates. The Plugin version will take precedence when loaded.

@@ -123,7 +123,7 @@ Plugin hooks respond to the same lifecycle events as user-defined hooks:
 | `Stop`               | When CSC finishes responding                                                                                                      |
 | `StopFailure`        | When the turn ends due to an API error. Output and exit code are ignored                                                          |
 | `TeammateIdle`       | When an agent team teammate is about to go idle                                                                                   |
-| `InstructionsLoaded` | When a CLAUDE.md or `.claude/rules/*.md` file is loaded into context. Fires at session start and when files are lazily loaded during a session |
+| `InstructionsLoaded` | When a AGENTS.md or `.costrict/rules/*.md` file is loaded into context. Fires at session start and when files are lazily loaded during a session |
 | `ConfigChange`       | When a configuration file changes during a session                                                                                |
 | `CwdChanged`         | When the working directory changes, for example when CSC executes a `cd` command. Useful for reactive environment management with tools like direnv |
 | `FileChanged`        | When a watched file changes on disk. The `matcher` field specifies which filenames to watch                                       |
@@ -267,9 +267,9 @@ When you install a plugin, you choose a **scope** that determines where the plug
 
 | Scope     | Settings file                    | Use case                                        |
 | :-------- | :------------------------------- | :---------------------------------------------- |
-| `user`    | `~/.claude/settings.json`        | Personal plugins available across all projects (default) |
-| `project` | `.claude/settings.json`          | Team plugins shared via version control         |
-| `local`   | `.claude/settings.local.json`    | Project-specific plugins, gitignored            |
+| `user`    | `~/.costrict/settings.json`        | Personal plugins available across all projects (default) |
+| `project` | `.costrict/settings.json`          | Team plugins shared via version control         |
+| `local`   | `.costrict/settings.local.json`    | Project-specific plugins, gitignored            |
 | `managed` | Managed settings                 | Managed plugins (read-only, update only)        |
 
 Plugins use the same scope system as other CSC configurations. For installation instructions and scope flags, see Install plugins. For a complete explanation of scopes, see Configuration scopes.
@@ -365,7 +365,7 @@ The `userConfig` field declares values that CSC prompts the user for when the pl
 
 Keys must be valid identifiers. Each value is available for substitution as `${user_config.KEY}` in MCP and LSP server configs, hook commands, and (for non-sensitive values only) skill and agent content. Values are also exported to plugin subprocesses as `CLAUDE_PLUGIN_OPTION_<KEY>` environment variables.
 
-Non-sensitive values are stored in `settings.json` under `pluginConfigs[<plugin-id>].options`. Sensitive values go to the system keychain (or `~/.claude/.credentials.json` where the keychain is unavailable). Keychain storage is shared with OAuth tokens and has an approximately 2 KB total limit, so keep sensitive values small.
+Non-sensitive values are stored in `settings.json` under `pluginConfigs[<plugin-id>].options`. Sensitive values go to the system keychain (or `~/.costrict/.credentials.json` where the keychain is unavailable). Keychain storage is shared with OAuth tokens and has an approximately 2 KB total limit, so keep sensitive values small.
 
 ### Channels
 
@@ -439,7 +439,7 @@ CSC provides two variables for referencing plugin paths. Both are substituted in
 
 #### Persistent data directory
 
-The `${CLAUDE_PLUGIN_DATA}` directory resolves to `~/.claude/plugins/data/{id}/`, where `{id}` is the plugin identifier with characters outside `a-z`, `A-Z`, `0-9`, `_`, and `-` replaced by `-`. For a plugin installed as `formatter@my-marketplace`, the directory is `~/.claude/plugins/data/formatter-my-marketplace/`.
+The `${CLAUDE_PLUGIN_DATA}` directory resolves to `~/.costrict/plugins/data/{id}/`, where `{id}` is the plugin identifier with characters outside `a-z`, `A-Z`, `0-9`, `_`, and `-` replaced by `-`. For a plugin installed as `formatter@my-marketplace`, the directory is `~/.costrict/plugins/data/formatter-my-marketplace/`.
 
 A common use is installing language dependencies once and reusing them across sessions and plugin updates. Because the data directory outlives any single plugin version, a check for directory existence alone cannot detect when an update changes the plugin's dependency manifest. The recommended pattern compares the bundled manifest against a copy in the data directory and reinstalls when they differ.
 
@@ -491,7 +491,7 @@ Plugins are specified in one of two ways:
 * Through `csc --plugin-dir`, for the duration of a session.
 * Through a marketplace, installed for future sessions.
 
-For security and verification purposes, CSC copies marketplace plugins to the user's local **plugin cache** (`~/.claude/plugins/cache`) rather than using them in-place. Understanding this behavior is important when developing plugins that reference external files.
+For security and verification purposes, CSC copies marketplace plugins to the user's local **plugin cache** (`~/.costrict/plugins/cache`) rather than using them in-place. Understanding this behavior is important when developing plugins that reference external files.
 
 Each installed version is a separate directory in the cache. When you update or uninstall a plugin, the previous version directory is marked as orphaned and removed automatically 7 days later. The grace period lets concurrent CSC sessions that already loaded the old version keep running without errors.
 
@@ -594,7 +594,7 @@ csc plugin install <plugin> [options]
 | `-s, --scope <scope>` | Installation scope: `user`, `project`, or `local` | `user`  |
 | `-h, --help`          | Display help for command                          |         |
 
-Scope determines which settings file the installed plugin is added to. For example, `--scope project` writes to `enabledPlugins` in .claude/settings.json, making the plugin available to everyone who clones the project repository.
+Scope determines which settings file the installed plugin is added to. For example, `--scope project` writes to `enabledPlugins` in .costrict/settings.json, making the plugin available to everyone who clones the project repository.
 
 **Examples:**
 

@@ -62,7 +62,7 @@ The Model Context Protocol (MCP) is an open standard for connecting AI tools to 
 
 ### Customize with instructions, skills, and hooks
 
-`CLAUDE.md` is a markdown file you add to your project root that CSC reads at the start of every session. Use it to set coding standards, architecture decisions, preferred libraries, and review checklists. CSC also builds auto memory as it works, saving learnings like build commands and debugging insights across sessions without you writing anything.
+`AGENTS.md` is a markdown file you add to your project root that CSC reads at the start of every session. Use it to set coding standards, architecture decisions, preferred libraries, and review checklists. CSC also builds auto memory as it works, saving learnings like build commands and debugging insights across sessions without you writing anything.
 
 Create custom commands to package repeatable workflows your team can share, like `/review-pr` or `/deploy-staging`.
 

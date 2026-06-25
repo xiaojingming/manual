@@ -20,7 +20,7 @@ The table below summarizes when each event fires. The Hook events section docume
 | Event                | When it fires                                                                                                                                          |
 | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `SessionStart`       | When a session begins or resumes                                                                                                                       |
-| `UserPromptSubmit`   | When you submit a prompt, before Claude processes it                                                                                                   |
+| `UserPromptSubmit`   | When you submit a prompt, before CSC processes it                                                                                                   |
 | `PreToolUse`         | Before a tool call executes. Can block it                                                                                                              |
 | `PermissionRequest`  | When a permission dialog appears                                                                                                                       |
 | `PermissionDenied`   | When a tool call is denied by the auto mode classifier. Return `{retry: true}` to tell the model it may retry the denied tool call                     |
@@ -31,12 +31,12 @@ The table below summarizes when each event fires. The Hook events section docume
 | `SubagentStop`       | When a subagent finishes                                                                                                                               |
 | `TaskCreated`        | When a task is being created via `TaskCreate`                                                                                                          |
 | `TaskCompleted`      | When a task is being marked as completed                                                                                                               |
-| `Stop`               | When Claude finishes responding                                                                                                                        |
+| `Stop`               | When CSC finishes responding                                                                                                                        |
 | `StopFailure`        | When the turn ends due to an API error. Output and exit code are ignored                                                                               |
 | `TeammateIdle`       | When an agent team teammate is about to go idle                                                                                     |
-| `InstructionsLoaded` | When a CLAUDE.md or `.claude/rules/*.md` file is loaded into context. Fires at session start and when files are lazily loaded during a session         |
+| `InstructionsLoaded` | When a AGENTS.md or `.costrict/rules/*.md` file is loaded into context. Fires at session start and when files are lazily loaded during a session         |
 | `ConfigChange`       | When a configuration file changes during a session                                                                                                     |
-| `CwdChanged`         | When the working directory changes, for example when Claude executes a `cd` command. Useful for reactive environment management with tools like direnv |
+| `CwdChanged`         | When the working directory changes, for example when CSC executes a `cd` command. Useful for reactive environment management with tools like direnv |
 | `FileChanged`        | When a watched file changes on disk. The `matcher` field specifies which filenames to watch                                                            |
 | `WorktreeCreate`     | When a worktree is being created via `--worktree` or `isolation: "worktree"`. Replaces default git behavior                                            |
 | `WorktreeRemove`     | When a worktree is being removed, either at session exit or when a subagent finishes                                                                   |
@@ -60,7 +60,7 @@ To see how these pieces fit together, consider this `PreToolUse` hook that block
           {
             "type": "command",
             "if": "Bash(rm *)",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-rm.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.costrict/hooks/block-rm.sh"
           }
         ]
       }
@@ -73,7 +73,7 @@ The script reads the JSON input from stdin, extracts the command, and returns a 
 
 ```bash
 #!/bin/bash
-# .claude/hooks/block-rm.sh
+# .costrict/hooks/block-rm.sh
 COMMAND=$(jq -r '.tool_input.command')
 
 if echo "$COMMAND" | grep -q 'rm -rf'; then
@@ -125,7 +125,7 @@ If the command had been a safer `rm` variant like `rm file.txt`, the script woul
 
 **5. CSC acts on the result**
 
-CSC reads the JSON decision, blocks the tool call, and shows Claude the reason.
+CSC reads the JSON decision, blocks the tool call, and shows CSC the reason.
 
 The Configuration section below documents the full schema, and each hook event section documents what input your command receives and what output it can return.
 
@@ -148,9 +148,9 @@ Where you define a hook determines its scope:
 
 | Location                                                   | Scope                         | Shareable                          |
 | :--------------------------------------------------------- | :---------------------------- | :--------------------------------- |
-| `~/.claude/settings.json`                                  | All your projects             | No, local to your machine          |
-| `.claude/settings.json`                                    | Single project                | Yes, can be committed to the repo  |
-| `.claude/settings.local.json`                              | Single project                | No, gitignored                     |
+| `~/.costrict/settings.json`                                  | All your projects             | No, local to your machine          |
+| `.costrict/settings.json`                                    | Single project                | Yes, can be committed to the repo  |
+| `.costrict/settings.local.json`                              | Single project                | No, gitignored                     |
 | Managed policy settings                                    | Organization-wide             | Yes, admin-controlled              |
 | Plugin `hooks/hooks.json`                   | When plugin is enabled        | Yes, bundled with the plugin       |
 | Skill or agent frontmatter | While the component is active | Yes, defined in the component file |
@@ -191,7 +191,7 @@ Each event type matches on a different field:
 
 The matcher runs against a field from the JSON input that CSC sends to your hook on stdin. For tool events, that field is `tool_name`. Each hook event section lists the full set of matcher values and the input schema for that event.
 
-This example runs a linting script only when Claude writes or edits a file:
+This example runs a linting script only when CSC writes or edits a file:
 
 ```json
 {
@@ -265,7 +265,7 @@ Each object in the inner `hooks` array is a hook handler: the shell command, HTT
 
 * **Command hooks** (`type: "command"`): run a shell command. Your script receives the event's JSON input on stdin and communicates results back through exit codes and stdout.
 * **HTTP hooks** (`type: "http"`): send the event's JSON input as an HTTP POST request to a URL. The endpoint communicates results back through the response body using the same JSON output format as command hooks.
-* **Prompt hooks** (`type: "prompt"`): send a prompt to a Claude model for single-turn evaluation. The model returns a yes/no decision as JSON. See Prompt-based hooks.
+* **Prompt hooks** (`type: "prompt"`): send a prompt to a CSC model for single-turn evaluation. The model returns a yes/no decision as JSON. See Prompt-based hooks.
 * **Agent hooks** (`type: "agent"`): spawn a subagent that can use tools like Read, Grep, and Glob to verify conditions before returning a decision. See Agent-based hooks.
 
 #### Common fields
@@ -350,7 +350,7 @@ Use environment variables to reference hook scripts relative to the project or p
 
 ### Project scripts
 
-This example uses `$CLAUDE_PROJECT_DIR` to run a style checker from the project's `.claude/hooks/` directory after any `Write` or `Edit` tool call:
+This example uses `$CLAUDE_PROJECT_DIR` to run a style checker from the project's `.costrict/hooks/` directory after any `Write` or `Edit` tool call:
 
 ```json
 {
@@ -361,7 +361,7 @@ This example uses `$CLAUDE_PROJECT_DIR` to run a style checker from the project'
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check-style.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.costrict/hooks/check-style.sh"
           }
         ]
       }
@@ -429,14 +429,14 @@ Type `/hooks` in CSC to open a read-only browser for your configured hooks. The 
 
 The menu displays all four hook types: `command`, `prompt`, `agent`, and `http`. Each hook is labeled with a `[type]` prefix and a source indicating where it was defined:
 
-* `User`: from `~/.claude/settings.json`
-* `Project`: from `.claude/settings.json`
-* `Local`: from `.claude/settings.local.json`
+* `User`: from `~/.costrict/settings.json`
+* `Project`: from `.costrict/settings.json`
+* `Local`: from `.costrict/settings.local.json`
 * `Plugin`: from a plugin's `hooks/hooks.json`
 * `Session`: registered in memory for the current session
 * `Built-in`: registered internally by CSC
 
-Selecting a hook opens a detail view showing its event, matcher, type, source file, and the full command, prompt, or URL. The menu is read-only: to add, modify, or remove hooks, edit the settings JSON directly or ask Claude to make the change.
+Selecting a hook opens a detail view showing its event, matcher, type, source file, and the full command, prompt, or URL. The menu is read-only: to add, modify, or remove hooks, edit the settings JSON directly or ask CSC to make the change.
 
 ### Disable or remove hooks
 
@@ -476,7 +476,7 @@ For example, a `PreToolUse` hook for a Bash command receives this on stdin:
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/home/user/.claude/projects/.../transcript.jsonl",
+  "transcript_path": "/home/user/.costrict/projects/.../transcript.jsonl",
   "cwd": "/home/user/my-project",
   "permission_mode": "default",
   "hook_event_name": "PreToolUse",
@@ -493,9 +493,9 @@ The `tool_name` and `tool_input` fields are event-specific. Each hook event sect
 
 The exit code from your hook command tells CSC whether the action should proceed, be blocked, or be ignored.
 
-**Exit 0** means success. CSC parses stdout for JSON output fields. JSON output is only processed on exit 0. For most events, stdout is written to the debug log but not shown in the transcript. The exceptions are `UserPromptSubmit` and `SessionStart`, where stdout is added as context that Claude can see and act on.
+**Exit 0** means success. CSC parses stdout for JSON output fields. JSON output is only processed on exit 0. For most events, stdout is written to the debug log but not shown in the transcript. The exceptions are `UserPromptSubmit` and `SessionStart`, where stdout is added as context that CSC can see and act on.
 
-**Exit 2** means a blocking error. CSC ignores stdout and any JSON in it. Instead, stderr text is fed back to Claude as an error message. The effect depends on the event: `PreToolUse` blocks the tool call, `UserPromptSubmit` rejects the prompt, and so on. See exit code 2 behavior per event for the full list.
+**Exit 2** means a blocking error. CSC ignores stdout and any JSON in it. Instead, stderr text is fed back to CSC as an error message. The effect depends on the event: `PreToolUse` blocks the tool call, `UserPromptSubmit` rejects the prompt, and so on. See exit code 2 behavior per event for the full list.
 
 **Any other exit code** is a non-blocking error for most hook events. The transcript shows a `<hook name> hook error` notice followed by the first line of stderr, so you can identify the cause without `--debug`. Execution continues and the full stderr is written to the debug log.
 
@@ -526,15 +526,15 @@ Exit code 2 is the way a hook signals "stop, don't do this." The effect depends 
 | `PreToolUse`         | Yes        | Blocks the tool call                                                                                                                 |
 | `PermissionRequest`  | Yes        | Denies the permission                                                                                                                |
 | `UserPromptSubmit`   | Yes        | Blocks prompt processing and erases the prompt                                                                                       |
-| `Stop`               | Yes        | Prevents Claude from stopping, continues the conversation                                                                            |
+| `Stop`               | Yes        | Prevents CSC from stopping, continues the conversation                                                                            |
 | `SubagentStop`       | Yes        | Prevents the subagent from stopping                                                                                                  |
 | `TeammateIdle`       | Yes        | Prevents the teammate from going idle (teammate continues working)                                                                   |
 | `TaskCreated`        | Yes        | Rolls back the task creation                                                                                                         |
 | `TaskCompleted`      | Yes        | Prevents the task from being marked as completed                                                                                     |
 | `ConfigChange`       | Yes        | Blocks the configuration change from taking effect (except `policy_settings`)                                                        |
 | `StopFailure`        | No         | Output and exit code are ignored                                                                                                     |
-| `PostToolUse`        | No         | Shows stderr to Claude (tool already ran)                                                                                            |
-| `PostToolUseFailure` | No         | Shows stderr to Claude (tool already failed)                                                                                         |
+| `PostToolUse`        | No         | Shows stderr to CSC (tool already ran)                                                                                            |
+| `PostToolUseFailure` | No         | Shows stderr to CSC (tool already failed)                                                                                         |
 | `PermissionDenied`   | No         | Exit code and stderr are ignored (denial already occurred). Use JSON `hookSpecificOutput.retry: true` to tell the model it may retry |
 | `Notification`       | No         | Shows stderr to user only                                                                                                            |
 | `SubagentStart`      | No         | Shows stderr to user only                                                                                                            |
@@ -581,12 +581,12 @@ The JSON object supports three kinds of fields:
 
 | Field            | Default | Description                                                                                                                |
 | :--------------- | :------ | :------------------------------------------------------------------------------------------------------------------------- |
-| `continue`       | `true`  | If `false`, Claude stops processing entirely after the hook runs. Takes precedence over any event-specific decision fields |
-| `stopReason`     | none    | Message shown to the user when `continue` is `false`. Not shown to Claude                                                  |
+| `continue`       | `true`  | If `false`, CSC stops processing entirely after the hook runs. Takes precedence over any event-specific decision fields |
+| `stopReason`     | none    | Message shown to the user when `continue` is `false`. Not shown to CSC                                                  |
 | `suppressOutput` | `false` | If `true`, omits stdout from the debug log                                                                                 |
 | `systemMessage`  | none    | Warning message shown to the user                                                                                          |
 
-To stop Claude entirely regardless of event type:
+To stop CSC entirely regardless of event type:
 
 ```json
 { "continue": false, "stopReason": "Build failed, fix errors before continuing" }
@@ -623,7 +623,7 @@ Used by `UserPromptSubmit`, `PostToolUse`, `PostToolUseFailure`, `Stop`, `Subage
 
 ### PreToolUse
 
-Uses `hookSpecificOutput` for richer control: allow, deny, or escalate to the user. You can also modify tool input before it runs or inject additional context for Claude. See PreToolUse decision control for the full set of options.
+Uses `hookSpecificOutput` for richer control: allow, deny, or escalate to the user. You can also modify tool input before it runs or inject additional context for CSC. See PreToolUse decision control for the full set of options.
 
 ```json
 {
@@ -661,7 +661,7 @@ Each event corresponds to a point in CSC's lifecycle where hooks can run. The se
 
 ### SessionStart
 
-Runs when CSC starts a new session or resumes an existing session. Useful for loading development context like existing issues or recent changes to your codebase, or setting up environment variables. For static context that does not require a script, use CLAUDE.md instead.
+Runs when CSC starts a new session or resumes an existing session. Useful for loading development context like existing issues or recent changes to your codebase, or setting up environment variables. For static context that does not require a script, use AGENTS.md instead.
 
 SessionStart runs on every session, so keep these hooks fast. Only `type: "command"` hooks are supported.
 
@@ -681,7 +681,7 @@ In addition to the common input fields, SessionStart hooks receive `source`, `mo
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "SessionStart",
   "source": "startup",
@@ -691,11 +691,11 @@ In addition to the common input fields, SessionStart hooks receive `source`, `mo
 
 #### SessionStart decision control
 
-Any text your hook script prints to stdout is added as context for Claude. In addition to the JSON output fields available to all hooks, you can return these event-specific fields:
+Any text your hook script prints to stdout is added as context for CSC. In addition to the JSON output fields available to all hooks, you can return these event-specific fields:
 
 | Field               | Description                                                               |
 | :------------------ | :------------------------------------------------------------------------ |
-| `additionalContext` | String added to Claude's context. Multiple hooks' values are concatenated |
+| `additionalContext` | String added to CSC's context. Multiple hooks' values are concatenated |
 
 ```json
 {
@@ -750,7 +750,7 @@ Any variables written to this file will be available in all subsequent Bash comm
 
 ### InstructionsLoaded
 
-Fires when a `CLAUDE.md` or `.claude/rules/*.md` file is loaded into context. This event fires at session start for eagerly-loaded files and again later when files are lazily loaded, for example when Claude accesses a subdirectory that contains a nested `CLAUDE.md` or when conditional rules with `paths:` frontmatter match. The hook does not support blocking or decision control. It runs asynchronously for observability purposes.
+Fires when a `AGENTS.md` or `.costrict/rules/*.md` file is loaded into context. This event fires at session start for eagerly-loaded files and again later when files are lazily loaded, for example when CSC accesses a subdirectory that contains a nested `AGENTS.md` or when conditional rules with `paths:` frontmatter match. The hook does not support blocking or decision control. It runs asynchronously for observability purposes.
 
 The matcher runs against `load_reason`. For example, use `"matcher": "session_start"` to fire only for files loaded at session start, or `"matcher": "path_glob_match|nested_traversal"` to fire only for lazy loads.
 
@@ -770,10 +770,10 @@ In addition to the common input fields, InstructionsLoaded hooks receive these f
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../transcript.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../transcript.jsonl",
   "cwd": "/Users/my-project",
   "hook_event_name": "InstructionsLoaded",
-  "file_path": "/Users/my-project/CLAUDE.md",
+  "file_path": "/Users/my-project/AGENTS.md",
   "memory_type": "Project",
   "load_reason": "session_start"
 }
@@ -785,7 +785,7 @@ InstructionsLoaded hooks have no decision control. They cannot block or modify i
 
 ### UserPromptSubmit
 
-Runs when the user submits a prompt, before Claude processes it. This allows you to add additional context based on the prompt/conversation, validate prompts, or block certain types of prompts.
+Runs when the user submits a prompt, before CSC processes it. This allows you to add additional context based on the prompt/conversation, validate prompts, or block certain types of prompts.
 
 #### UserPromptSubmit input
 
@@ -794,7 +794,7 @@ In addition to the common input fields, UserPromptSubmit hooks receive the `prom
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "UserPromptSubmit",
@@ -819,7 +819,7 @@ To block a prompt, return a JSON object with `decision` set to `"block"`:
 | :------------------ | :----------------------------------------------------------------------------------------------------------------- |
 | `decision`          | `"block"` prevents the prompt from being processed and erases it from context. Omit to allow the prompt to proceed |
 | `reason`            | Shown to the user when `decision` is `"block"`. Not added to context                                               |
-| `additionalContext` | String added to Claude's context                                                                                   |
+| `additionalContext` | String added to CSC's context                                                                                   |
 | `sessionTitle`      | Sets the session title, same effect as `/rename`. Use to name sessions automatically based on the prompt content   |
 
 ```json
@@ -839,7 +839,7 @@ To block a prompt, return a JSON object with `decision` set to `"block"`:
 
 ### PreToolUse
 
-Runs after Claude creates tool parameters and before processing the tool call. Matches on tool name: `Bash`, `Edit`, `Write`, `Read`, `Glob`, `Grep`, `Agent`, `WebFetch`, `WebSearch`, `AskUserQuestion`, `ExitPlanMode`, and any MCP tool names.
+Runs after CSC creates tool parameters and before processing the tool call. Matches on tool name: `Bash`, `Edit`, `Write`, `Read`, `Glob`, `Grep`, `Agent`, `WebFetch`, `WebSearch`, `AskUserQuestion`, `ExitPlanMode`, and any MCP tool names.
 
 Use PreToolUse decision control to allow, deny, ask, or defer the tool call.
 
@@ -947,7 +947,7 @@ Asks the user one to four multiple-choice questions.
 | Field       | Type   | Example                                                                                                            | Description                                                                                                                                                                                      |
 | :---------- | :----- | :----------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `questions` | array  | `[{"question": "Which framework?", "header": "Framework", "options": [{"label": "React"}], "multiSelect": false}]` | Questions to present, each with a `question` string, short `header`, `options` array, and optional `multiSelect` flag                                                                            |
-| `answers`   | object | `{"Which framework?": "React"}`                                                                                    | Optional. Maps question text to the selected option label. Multi-select answers join labels with commas. Claude does not set this field; supply it via `updatedInput` to answer programmatically |
+| `answers`   | object | `{"Which framework?": "React"}`                                                                                    | Optional. Maps question text to the selected option label. Multi-select answers join labels with commas. CSC does not set this field; supply it via `updatedInput` to answer programmatically |
 
 #### PreToolUse decision control
 
@@ -956,9 +956,9 @@ Asks the user one to four multiple-choice questions.
 | Field                      | Description                                                                                                                                                                                                                                                                  |
 | :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `permissionDecision`       | `"allow"` skips the permission prompt. `"deny"` prevents the tool call. `"ask"` prompts the user to confirm. `"defer"` exits gracefully so the tool can be resumed later. Deny and ask rules still apply when a hook returns `"allow"` |
-| `permissionDecisionReason` | For `"allow"` and `"ask"`, shown to the user but not Claude. For `"deny"`, shown to Claude. For `"defer"`, ignored                                                                                                                                                           |
+| `permissionDecisionReason` | For `"allow"` and `"ask"`, shown to the user but not CSC. For `"deny"`, shown to CSC. For `"defer"`, ignored                                                                                                                                                           |
 | `updatedInput`             | Modifies the tool's input parameters before execution. Replaces the entire input object, so include unchanged fields alongside modified ones. Combine with `"allow"` to auto-approve, or `"ask"` to show the modified input to the user. For `"defer"`, ignored              |
-| `additionalContext`        | String added to Claude's context before the tool executes. For `"defer"`, ignored                                                                                                                                                                                            |
+| `additionalContext`        | String added to CSC's context before the tool executes. For `"defer"`, ignored                                                                                                                                                                                            |
 
 When multiple PreToolUse hooks return different decisions, precedence is `deny` > `defer` > `ask` > `allow`.
 
@@ -985,20 +985,20 @@ When a hook returns `"ask"`, the permission prompt displayed to the user include
 
 #### Defer a tool call for later
 
-`"defer"` is for integrations that run `csc -p` as a subprocess and read its JSON output, such as an Agent SDK app or a custom UI built on top of CSC. It lets that calling process pause Claude at a tool call, collect input through its own interface, and resume where it left off. CSC honors this value only in non-interactive mode with the `-p` flag. In interactive sessions it logs a warning and ignores the hook result.
+`"defer"` is for integrations that run `csc -p` as a subprocess and read its JSON output, such as an Agent SDK app or a custom UI built on top of CSC. It lets that calling process pause CSC at a tool call, collect input through its own interface, and resume where it left off. CSC honors this value only in non-interactive mode with the `-p` flag. In interactive sessions it logs a warning and ignores the hook result.
 
 > **Note:**
 > The `defer` value requires CSC v2.1.89 or later. Earlier versions do not recognize it and the tool proceeds through the normal permission flow.
 
-The `AskUserQuestion` tool is the typical case: Claude wants to ask the user something, but there is no terminal to answer in. The round trip works like this:
+The `AskUserQuestion` tool is the typical case: CSC wants to ask the user something, but there is no terminal to answer in. The round trip works like this:
 
-1. Claude calls `AskUserQuestion`. The `PreToolUse` hook fires.
+1. CSC calls `AskUserQuestion`. The `PreToolUse` hook fires.
 2. The hook returns `permissionDecision: "defer"`. The tool does not execute. The process exits with `stop_reason: "tool_deferred"` and the pending tool call preserved in the transcript.
 3. The calling process reads `deferred_tool_use` from the SDK result, surfaces the question in its own UI, and waits for an answer.
 4. The calling process runs `csc -p --resume <session-id>`. The same tool call fires `PreToolUse` again.
-5. The hook returns `permissionDecision: "allow"` with the answer in `updatedInput`. The tool executes and Claude continues.
+5. The hook returns `permissionDecision: "allow"` with the answer in `updatedInput`. The tool executes and CSC continues.
 
-The `deferred_tool_use` field carries the tool's `id`, `name`, and `input`. The `input` is the parameters Claude generated for the tool call, captured before execution:
+The `deferred_tool_use` field carries the tool's `id`, `name`, and `input`. The `input` is the parameters CSC generated for the tool call, captured before execution:
 
 ```json
 {
@@ -1016,7 +1016,7 @@ The `deferred_tool_use` field carries the tool's `id`, `name`, and `input`. The 
 
 There is no timeout or retry limit. The session remains on disk until you resume it. If the answer is not ready when you resume, the hook can return `"defer"` again and the process exits the same way. The calling process controls when to break the loop by eventually returning `"allow"` or `"deny"` from the hook.
 
-`"defer"` only works when Claude makes a single tool call in the turn. If Claude makes several tool calls at once, `"defer"` is ignored with a warning and the tool proceeds through the normal permission flow. The constraint exists because resume can only re-run one tool: there is no way to defer one call from a batch without leaving the others unresolved.
+`"defer"` only works when CSC makes a single tool call in the turn. If CSC makes several tool calls at once, `"defer"` is ignored with a warning and the tool proceeds through the normal permission flow. The constraint exists because resume can only re-run one tool: there is no way to defer one call from a batch without leaving the others unresolved.
 
 If the deferred tool is no longer available when you resume, the process exits with `stop_reason: "tool_deferred_unavailable"` and `is_error: true` before the hook fires. This happens when an MCP server that provided the tool is not connected for the resumed session. The `deferred_tool_use` payload is still included so you can identify which tool went missing.
 
@@ -1036,7 +1036,7 @@ PermissionRequest hooks receive `tool_name` and `tool_input` fields like PreTool
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "PermissionRequest",
@@ -1065,8 +1065,8 @@ PermissionRequest hooks receive `tool_name` and `tool_input` fields like PreTool
 | `behavior`           | `"allow"` grants the permission, `"deny"` denies it                                                                                                                 |
 | `updatedInput`       | For `"allow"` only: modifies the tool's input parameters before execution. Replaces the entire input object, so include unchanged fields alongside modified ones    |
 | `updatedPermissions` | For `"allow"` only: array of permission update entries to apply, such as adding an allow rule or changing the session permission mode |
-| `message`            | For `"deny"` only: tells Claude why the permission was denied                                                                                                       |
-| `interrupt`          | For `"deny"` only: if `true`, stops Claude                                                                                                                          |
+| `message`            | For `"deny"` only: tells CSC why the permission was denied                                                                                                       |
+| `interrupt`          | For `"deny"` only: if `true`, stops CSC                                                                                                                          |
 
 ```json
 {
@@ -1100,9 +1100,9 @@ The `destination` field on every entry determines whether the change stays in me
 | `destination`     | Writes to                                       |
 | :---------------- | :---------------------------------------------- |
 | `session`         | in-memory only, discarded when the session ends |
-| `localSettings`   | `.claude/settings.local.json`                   |
-| `projectSettings` | `.claude/settings.json`                         |
-| `userSettings`    | `~/.claude/settings.json`                       |
+| `localSettings`   | `.costrict/settings.local.json`                   |
+| `projectSettings` | `.costrict/settings.json`                         |
+| `userSettings`    | `~/.costrict/settings.json`                       |
 
 A hook can echo one of the `permission_suggestions` it received as its own `updatedPermissions` output, which is equivalent to the user selecting that "always allow" option in the dialog.
 
@@ -1119,7 +1119,7 @@ Matches on tool name, same values as PreToolUse.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "PostToolUse",
@@ -1138,13 +1138,13 @@ Matches on tool name, same values as PreToolUse.
 
 #### PostToolUse decision control
 
-`PostToolUse` hooks can provide feedback to Claude after tool execution. In addition to the JSON output fields available to all hooks, your hook script can return these event-specific fields:
+`PostToolUse` hooks can provide feedback to CSC after tool execution. In addition to the JSON output fields available to all hooks, your hook script can return these event-specific fields:
 
 | Field                  | Description                                                                                |
 | :--------------------- | :----------------------------------------------------------------------------------------- |
-| `decision`             | `"block"` prompts Claude with the `reason`. Omit to allow the action to proceed            |
-| `reason`               | Explanation shown to Claude when `decision` is `"block"`                                   |
-| `additionalContext`    | Additional context for Claude to consider                                                  |
+| `decision`             | `"block"` prompts CSC with the `reason`. Omit to allow the action to proceed            |
+| `reason`               | Explanation shown to CSC when `decision` is `"block"`                                   |
+| `additionalContext`    | Additional context for CSC to consider                                                  |
 | `updatedMCPToolOutput` | For MCP tools only: replaces the tool's output with the provided value |
 
 ```json
@@ -1153,14 +1153,14 @@ Matches on tool name, same values as PreToolUse.
   "reason": "Explanation for decision",
   "hookSpecificOutput": {
     "hookEventName": "PostToolUse",
-    "additionalContext": "Additional information for Claude"
+    "additionalContext": "Additional information for CSC"
   }
 }
 ```
 
 ### PostToolUseFailure
 
-Runs when a tool execution fails. This event fires for tool calls that throw errors or return failure results. Use this to log failures, send alerts, or provide corrective feedback to Claude.
+Runs when a tool execution fails. This event fires for tool calls that throw errors or return failure results. Use this to log failures, send alerts, or provide corrective feedback to CSC.
 
 Matches on tool name, same values as PreToolUse.
 
@@ -1171,7 +1171,7 @@ PostToolUseFailure hooks receive the same `tool_name` and `tool_input` fields as
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "PostToolUseFailure",
@@ -1193,17 +1193,17 @@ PostToolUseFailure hooks receive the same `tool_name` and `tool_input` fields as
 
 #### PostToolUseFailure decision control
 
-`PostToolUseFailure` hooks can provide context to Claude after a tool failure. In addition to the JSON output fields available to all hooks, your hook script can return these event-specific fields:
+`PostToolUseFailure` hooks can provide context to CSC after a tool failure. In addition to the JSON output fields available to all hooks, your hook script can return these event-specific fields:
 
 | Field               | Description                                                   |
 | :------------------ | :------------------------------------------------------------ |
-| `additionalContext` | Additional context for Claude to consider alongside the error |
+| `additionalContext` | Additional context for CSC to consider alongside the error |
 
 ```json
 {
   "hookSpecificOutput": {
     "hookEventName": "PostToolUseFailure",
-    "additionalContext": "Additional information about the failure for Claude"
+    "additionalContext": "Additional information about the failure for CSC"
   }
 }
 ```
@@ -1221,7 +1221,7 @@ In addition to the common input fields, PermissionDenied hooks receive `tool_nam
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "auto",
   "hook_event_name": "PermissionDenied",
@@ -1258,7 +1258,7 @@ When `retry` is `true`, CSC adds a message to the conversation telling the model
 
 Runs when CSC sends notifications. Matches on notification type: `permission_prompt`, `idle_prompt`, `auth_success`, `elicitation_dialog`. Omit the matcher to run hooks for all notification types.
 
-Use separate matchers to run different handlers depending on the notification type. This configuration triggers a permission-specific alert script when Claude needs permission approval and a different notification when Claude has been idle:
+Use separate matchers to run different handlers depending on the notification type. This configuration triggers a permission-specific alert script when CSC needs permission approval and a different notification when CSC has been idle:
 
 ```json
 {
@@ -1294,10 +1294,10 @@ In addition to the common input fields, Notification hooks receive `message` wit
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "Notification",
-  "message": "Claude needs your permission to use Bash",
+  "message": "CSC needs your permission to use Bash",
   "title": "Permission needed",
   "notification_type": "permission_prompt"
 }
@@ -1307,11 +1307,11 @@ Notification hooks cannot block or modify notifications. In addition to the JSON
 
 | Field               | Description                      |
 | :------------------ | :------------------------------- |
-| `additionalContext` | String added to Claude's context |
+| `additionalContext` | String added to CSC's context |
 
 ### SubagentStart
 
-Runs when a CSC subagent is spawned via the Agent tool. Supports matchers to filter by agent type name (built-in agents like `Bash`, `Explore`, `Plan`, or custom agent names from `.claude/agents/`).
+Runs when a CSC subagent is spawned via the Agent tool. Supports matchers to filter by agent type name (built-in agents like `Bash`, `Explore`, `Plan`, or custom agent names from `.costrict/agents/`).
 
 #### SubagentStart input
 
@@ -1320,7 +1320,7 @@ In addition to the common input fields, SubagentStart hooks receive `agent_id` w
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "SubagentStart",
   "agent_id": "agent-abc123",
@@ -1354,14 +1354,14 @@ In addition to the common input fields, SubagentStop hooks receive `stop_hook_ac
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../abc123.jsonl",
+  "transcript_path": "~/.costrict/projects/.../abc123.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "SubagentStop",
   "stop_hook_active": false,
   "agent_id": "def456",
   "agent_type": "Explore",
-  "agent_transcript_path": "~/.claude/projects/.../abc123/subagents/agent-def456.jsonl",
+  "agent_transcript_path": "~/.costrict/projects/.../abc123/subagents/agent-def456.jsonl",
   "last_assistant_message": "Analysis complete. Found 3 potential issues..."
 }
 ```
@@ -1381,7 +1381,7 @@ In addition to the common input fields, TaskCreated hooks receive `task_id`, `ta
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "TaskCreated",
@@ -1436,7 +1436,7 @@ In addition to the common input fields, TaskCompleted hooks receive `task_id`, `
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "TaskCompleted",
@@ -1485,12 +1485,12 @@ Runs when the main CSC agent has finished responding. Does not run if the stoppa
 
 #### Stop input
 
-In addition to the common input fields, Stop hooks receive `stop_hook_active` and `last_assistant_message`. The `stop_hook_active` field is `true` when CSC is already continuing as a result of a stop hook. Check this value or process the transcript to prevent CSC from running indefinitely. The `last_assistant_message` field contains the text content of Claude's final response, so hooks can access it without parsing the transcript file.
+In addition to the common input fields, Stop hooks receive `stop_hook_active` and `last_assistant_message`. The `stop_hook_active` field is `true` when CSC is already continuing as a result of a stop hook. Check this value or process the transcript to prevent CSC from running indefinitely. The `last_assistant_message` field contains the text content of CSC's final response, so hooks can access it without parsing the transcript file.
 
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "~/.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "Stop",
@@ -1501,23 +1501,23 @@ In addition to the common input fields, Stop hooks receive `stop_hook_active` an
 
 #### Stop decision control
 
-`Stop` and `SubagentStop` hooks can control whether Claude continues. In addition to the JSON output fields available to all hooks, your hook script can return these event-specific fields:
+`Stop` and `SubagentStop` hooks can control whether CSC continues. In addition to the JSON output fields available to all hooks, your hook script can return these event-specific fields:
 
 | Field      | Description                                                                |
 | :--------- | :------------------------------------------------------------------------- |
-| `decision` | `"block"` prevents Claude from stopping. Omit to allow Claude to stop      |
-| `reason`   | Required when `decision` is `"block"`. Tells Claude why it should continue |
+| `decision` | `"block"` prevents CSC from stopping. Omit to allow CSC to stop      |
+| `reason`   | Required when `decision` is `"block"`. Tells CSC why it should continue |
 
 ```json
 {
   "decision": "block",
-  "reason": "Must be provided when Claude is blocked from stopping"
+  "reason": "Must be provided when CSC is blocked from stopping"
 }
 ```
 
 ### StopFailure
 
-Runs instead of Stop when the turn ends due to an API error. Output and exit code are ignored. Use this to log failures, send alerts, or take recovery actions when Claude cannot complete a response due to rate limits, authentication problems, or other API errors.
+Runs instead of Stop when the turn ends due to an API error. Output and exit code are ignored. Use this to log failures, send alerts, or take recovery actions when CSC cannot complete a response due to rate limits, authentication problems, or other API errors.
 
 #### StopFailure input
 
@@ -1527,12 +1527,12 @@ In addition to the common input fields, StopFailure hooks receive `error`, optio
 | :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `error`                  | Error type: `rate_limit`, `authentication_failed`, `billing_error`, `invalid_request`, `server_error`, `max_output_tokens`, or `unknown`                                                                                                         |
 | `error_details`          | Additional details about the error, when available                                                                                                                                                                                               |
-| `last_assistant_message` | The rendered error text shown in the conversation. Unlike `Stop` and `SubagentStop`, where this field holds Claude's conversational output, for `StopFailure` it contains the API error string itself, such as `"API Error: Rate limit reached"` |
+| `last_assistant_message` | The rendered error text shown in the conversation. Unlike `Stop` and `SubagentStop`, where this field holds CSC's conversational output, for `StopFailure` it contains the API error string itself, such as `"API Error: Rate limit reached"` |
 
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "StopFailure",
   "error": "rate_limit",
@@ -1556,7 +1556,7 @@ In addition to the common input fields, TeammateIdle hooks receive `teammate_nam
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "TeammateIdle",
@@ -1600,11 +1600,11 @@ The matcher filters on the configuration source:
 
 | Matcher            | When it fires                             |
 | :----------------- | :---------------------------------------- |
-| `user_settings`    | `~/.claude/settings.json` changes         |
-| `project_settings` | `.claude/settings.json` changes           |
-| `local_settings`   | `.claude/settings.local.json` changes     |
+| `user_settings`    | `~/.costrict/settings.json` changes         |
+| `project_settings` | `.costrict/settings.json` changes           |
+| `local_settings`   | `.costrict/settings.local.json` changes     |
 | `policy_settings`  | Managed policy settings change            |
-| `skills`           | A skill file in `.claude/skills/` changes |
+| `skills`           | A skill file in `.costrict/skills/` changes |
 
 This example logs all configuration changes for security auditing:
 
@@ -1616,7 +1616,7 @@ This example logs all configuration changes for security auditing:
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/audit-config-change.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.costrict/hooks/audit-config-change.sh"
           }
         ]
       }
@@ -1632,11 +1632,11 @@ In addition to the common input fields, ConfigChange hooks receive `source` and 
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "ConfigChange",
   "source": "project_settings",
-  "file_path": "/Users/.../my-project/.claude/settings.json"
+  "file_path": "/Users/.../my-project/.costrict/settings.json"
 }
 ```
 
@@ -1660,7 +1660,7 @@ ConfigChange hooks can block configuration changes from taking effect. Use exit 
 
 ### CwdChanged
 
-Runs when the working directory changes during a session, for example when Claude executes a `cd` command. Use this to react to directory changes: reload environment variables, activate project-specific toolchains, or run setup scripts automatically. Pairs with FileChanged for tools like direnv that manage per-directory environment.
+Runs when the working directory changes during a session, for example when CSC executes a `cd` command. Use this to react to directory changes: reload environment variables, activate project-specific toolchains, or run setup scripts automatically. Pairs with FileChanged for tools like direnv that manage per-directory environment.
 
 CwdChanged hooks have access to `CLAUDE_ENV_FILE`. Variables written to that file persist into subsequent Bash commands for the session, just as in SessionStart hooks. Only `type: "command"` hooks are supported.
 
@@ -1673,7 +1673,7 @@ In addition to the common input fields, CwdChanged hooks receive `old_cwd` and `
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../transcript.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../transcript.jsonl",
   "cwd": "/Users/my-project/src",
   "hook_event_name": "CwdChanged",
   "old_cwd": "/Users/my-project",
@@ -1714,7 +1714,7 @@ In addition to the common input fields, FileChanged hooks receive `file_path` an
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../transcript.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../transcript.jsonl",
   "cwd": "/Users/my-project",
   "hook_event_name": "FileChanged",
   "file_path": "/Users/my-project/.envrc",
@@ -1750,7 +1750,7 @@ This example creates an SVN working copy and prints the path for CSC to use. Rep
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'NAME=$(jq -r .name); DIR=\"$HOME/.claude/worktrees/$NAME\"; svn checkout https://svn.example.com/repo/trunk \"$DIR\" >&2 && echo \"$DIR\"'"
+            "command": "bash -c 'NAME=$(jq -r .name); DIR=\"$HOME/.costrict/worktrees/$NAME\"; svn checkout https://svn.example.com/repo/trunk \"$DIR\" >&2 && echo \"$DIR\"'"
           }
         ]
       }
@@ -1768,7 +1768,7 @@ In addition to the common input fields, WorktreeCreate hooks receive the `name` 
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "WorktreeCreate",
   "name": "feature-auth"
@@ -1786,7 +1786,7 @@ If the hook fails or produces no path, worktree creation fails with an error.
 
 ### WorktreeRemove
 
-The cleanup counterpart to WorktreeCreate. This hook fires when a worktree is being removed, either when you exit a `--worktree` session and choose to remove it, or when a subagent with `isolation: "worktree"` finishes. For git-based worktrees, Claude handles cleanup automatically with `git worktree remove`. If you configured a WorktreeCreate hook for a non-git version control system, pair it with a WorktreeRemove hook to handle cleanup. Without one, the worktree directory is left on disk.
+The cleanup counterpart to WorktreeCreate. This hook fires when a worktree is being removed, either when you exit a `--worktree` session and choose to remove it, or when a subagent with `isolation: "worktree"` finishes. For git-based worktrees, CSC handles cleanup automatically with `git worktree remove`. If you configured a WorktreeCreate hook for a non-git version control system, pair it with a WorktreeRemove hook to handle cleanup. Without one, the worktree directory is left on disk.
 
 CSC passes the path returned by WorktreeCreate as `worktree_path` in the hook input. This example reads that path and removes the directory:
 
@@ -1814,10 +1814,10 @@ In addition to the common input fields, WorktreeRemove hooks receive the `worktr
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "WorktreeRemove",
-  "worktree_path": "/Users/.../my-project/.claude/worktrees/feature-auth"
+  "worktree_path": "/Users/.../my-project/.costrict/worktrees/feature-auth"
 }
 ```
 
@@ -1841,7 +1841,7 @@ In addition to the common input fields, PreCompact hooks receive `trigger` and `
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "PreCompact",
   "trigger": "manual",
@@ -1867,7 +1867,7 @@ In addition to the common input fields, PostCompact hooks receive `trigger` and 
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "PostCompact",
   "trigger": "manual",
@@ -1899,7 +1899,7 @@ In addition to the common input fields, SessionEnd hooks receive a `reason` fiel
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "hook_event_name": "SessionEnd",
   "reason": "other"
@@ -1929,7 +1929,7 @@ For form-mode elicitation (the most common case):
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "Elicitation",
@@ -1950,7 +1950,7 @@ For URL-mode elicitation (browser-based authentication):
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "Elicitation",
@@ -1997,7 +1997,7 @@ In addition to the common input fields, ElicitationResult hooks receive `mcp_ser
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "/Users/.../.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+  "transcript_path": "/Users/.../.costrict/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
   "cwd": "/Users/...",
   "permission_mode": "default",
   "hook_event_name": "ElicitationResult",
@@ -2071,15 +2071,15 @@ Events that support `command` and `http` hooks but not `prompt` or `agent`:
 
 Instead of executing a Bash command, prompt-based hooks:
 
-1. Send the hook input and your prompt to a Claude model, Haiku by default
+1. Send the hook input and your prompt to a CSC model, Haiku by default
 2. The LLM responds with structured JSON containing a decision
 3. CSC processes the decision automatically
 
 ### Prompt hook configuration
 
-Set `type` to `"prompt"` and provide a `prompt` string instead of a `command`. Use the `$ARGUMENTS` placeholder to inject the hook's JSON input data into your prompt text. CSC sends the combined prompt and input to a fast Claude model, which returns a JSON decision.
+Set `type` to `"prompt"` and provide a `prompt` string instead of a `command`. Use the `$ARGUMENTS` placeholder to inject the hook's JSON input data into your prompt text. CSC sends the combined prompt and input to a fast CSC model, which returns a JSON decision.
 
-This `Stop` hook asks the LLM to evaluate whether all tasks are complete before allowing Claude to finish:
+This `Stop` hook asks the LLM to evaluate whether all tasks are complete before allowing CSC to finish:
 
 ```json
 {
@@ -2089,7 +2089,7 @@ This `Stop` hook asks the LLM to evaluate whether all tasks are complete before 
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Evaluate if Claude should stop: $ARGUMENTS. Check if all tasks are complete."
+            "prompt": "Evaluate if CSC should stop: $ARGUMENTS. Check if all tasks are complete."
           }
         ]
       }
@@ -2119,11 +2119,11 @@ The LLM must respond with JSON containing:
 | Field    | Description                                                |
 | :------- | :--------------------------------------------------------- |
 | `ok`     | `true` allows the action, `false` prevents it              |
-| `reason` | Required when `ok` is `false`. Explanation shown to Claude |
+| `reason` | Required when `ok` is `false`. Explanation shown to CSC |
 
 ### Example: Multi-criteria Stop hook
 
-This `Stop` hook uses a detailed prompt to check three conditions before allowing Claude to stop. If `"ok"` is `false`, Claude continues working with the provided reason as its next instruction. `SubagentStop` hooks use the same format to evaluate whether a subagent should stop:
+This `Stop` hook uses a detailed prompt to check three conditions before allowing CSC to stop. If `"ok"` is `false`, CSC continues working with the provided reason as its next instruction. `SubagentStop` hooks use the same format to evaluate whether a subagent should stop:
 
 ```json
 {
@@ -2133,7 +2133,7 @@ This `Stop` hook uses a detailed prompt to check three conditions before allowin
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "You are evaluating whether Claude should stop working. Context: $ARGUMENTS\n\nAnalyze the conversation and determine if:\n1. All user-requested tasks are complete\n2. Any errors need to be addressed\n3. Follow-up work is needed\n\nRespond with JSON: {\"ok\": true} to allow stopping, or {\"ok\": false, \"reason\": \"your explanation\"} to continue working.",
+            "prompt": "You are evaluating whether CSC should stop working. Context: $ARGUMENTS\n\nAnalyze the conversation and determine if:\n1. All user-requested tasks are complete\n2. Any errors need to be addressed\n3. Follow-up work is needed\n\nRespond with JSON: {\"ok\": true} to allow stopping, or {\"ok\": false, \"reason\": \"your explanation\"} to continue working.",
             "timeout": 30
           }
         ]
@@ -2171,7 +2171,7 @@ Set `type` to `"agent"` and provide a `prompt` string. The configuration fields 
 
 The response schema is the same as prompt hooks: `{ "ok": true }` to allow or `{ "ok": false, "reason": "..." }` to block.
 
-This `Stop` hook verifies that all unit tests pass before allowing Claude to finish:
+This `Stop` hook verifies that all unit tests pass before allowing CSC to finish:
 
 ```json
 {
@@ -2193,13 +2193,13 @@ This `Stop` hook verifies that all unit tests pass before allowing Claude to fin
 
 ## Run hooks in the background
 
-By default, hooks block Claude's execution until they complete. For long-running tasks like deployments, test suites, or external API calls, set `"async": true` to run the hook in the background while Claude continues working. Async hooks cannot block or control Claude's behavior: response fields like `decision`, `permissionDecision`, and `continue` have no effect, because the action they would have controlled has already completed.
+By default, hooks block CSC's execution until they complete. For long-running tasks like deployments, test suites, or external API calls, set `"async": true` to run the hook in the background while CSC continues working. Async hooks cannot block or control CSC's behavior: response fields like `decision`, `permissionDecision`, and `continue` have no effect, because the action they would have controlled has already completed.
 
 ### Configure an async hook
 
-Add `"async": true` to a command hook's configuration to run it in the background without blocking Claude. This field is only available on `type: "command"` hooks.
+Add `"async": true` to a command hook's configuration to run it in the background without blocking CSC. This field is only available on `type: "command"` hooks.
 
-This hook runs a test script after every `Write` tool call. Claude continues working immediately while `run-tests.sh` executes for up to 120 seconds. When the script finishes, its output is delivered on the next conversation turn:
+This hook runs a test script after every `Write` tool call. CSC continues working immediately while `run-tests.sh` executes for up to 120 seconds. When the script finishes, its output is delivered on the next conversation turn:
 
 ```json
 {
@@ -2227,13 +2227,13 @@ The `timeout` field sets the maximum time in seconds for the background process.
 
 When an async hook fires, CSC starts the hook process and immediately continues without waiting for it to finish. The hook receives the same JSON input via stdin as a synchronous hook.
 
-After the background process exits, if the hook produced a JSON response with a `systemMessage` or `additionalContext` field, that content is delivered to Claude as context on the next conversation turn.
+After the background process exits, if the hook produced a JSON response with a `systemMessage` or `additionalContext` field, that content is delivered to CSC as context on the next conversation turn.
 
 Async hook completion notifications are suppressed by default. To see them, enable verbose mode with `Ctrl+O` or start CSC with `--verbose`.
 
 ### Example: run tests after file changes
 
-This hook starts a test suite in the background whenever Claude writes a file, then reports the results back to Claude when the tests finish. Save this script to `.claude/hooks/run-tests-async.sh` in your project and make it executable with `chmod +x`:
+This hook starts a test suite in the background whenever CSC writes a file, then reports the results back to CSC when the tests finish. Save this script to `.costrict/hooks/run-tests-async.sh` in your project and make it executable with `chmod +x`:
 
 ```bash
 #!/bin/bash
@@ -2259,7 +2259,7 @@ else
 fi
 ```
 
-Then add this configuration to `.claude/settings.json` in your project root. The `async: true` flag lets Claude keep working while tests run:
+Then add this configuration to `.costrict/settings.json` in your project root. The `async: true` flag lets CSC keep working while tests run:
 
 ```json
 {
@@ -2270,7 +2270,7 @@ Then add this configuration to `.claude/settings.json` in your project root. The
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/run-tests-async.sh",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.costrict/hooks/run-tests-async.sh",
             "async": true,
             "timeout": 300
           }
@@ -2334,7 +2334,7 @@ On Windows, you can run individual hooks in PowerShell by setting `"shell": "pow
 
 ## Debug hooks
 
-Hook execution details, including which hooks matched, their exit codes, and full stdout and stderr, are written to the debug log file. Start CSC with `csc --debug-file <path>` to write the log to a known location, or run `csc --debug` and read the log at `~/.claude/debug/<session-id>.txt`. The `--debug` flag does not print to the terminal.
+Hook execution details, including which hooks matched, their exit codes, and full stdout and stderr, are written to the debug log file. Start CSC with `csc --debug-file <path>` to write the log to a known location, or run `csc --debug` and read the log at `~/.costrict/debug/<session-id>.txt`. The `--debug` flag does not print to the terminal.
 
 ```text
 [DEBUG] Executing hooks for PostToolUse:Write

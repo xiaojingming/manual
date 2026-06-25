@@ -8,7 +8,7 @@ sidebar_position: 7
 
 > **注意：** 自定义键盘快捷键需要 CSC v2.1.18 或更高版本。使用 `claude --version` 检查你的版本。
 
-CSC 支持自定义键盘快捷键。运行 `/keybindings` 可创建或打开配置文件 `~/.claude/keybindings.json`。
+CSC 支持自定义键盘快捷键。运行 `/keybindings` 可创建或打开配置文件 `~/.costrict/keybindings.json`。
 
 ## 配置文件
 
@@ -27,7 +27,7 @@ CSC 支持自定义键盘快捷键。运行 `/keybindings` 可创建或打开配
 ```json
 {
   "$schema": "https://www.schemastore.org/claude-code-keybindings.json",
-  "$docs": "https://code.claude.com/docs/en/keybindings",
+  "$docs": "https://costrict.ai/docs/en/keybindings",
   "bindings": [
     {
       "context": "Chat",

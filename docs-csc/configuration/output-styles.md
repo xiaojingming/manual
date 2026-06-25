@@ -8,7 +8,7 @@ sidebar_position: 6
 
 Output styles change how CSC responds, not what CSC knows. They modify the system prompt to set role, tone, and output format while keeping core capabilities like running scripts, reading and writing files, and tracking TODOs. Use one when you keep re-prompting for the same voice or format every turn, or when you want CSC to act as something other than a software engineer.
 
-For instructions about your project, conventions, or codebase, use CLAUDE.md instead.
+For instructions about your project, conventions, or codebase, use AGENTS.md instead.
 
 ## Built-in output styles
 
@@ -32,7 +32,7 @@ Token usage depends on the style. Adding instructions to the system prompt incre
 
 ## Change your output style
 
-Run `/config` and select **Output style** to pick a style from a menu. Your selection is saved to `.claude/settings.local.json` at the local project level.
+Run `/config` and select **Output style** to pick a style from a menu. Your selection is saved to `.costrict/settings.local.json` at the local project level.
 
 To set a style without the menu, edit the `outputStyle` field directly in a settings file:
 
@@ -65,7 +65,7 @@ tasks. [Your custom instructions here...]
 [Define how the assistant should behave in this style...]
 ```
 
-You can save these files at the user level (`~/.claude/output-styles`) or project level (`.claude/output-styles`). Plugins can also ship output styles in an `output-styles/` directory.
+You can save these files at the user level (`~/.costrict/output-styles`) or project level (`.costrict/output-styles`). Plugins can also ship output styles in an `output-styles/` directory.
 
 ### Frontmatter
 
@@ -79,9 +79,9 @@ Output style files support frontmatter for specifying metadata:
 
 ## Comparisons to related features
 
-### Output Styles vs. CLAUDE.md vs. --append-system-prompt
+### Output Styles vs. AGENTS.md vs. --append-system-prompt
 
-Output styles completely "turn off" the parts of CSC's default system prompt specific to software engineering. Neither CLAUDE.md nor `--append-system-prompt` edit CSC's default system prompt. CLAUDE.md adds the contents as a user message *following* CSC's default system prompt. `--append-system-prompt` appends the content to the system prompt.
+Output styles completely "turn off" the parts of CSC's default system prompt specific to software engineering. Neither AGENTS.md nor `--append-system-prompt` edit CSC's default system prompt. AGENTS.md adds the contents as a user message *following* CSC's default system prompt. `--append-system-prompt` appends the content to the system prompt.
 
 ### Output Styles vs. Agents
 

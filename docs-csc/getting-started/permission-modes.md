@@ -147,7 +147,7 @@ On entering auto mode, broad allow rules that grant arbitrary code execution are
 
 Narrow rules like `Bash(npm test)` carry over. Dropped rules are restored when you leave auto mode.
 
-The classifier sees user messages, tool calls, and your CLAUDE.md content. Tool results are stripped, so hostile content in a file or web page cannot manipulate it directly. A separate server-side probe scans incoming tool results and flags suspicious content before CSC reads it.
+The classifier sees user messages, tool calls, and your AGENTS.md content. Tool results are stripped, so hostile content in a file or web page cannot manipulate it directly. A separate server-side probe scans incoming tool results and flags suspicious content before CSC reads it.
 
 ### How auto mode handles subagents
 
@@ -195,11 +195,11 @@ Protected directories:
 * `.vscode`
 * `.idea`
 * `.husky`
-* `.claude`, except for `.claude/commands`, `.claude/agents`, `.claude/skills`, and `.claude/worktrees` where CSC routinely creates content
+* `.costrict`, except for `.costrict/commands`, `.costrict/agents`, `.costrict/skills`, and `.costrict/worktrees` where CSC routinely creates content
 
 Protected files:
 
 * `.gitconfig`, `.gitmodules`
 * `.bashrc`, `.bash_profile`, `.zshrc`, `.zprofile`, `.profile`
 * `.ripgreprc`
-* `.mcp.json`, `.claude.json`
+* `.mcp.json`, `.costrict.json`

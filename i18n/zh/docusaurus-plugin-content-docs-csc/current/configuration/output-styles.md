@@ -8,7 +8,7 @@ sidebar_position: 6
 
 输出样式改变的是 CSC 的回复方式，而非 CSC 所知道的内容。它们修改系统提示以设定角色、语气和输出格式，同时保留运行脚本、读写文件和跟踪 TODO 等核心能力。当你每轮对话都在重复要求相同的语气或格式时，或者当你希望 CSC 扮演软件工程师以外的角色时，请使用输出样式。
 
-如需关于项目、约定或代码库的说明，请改用 CLAUDE.md。
+如需关于项目、约定或代码库的说明，请改用 AGENTS.md。
 
 ## 内置输出样式
 
@@ -32,7 +32,7 @@ Token 使用量取决于样式。向系统提示添加指令会增加输入 toke
 
 ## 更改输出样式
 
-运行 `/config` 并选择**输出样式**，从菜单中选择一个样式。你的选择会保存到 `.claude/settings.local.json` 中的本地项目级别。
+运行 `/config` 并选择**输出样式**，从菜单中选择一个样式。你的选择会保存到 `.costrict/settings.local.json` 中的本地项目级别。
 
 要在不使用菜单的情况下设置样式，请直接在设置文件中编辑 `outputStyle` 字段：
 
@@ -65,7 +65,7 @@ tasks. [Your custom instructions here...]
 [Define how the assistant should behave in this style...]
 ```
 
-你可以将这些文件保存在用户级别（`~/.claude/output-styles`）或项目级别（`.claude/output-styles`）。插件也可以在 `output-styles/` 目录中提供输出样式。
+你可以将这些文件保存在用户级别（`~/.costrict/output-styles`）或项目级别（`.costrict/output-styles`）。插件也可以在 `output-styles/` 目录中提供输出样式。
 
 ### Frontmatter
 
@@ -79,9 +79,9 @@ tasks. [Your custom instructions here...]
 
 ## 与相关功能的比较
 
-### 输出样式 vs. CLAUDE.md vs. --append-system-prompt
+### 输出样式 vs. AGENTS.md vs. --append-system-prompt
 
-输出样式会完全"关闭" CSC 默认系统提示中专门针对软件工程的部分。CLAUDE.md 和 `--append-system-prompt` 都不会编辑 CSC 的默认系统提示。CLAUDE.md 将内容作为用户消息添加到 CSC 默认系统提示*之后*。`--append-system-prompt` 将内容追加到系统提示末尾。
+输出样式会完全"关闭" CSC 默认系统提示中专门针对软件工程的部分。AGENTS.md 和 `--append-system-prompt` 都不会编辑 CSC 的默认系统提示。AGENTS.md 将内容作为用户消息添加到 CSC 默认系统提示*之后*。`--append-system-prompt` 将内容追加到系统提示末尾。
 
 ### 输出样式 vs. 智能体
 

@@ -8,7 +8,7 @@ sidebar_position: 1
 
 Subagents are specialized AI assistants that handle specific types of tasks. Use one when a side task would flood your main conversation with search results, logs, or file contents you won't reference again: the Subagent does that work in its own context and returns only the summary. Define a custom Subagent when you keep spawning the same kind of worker with the same instructions.
 
-Each Subagent runs in its own context window with a custom system prompt, specific tool access, and independent permissions. When Claude encounters a task that matches a Subagent's description, it delegates to that Subagent, which works independently and returns results. To see the context savings in practice, the context window visualization walks through a session where a Subagent handles research in its own separate window.
+Each Subagent runs in its own context window with a custom system prompt, specific tool access, and independent permissions. When CSC encounters a task that matches a Subagent's description, it delegates to that Subagent, which works independently and returns results. To see the context savings in practice, the context window visualization walks through a session where a Subagent handles research in its own separate window.
 
 > **Note:** If you need multiple agents working in parallel and communicating with each other, see Agent teams. Subagents work within a single session; Agent teams coordinate across separate sessions.
 
@@ -37,7 +37,7 @@ A fast, read-only agent optimized for searching and analyzing codebases.
 
 When CSC needs to search or understand a codebase without making changes, it delegates to Explore. This keeps exploration results out of your main conversation context.
 
-When invoking Explore, Claude specifies a thoroughness level: **quick** for targeted lookups, **medium** for balanced exploration, or **very thorough** for comprehensive analysis.
+When invoking Explore, CSC specifies a thoroughness level: **quick** for targeted lookups, **medium** for balanced exploration, or **very thorough** for comprehensive analysis.
 
 ### Plan
 
@@ -75,11 +75,11 @@ In CSC, run:
 
 #### Choose a location
 
-Switch to the **Library** tab, select **Create new agent**, then choose **Personal**. This saves the Subagent to `~/.claude/agents/` so it's available in all your projects.
+Switch to the **Library** tab, select **Create new agent**, then choose **Personal**. This saves the Subagent to `~/.costrict/agents/` so it's available in all your projects.
 
-#### Generate with Claude
+#### Generate with CSC
 
-Select **Generate with Claude**. When prompted, describe the Subagent:
+Select **Generate with CSC**. When prompted, describe the Subagent:
 
 ```text
 A code improvement agent that scans files and suggests improvements
@@ -87,7 +87,7 @@ for readability, performance, and best practices. It should explain
 each issue, show the current code, and provide an improved version.
 ```
 
-Claude generates the identifier, description, and system prompt for you.
+CSC generates the identifier, description, and system prompt for you.
 
 #### Select tools
 
@@ -103,7 +103,7 @@ Pick a background color for the Subagent. This helps you identify which Subagent
 
 #### Configure memory
 
-Select **User scope** to give the Subagent a persistent memory directory at `~/.claude/agent-memory/`. The Subagent uses this to accumulate insights across conversations, such as codebase patterns and recurring issues. Select **None** if you don't want the Subagent to persist learnings.
+Select **User scope** to give the Subagent a persistent memory directory at `~/.costrict/agent-memory/`. The Subagent uses this to accumulate insights across conversations, such as codebase patterns and recurring issues. Select **None** if you don't want the Subagent to persist learnings.
 
 #### Save and try it out
 
@@ -113,7 +113,7 @@ Review the configuration summary. Press `s` or `Enter` to save, or press `e` to 
 Use the code-improver agent to suggest improvements in this project
 ```
 
-Claude delegates to your new Subagent, which scans the codebase and returns improvement suggestions.
+CSC delegates to your new Subagent, which scans the codebase and returns improvement suggestions.
 
 You now have a Subagent you can use in any project on your machine to analyze codebases and suggest improvements.
 
@@ -126,7 +126,7 @@ You can also create Subagents manually as Markdown files, define them via CLI fl
 The `/agents` command opens a tabbed interface for managing Subagents. The **Running** tab shows live Subagents and lets you open or stop them. The **Library** tab lets you:
 
 * View all available Subagents (built-in, user, project, and plugin)
-* Create new Subagents with guided setup or Claude generation
+* Create new Subagents with guided setup or CSC generation
 * Edit existing Subagent configuration and tool access
 * Delete custom Subagents
 * See which Subagents are active when duplicates exist
@@ -143,15 +143,15 @@ Subagents are Markdown files with YAML frontmatter. Store them in different loca
 | :--------------------------- | :---------------------- | :---------- | :-------------------------------------------- |
 | Managed settings             | Organization-wide       | 1 (highest) | Deployed via managed settings                 |
 | `--agents` CLI flag          | Current session         | 2           | Pass JSON when launching CSC                  |
-| `.claude/agents/`            | Current project         | 3           | Interactive or manual                         |
-| `~/.claude/agents/`          | All your projects       | 4           | Interactive or manual                         |
+| `.costrict/agents/`            | Current project         | 3           | Interactive or manual                         |
+| `~/.costrict/agents/`          | All your projects       | 4           | Interactive or manual                         |
 | Plugin's `agents/` directory | Where plugin is enabled | 5 (lowest)  | Installed with Plugins                        |
 
-**Project Subagents** (`.claude/agents/`) are ideal for Subagents specific to a codebase. Check them into version control so your team can use and improve them collaboratively.
+**Project Subagents** (`.costrict/agents/`) are ideal for Subagents specific to a codebase. Check them into version control so your team can use and improve them collaboratively.
 
-Project Subagents are discovered by walking up from the current working directory. Directories added with `--add-dir` grant file access only and are not scanned for Subagents. To share Subagents across projects, use `~/.claude/agents/` or Plugins.
+Project Subagents are discovered by walking up from the current working directory. Directories added with `--add-dir` grant file access only and are not scanned for Subagents. To share Subagents across projects, use `~/.costrict/agents/` or Plugins.
 
-**User Subagents** (`~/.claude/agents/`) are personal Subagents available in all your projects.
+**User Subagents** (`~/.costrict/agents/`) are personal Subagents available in all your projects.
 
 **CLI-defined Subagents** are passed as JSON when launching CSC. They exist only for that session and aren't saved to disk, making them useful for quick testing or automation scripts. You can define multiple Subagents in a single `--agents` call:
 
@@ -172,11 +172,11 @@ csc --agents '{
 
 The `--agents` flag accepts JSON with the same frontmatter fields as file-based Subagents: `description`, `prompt`, `tools`, `disallowedTools`, `model`, `permissionMode`, `mcpServers`, `hooks`, `maxTurns`, `skills`, `initialPrompt`, `memory`, `effort`, `background`, `isolation`, and `color`. Use `prompt` for the system prompt, equivalent to the markdown body in file-based Subagents.
 
-**Managed Subagents** are deployed by organization administrators. Place markdown files in `.claude/agents/` inside the managed settings directory, using the same frontmatter format as project and user Subagents. Managed definitions take precedence over project and user Subagents with the same name.
+**Managed Subagents** are deployed by organization administrators. Place markdown files in `.costrict/agents/` inside the managed settings directory, using the same frontmatter format as project and user Subagents. Managed definitions take precedence over project and user Subagents with the same name.
 
 **Plugin Subagents** come from Plugins you've installed. They appear in `/agents` alongside your custom Subagents. See the plugin components reference for details on creating plugin Subagents.
 
-> **Note:** For security reasons, Plugin Subagents do not support the `hooks`, `mcpServers`, or `permissionMode` frontmatter fields. These fields are ignored when loading agents from a Plugin. If you need them, copy the agent file into `.claude/agents/` or `~/.claude/agents/`. You can also add rules to `permissions.allow` in `settings.json` or `settings.local.json`, but these rules apply to the entire session, not just the Plugin Subagent.
+> **Note:** For security reasons, Plugin Subagents do not support the `hooks`, `mcpServers`, or `permissionMode` frontmatter fields. These fields are ignored when loading agents from a Plugin. If you need them, copy the agent file into `.costrict/agents/` or `~/.costrict/agents/`. You can also add rules to `permissions.allow` in `settings.json` or `settings.local.json`, but these rules apply to the entire session, not just the Plugin Subagent.
 
 Subagent definitions from any of these scopes are also available to Agent teams: when spawning a teammate, you can reference a Subagent type and the teammate uses its `tools` and `model`, with the definition's body appended to the teammate's system prompt as additional instructions. See Agent teams for which frontmatter fields apply on that path.
 
@@ -209,7 +209,7 @@ The following fields can be used in the YAML frontmatter. Only `name` and `descr
 | Field             | Required | Description                                                                                                                                                                                                                                                                  |
 | :---------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `name`            | Yes      | Unique identifier using lowercase letters and hyphens                                                                                                                                                                                                                        |
-| `description`     | Yes      | When Claude should delegate to this Subagent                                                                                                                                                                                                                                 |
+| `description`     | Yes      | When CSC should delegate to this Subagent                                                                                                                                                                                                                                 |
 | `tools`           | No       | Tools the Subagent can use. Inherits all tools if omitted                                                                                                                                                                                                                    |
 | `disallowedTools` | No       | Tools to deny, removed from inherited or specified list                                                                                                                                                                                                                      |
 | `model`           | No       | Model to use: `sonnet`, `opus`, `haiku`, a full model ID (for example, `claude-opus-4-6`), or `inherit`. Defaults to `inherit`                                                                                                                                                |
@@ -335,7 +335,7 @@ The `permissionMode` field controls how the Subagent handles permission prompts.
 | `bypassPermissions` | Skip permission prompts                                                                                                                     |
 | `plan`              | Plan mode (read-only exploration)                                                                                                           |
 
-> **Warning:** Use `bypassPermissions` with caution. It skips permission prompts, allowing the Subagent to execute operations without approval. Writes to `.git`, `.claude`, `.vscode`, `.idea`, and `.husky` directories still prompt for confirmation, except for `.claude/commands`, `.claude/agents`, and `.claude/skills`. See permission modes for details.
+> **Warning:** Use `bypassPermissions` with caution. It skips permission prompts, allowing the Subagent to execute operations without approval. Writes to `.git`, `.costrict`, `.vscode`, `.idea`, and `.husky` directories still prompt for confirmation, except for `.costrict/commands`, `.costrict/agents`, and `.costrict/skills`. See permission modes for details.
 
 If the parent uses `bypassPermissions`, this takes precedence and cannot be overridden. If the parent uses auto mode, the Subagent inherits auto mode and any `permissionMode` in its frontmatter is ignored: the classifier evaluates the Subagent's tool calls with the same block and allow rules as the parent session.
 
@@ -378,9 +378,9 @@ Choose a scope based on how broadly the memory should apply:
 
 | Scope     | Location                                      | Use when                                                                                    |
 | :-------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------ |
-| `user`    | `~/.claude/agent-memory/<name-of-agent>/`     | The Subagent should remember learnings across all projects                                  |
-| `project` | `.claude/agent-memory/<name-of-agent>/`       | The Subagent's knowledge is project-specific and shareable via version control              |
-| `local`   | `.claude/agent-memory-local/<name-of-agent>/` | The Subagent's knowledge is project-specific but should not be checked into version control |
+| `user`    | `~/.costrict/agent-memory/<name-of-agent>/`     | The Subagent should remember learnings across all projects                                  |
+| `project` | `.costrict/agent-memory/<name-of-agent>/`       | The Subagent's knowledge is project-specific and shareable via version control              |
+| `local`   | `.costrict/agent-memory-local/<name-of-agent>/` | The Subagent's knowledge is project-specific but should not be checked into version control |
 
 When memory is enabled:
 
@@ -444,7 +444,7 @@ See Hook input for the complete input schema and exit codes for how exit codes a
 
 #### Disable specific Subagents
 
-You can prevent Claude from using specific Subagents by adding them to the `deny` array in your settings. Use the format `Agent(subagent-name)` where `subagent-name` matches the Subagent's name field.
+You can prevent CSC from using specific Subagents by adding them to the `deny` array in your settings. Use the format `Agent(subagent-name)` where `subagent-name` matches the Subagent's name field.
 
 ```json
 {
@@ -552,20 +552,20 @@ When automatic delegation isn't enough, you can request a Subagent yourself. Thr
 * **@-mention**: guarantees the Subagent runs for one task
 * **Session-wide**: the whole session uses that Subagent's system prompt, tool restrictions, and model via the `--agent` flag or the `agent` setting
 
-For natural language, there's no special syntax. Name the Subagent and Claude typically delegates:
+For natural language, there's no special syntax. Name the Subagent and CSC typically delegates:
 
 ```text
 Use the test-runner subagent to fix failing tests
 Have the code-reviewer subagent look at my recent changes
 ```
 
-**@-mention the Subagent.** Type `@` and pick the Subagent from the typeahead, the same way you @-mention files. This ensures that specific Subagent runs rather than leaving the choice to Claude:
+**@-mention the Subagent.** Type `@` and pick the Subagent from the typeahead, the same way you @-mention files. This ensures that specific Subagent runs rather than leaving the choice to CSC:
 
 ```text
 @"code-reviewer (agent)" look at the auth changes
 ```
 
-Your full message still goes to Claude, which writes the Subagent's task prompt based on what you asked. The @-mention controls which Subagent Claude invokes, not what prompt it receives.
+Your full message still goes to CSC, which writes the Subagent's task prompt based on what you asked. The @-mention controls which Subagent CSC invokes, not what prompt it receives.
 
 Subagents provided by an enabled Plugin appear in the typeahead as `<plugin-name>:<agent-name>`. Named background Subagents currently running in the session also appear in the typeahead, showing their status next to the name. You can also type the mention manually without using the picker: `@agent-<name>` for local Subagents, or `@agent-<plugin-name>:<agent-name>` for Plugin Subagents.
 
@@ -575,13 +575,13 @@ Subagents provided by an enabled Plugin appear in the typeahead as `<plugin-name
 csc --agent code-reviewer
 ```
 
-The Subagent's system prompt replaces the default CSC system prompt entirely, the same way `--system-prompt` does. `CLAUDE.md` files and project memory still load through the normal message flow. The agent name appears as `@<name>` in the startup header so you can confirm it's active.
+The Subagent's system prompt replaces the default CSC system prompt entirely, the same way `--system-prompt` does. `AGENTS.md` files and project memory still load through the normal message flow. The agent name appears as `@<name>` in the startup header so you can confirm it's active.
 
 This works with built-in and custom Subagents, and the choice persists when you resume the session.
 
 For a Plugin-provided Subagent, pass the scoped name: `csc --agent <plugin-name>:<agent-name>`.
 
-To make it the default for every session in a project, set `agent` in `.claude/settings.json`:
+To make it the default for every session in a project, set `agent` in `.costrict/settings.json`:
 
 ```json
 {
@@ -633,7 +633,7 @@ For tasks that need sustained parallelism or exceed your context window, Agent t
 
 #### Chain Subagents
 
-For multi-step workflows, ask Claude to use Subagents in sequence. Each Subagent completes its task and returns results to CSC, which then passes relevant context to the next Subagent.
+For multi-step workflows, ask CSC to use Subagents in sequence. Each Subagent completes its task and returns results to CSC, which then passes relevant context to the next Subagent.
 
 ```text
 Use the code-reviewer subagent to find performance issues, then use the optimizer subagent to fix them
@@ -670,19 +670,19 @@ Resumed Subagents retain their full conversation history, including all previous
 
 When a Subagent completes, CSC receives its agent ID. CSC uses the `SendMessage` tool with the agent's ID as the `to` field to resume it. The `SendMessage` tool is only available when Agent teams are enabled via `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`.
 
-To resume a Subagent, ask Claude to continue the previous work:
+To resume a Subagent, ask CSC to continue the previous work:
 
 ```text
 Use the code-reviewer subagent to review the authentication module
 [Agent completes]
 
 Continue that code review and now analyze the authorization logic
-[Claude resumes the subagent with full context from previous conversation]
+[CSC resumes the subagent with full context from previous conversation]
 ```
 
 If a stopped Subagent receives a `SendMessage`, it auto-resumes in the background without requiring a new `Agent` invocation.
 
-You can also ask Claude for the agent ID if you want to reference it explicitly, or find IDs in the transcript files at `~/.claude/projects/{project}/{sessionId}/subagents/`. Each transcript is stored as `agent-{agentId}.jsonl`.
+You can also ask CSC for the agent ID if you want to reference it explicitly, or find IDs in the transcript files at `~/.costrict/projects/{project}/{sessionId}/subagents/`. Each transcript is stored as `agent-{agentId}.jsonl`.
 
 Subagent transcripts persist independently of the main conversation:
 
@@ -716,7 +716,7 @@ These examples demonstrate effective patterns for building Subagents. Use them a
 > **Tip:** **Best practices:**
 >
 > * **Design focused Subagents:** each Subagent should excel at one specific task
-> * **Write detailed descriptions:** Claude uses the description to decide when to delegate
+> * **Write detailed descriptions:** CSC uses the description to decide when to delegate
 > * **Limit tool access:** grant only necessary permissions for security and focus
 > * **Check into version control:** share project Subagents with your team
 
@@ -891,4 +891,4 @@ Make the script executable:
 chmod +x ./scripts/validate-readonly-query.sh
 ```
 
-The hook receives JSON via stdin with the Bash command in `tool_input.command`. Exit code 2 blocks the operation and feeds the error message back to Claude. See Hooks for details on exit codes and Hook input for the complete input schema.
+The hook receives JSON via stdin with the Bash command in `tool_input.command`. Exit code 2 blocks the operation and feeds the error message back to CSC. See Hooks for details on exit codes and Hook input for the complete input schema.
