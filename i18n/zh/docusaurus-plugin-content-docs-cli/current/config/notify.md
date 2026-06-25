@@ -17,15 +17,15 @@ Github: https://github.com/zgsm-ai/costrict-system-notify
 
 - 主会话进入等待
 
-![img](img/notify/idle.png)
+![img](img/notify/idle.webp)
 
 - 询问权限
 
-![img](img/notify/permission.png)
+![img](img/notify/permission.webp)
 
 - 问卷工具调用
 
-![img](img/notify/question.png)
+![img](img/notify/question.webp)
 
 ## 通知渠道与启用配置
 
@@ -33,7 +33,7 @@ Github: https://github.com/zgsm-ai/costrict-system-notify
 
 ### 1. 系统通知栏通知
 
-![img](img/notify/system_notify.png)
+![img](img/notify/system_notify.webp)
 
 基于 [node-notify](https://github.com/mikaelbr/node-notifier) 库进行通知，支持 windows、mac、linux
 
@@ -58,15 +58,15 @@ webhook 地址获取途径如下：
 
 1. 打开企微群设置，选择消息推送功能
 
-![img](img/notify/wecom_webhook_url_1.png)
+![img](img/notify/wecom_webhook_url_1.webp)
 
 2. 新增自定义消息推送
 
-![img](img/notify/wecom_webhook_url_2.png)
+![img](img/notify/wecom_webhook_url_2.webp)
 
 3. 新增推送机器人 ，并获取推送 webhook 地址
 
-![img](img/notify/wecom_webhook_url_3.png)
+![img](img/notify/wecom_webhook_url_3.webp)
 
 ### 3. Bark 通知（仅针对 ios 用户）
 

@@ -12,11 +12,11 @@ sidebar_position: 2
 cs auth login
 ```
 
-![img.png](img/quick_start/connect.png)
+![img.png](img/quick_start/connect.webp)
 
 - 在浏览器进行登录。（如未自动打开浏览器，可手动复制url到浏览器中进行登录）
 
-![image-20260203110234558](img/quick_start/image-20260203110234558.png)
+![image-20260203110234558](img/quick_start/image-20260203110234558.webp)
 
 - 回到终端，等待登录完成（一般几秒内）。
 

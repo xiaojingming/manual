@@ -7,21 +7,21 @@ sidebar_position: 3
 
 回到 **Build** 模式（按 Tab 键切换）执行 **/test** 命令（或配合输入待测需求 */test 测试一下 tdd agent 的功能*）开始执行自测试自闭环
 
-![img](img/tdd/png.png)
+![img](img/tdd/png.webp)
 
 前序编码流程结束后，AI会具体情况推荐是否立即测试，选择后可以启动测试效果同/test
 
-![img](img/tdd/png-17700915168521.png)
+![img](img/tdd/png-17700915168521.webp)
 
 ##  /test 命令自动化流程说明
 
-![img](img/tdd/png-17700915168522.png)
+![img](img/tdd/png-17700915168522.webp)
 
 1）可运行性验证。将自动拉起 RunAndFix agent 用于可运行性验证，保障当前项目没有基本运行问题。当前主要验证**编译类问题**，会执行编译命令并修复**编码类缺陷**直至编译通过。
 
 2）测试需求确认。将从 plan 模式提案、历史上下文、当前变更文件、近期提交历史内，按优先级获取待测需求，并进行用户确认：
 
-![img](img/tdd/png-17700915168523.png)
+![img](img/tdd/png-17700915168523.webp)
 
 ​	选择或自定义输入待测需求即可。
 
@@ -55,7 +55,7 @@ TestPrepare agent 的检索应用优先级为：
 
 3）测试执行方式（使用 npm run test、bun test tests/play.test.ts 等知识）
 
-![img](img/tdd/png-17700915168524.png)
+![img](img/tdd/png-17700915168524.webp)
 
 确认后结果将保存于 `<project>.cospec/TEST_GUIDE.md` 内供后续复用。
 
@@ -73,6 +73,6 @@ TestPrepare agent 的检索应用优先级为：
 
 该版本有lsp功能（参考 4.4.9 章节），建议安装好对应的环境效果更好，更快收敛。
 
-![img](img/tdd/png-17700915168535.png)
+![img](img/tdd/png-17700915168535.webp)
 
  

@@ -11,18 +11,18 @@ sidebar_position: 8
 Windows 系统（cmd / PowerShell 等终端）
 终端顶部点击鼠标右键 → 编辑 → 粘贴
 
-![img](img/FAQ/png.png)
+![img](img/FAQ/png.webp)
 
 Linux 系统
 取决于所用终端，通常按下 Shift + 右键，即可弹出包含粘贴选项的菜单，选择对应粘贴项即可。
 
-![img](img/FAQ/linux-paste.png)
+![img](img/FAQ/linux-paste.webp)
 
 ## 2、Tab键无法切换问卷中的问题
 
 使用左右方向键进行切换。
 
-![img](img/FAQ/png-17700999595561.png)
+![img](img/FAQ/png-17700999595561.webp)
 
 ## 3、linux出现GLIB版本问题导致无法执行
 

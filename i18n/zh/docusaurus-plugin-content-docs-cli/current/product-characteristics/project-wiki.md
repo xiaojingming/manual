@@ -10,9 +10,9 @@ sidebar_position: 2
 
 在 **build** 模式下，输入  `/project-wiki` ，输入Enter 执行，等待完成即可。执行时间在数分钟到数十分钟不等，视项目规模而定。
 
-![image-20260307115432486](img/project-wiki/image-20260307115432486.png)
+![image-20260307115432486](img/project-wiki/image-20260307115432486.webp)
 
-![image-20260307115452974](img/project-wiki/image-20260307115452974.png)
+![image-20260307115452974](img/project-wiki/image-20260307115452974.webp)
 
 最终输出示例：
 

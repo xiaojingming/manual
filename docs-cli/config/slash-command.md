@@ -36,7 +36,7 @@ Parameter description: agent is an optional configuration option. If not specifi
 
 ## Testing
 
-![img](img/slash-command/png.png)
+![img](img/slash-command/png.webp)
 
 ## Other Configurations
 

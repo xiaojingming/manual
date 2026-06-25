@@ -24,21 +24,21 @@ To raise testing efficiency and tighten platform integration we decided to embed
 
 We first added two new tables—`VDC` and `TestTask`. After defining the columns we let CoStrict read an existing local database-design example and instantly emit the DDL and ORM code; no repetitive CRUD was written by hand. The annotations we added in code look like this:
 
-![alt text](img/case3/image1.png)
+![alt text](img/case3/image1.webp)
 
 **2. One-command back-end scaffold**
 
 CoStrict automatically ingested related local code (no copy-paste required) and, from the schema alone, produced entity classes, DAOs and service layers that follow the platform’s existing conventions. Once we explained the meaning of each field, CoStrict referenced our prior database example, built the tables, and exposed basic CRUD endpoints that the controller could call immediately.
 
-![alt text](img/case3/image2.png)
+![alt text](img/case3/image2.webp)
 
-![alt text](img/case3/image3.png)
+![alt text](img/case3/image3.webp)
 
 **3. Auto-generated front-end pages**
 
 We kept the same UI patterns already used in the platform. CoStrict accepted the column list and interaction requirements and emitted page components that conform to the house style, already wired to the back-end for live debugging—slashing front-end effort. The prompt we used is shown below:
 
-![alt text](img/case3/image4.png)
+![alt text](img/case3/image4.webp)
 
 #### 3. Results: Dramatic Speed-Up in Test Development
 
@@ -46,19 +46,19 @@ We kept the same UI patterns already used in the platform. CoStrict accepted the
 
 The emitted database layer mirrors the existing project layout, so it drops straight in:
 
-![alt text](img/case3/image5.png)
+![alt text](img/case3/image5.webp)
 
-![alt text](img/case3/image6.png)
+![alt text](img/case3/image6.webp)
 
-![alt text](img/case3/image7.png)
+![alt text](img/case3/image7.webp)
 
 **2. Consistent UI, smooth UX**
 
 The auto-generated pages match the platform’s look-and-feel and expose full CRUD plus test-task triggering. They communicate with the back-end controller instantly, as shown here:
 
-![alt text](img/case3/image8.png)
+![alt text](img/case3/image8.webp)
 
-![alt text](img/case3/image9.png)
+![alt text](img/case3/image9.webp)
 
 **3. Measurable efficiency gain**
 

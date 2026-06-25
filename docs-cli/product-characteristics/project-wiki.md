@@ -10,7 +10,7 @@ This feature uses AI to perform comprehensive, multi-dimensional deep analysis o
 
 In **build** mode, enter `/project-wiki`, press Enter to execute, and wait for completion. Execution time ranges from a few minutes to tens of minutes, depending on the project size.
 
-![image-20260307115432486](img/project-wiki/image-20260307115432486.png)
+![image-20260307115432486](img/project-wiki/image-20260307115432486.webp)
 
 {/* ![image-20260307115452974](img/project-wiki/image-20260307115452974.png) */}
 

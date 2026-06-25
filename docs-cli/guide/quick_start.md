@@ -12,7 +12,7 @@ Or:
 cs auth login
 ```
 
-![img.png](img/quick_start/connect.png)
+![img.png](img/quick_start/connect.webp)
 
 - Log in through the browser. (If the browser does not open automatically, manually copy the URL to the browser to log in)
 

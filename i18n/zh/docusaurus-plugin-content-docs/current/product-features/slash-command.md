@@ -17,7 +17,7 @@ sidebar_position: 3
 
 斜杠命令让您可以创建可重复使用的提示和工作流，可以即时触发。将复杂的多步骤过程转换为单个命令，标准化团队实践，并通过简单的 Markdown 文件自动化重复任务。
 
-![descript](./img/slash/image1.png)
+![descript](./img/slash/image1.webp)
 
 主要优势：
 
@@ -123,7 +123,7 @@ argument-hint: <要审查的文件或目录>
 3. 点击"新建命令"，命名它，并选择位置（项目或全局）
 4. 命令文件将打开并包含起始模板内容
 
-![descript](./img/slash/image2.png)
+![descript](./img/slash/image2.webp)
 
 
 
@@ -132,7 +132,7 @@ argument-hint: <要审查的文件或目录>
 
 在聊天中输入 / 以打开仅选择命令菜单。使用齿轮图标打开设置 > 斜杠命令来创建和编辑命令。
 
-![descript](./img/slash/image3.png)
+![descript](./img/slash/image3.webp)
 
 1. 仅选择：从现有命令中选择；创建和编辑在设置中进行
 2. 自动完成：开始输入以过滤命令（例如，/sam 显示 sample-command-name）

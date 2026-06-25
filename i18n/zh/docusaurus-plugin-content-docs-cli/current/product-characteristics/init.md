@@ -9,12 +9,12 @@ sidebar_position: 1
 
 一次生成，多次复用，可手动编辑修改该文件，添加自己的rules。
 
-![img](img/init/png.png)
+![img](img/init/png.webp)
 
-![img](img/init/png-17700918603891.png)
+![img](img/init/png-17700918603891.webp)
 
  
 
-![img](img/init/png-17700918603902.png)
+![img](img/init/png-17700918603902.webp)
 
  

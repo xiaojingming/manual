@@ -26,7 +26,7 @@ npm install -g @costrict/csc --registry=https://registry.npmjs.org/
 
 安装后即可使用 csc 命令。
 
-![image-20260413163936500](./assets/csc.png)
+![image-20260413163936500](./assets/csc.webp)
 
 ## 你可以做什么
 

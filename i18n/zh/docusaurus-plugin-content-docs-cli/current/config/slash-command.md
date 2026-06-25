@@ -36,7 +36,7 @@ Focus on the failing tests and suggest fixes.
 
 ## 测试
 
-![img](img/slash-command/png.png)
+![img](img/slash-command/png.webp)
 
 ## 其它配置
 

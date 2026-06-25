@@ -18,7 +18,7 @@ cs
 cs /path/to/project
 ```
 
-![img](img/feature/main.png)
+![img](img/feature/main.webp)
 
 ### 非交互模式
 
@@ -36,7 +36,7 @@ cs web                              # 默认 http://127.0.0.1:4096/
 cs web --hostname 0.0.0.0 --port 8080  # 自定义 IP 和端口
 ```
 
-![img](img/feature/png-17700885881302.png)
+![img](img/feature/png-17700885881302.webp)
 
 ### Docker 容器
 

@@ -58,14 +58,14 @@ CoStrict生成了基础前端代码，但初次生成的界面布局不够美观
 添加数据加载状态提示和错误处理
 ```
 
-![alt text](img/case2/1.png)
+![alt text](img/case2/1.webp)
 
 #### 4、效果测试
 
 代码生成完成后，我使用CoStrict协助编写单元测试和集成测试，并将问题发给CoStrict去debug，最终跑出了最终想要的效果。
 在CoStrict的协助下，我仅用一天时间就完成了原本需要一周多的全栈开发任务。
 
-![alt text](img/case2/2.png)
+![alt text](img/case2/2.webp)
 
 ### 心得体会
 

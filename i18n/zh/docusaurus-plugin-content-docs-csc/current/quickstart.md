@@ -26,7 +26,7 @@ npm install -g @costrict/csc --registry=https://registry.npmjs.org/
 
 安装后即可使用 csc 命令。
 
-![csc](./assets/csc.png)
+![csc](./assets/csc.webp)
 
 ## 第 2 步：启动你的第一个会话
 
@@ -60,7 +60,7 @@ csc
 
 ### **方式一：CoStrict 企业登录（推荐）**
 
-![login](./assets/login.png)
+![login](./assets/login.webp)
 
 > 登录后，你的凭据将被保存，无需再次登录。之后要切换账户，请使用 `/login` 命令。
 
@@ -100,7 +100,7 @@ csc
 > /model  # 开始切换模型
 ```
 
-![models](./assets/models.png)
+![models](./assets/models.webp)
 
 
 

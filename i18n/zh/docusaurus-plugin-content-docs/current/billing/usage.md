@@ -157,7 +157,7 @@ sidebar_position: 1
 
 Credits 获取历史提供了所有已获得 Credits 的完整记录，包括获取原因、数量，以及生效与到期日期，便于你轻松追踪 Credits 来源。
 
-![Credits 日志示例](./img/usage/image1.png)
+![Credits 日志示例](./img/usage/image1.webp)
 
 ### Credits 日志包含以下信息
 

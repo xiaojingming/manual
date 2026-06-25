@@ -8,7 +8,7 @@ sidebar_position: 2
 
 The "Enhance Prompt" feature in CoStrict helps you improve quality and effectiveness of your prompts before sending them to the AI model. By clicking the wand icon in the chat input, you can automatically refine your initial request, making it clearer, more specific, and more likely to produce the desired results.
 
-![desctiption](./img/prompt/image1.png)
+![desctiption](./img/prompt/image1.webp)
 
 ### How to Use Enhance Prompt
 
@@ -35,7 +35,7 @@ The "Enhance Prompt" feature in CoStrict helps you improve quality and effective
 
 The "Enhance Prompt" feature uses a customizable prompt template. You can modify this template to tailor the enhancement process to your specific needs.
 
-![desctiption](./img/prompt/image2.png)
+![desctiption](./img/prompt/image2.webp)
 
 ### Prompts Settings
 

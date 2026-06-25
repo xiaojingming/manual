@@ -62,14 +62,14 @@ Switch the color palette to the system theme, add animation,
 stack the charts on small screens, and show loading & error states.
 ```
 
-![alt text](img/case2/image1.png)
+![alt text](img/case2/image1.webp)
 
 #### 4. Testing & Polish
 
 After the code was generated, I asked CoStrict to write unit and integration tests, then pasted any failing output back into the chat for instant debugging.  
 In one working day I had a feature that would normally have taken a week—and the sprint stayed green.
 
-![alt text](img/case2/image2.png)
+![alt text](img/case2/image2.webp)
 
 ### Key Takeaways
 

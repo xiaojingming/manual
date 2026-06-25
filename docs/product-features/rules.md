@@ -58,7 +58,7 @@ Rules are loaded in order: Global rules first, then workspace rules. If there's 
 
 Custom Instructions define specific behaviors, preferences, and constraints beyond CoStrict's basic role definition. Examples include coding style, documentation standards, testing requirements, and workflow guidelines.
 
-![descript](./img/rules/image1.png)
+![descript](./img/rules/image1.webp)
 
 ## Setting Custom Instructions​
 
@@ -68,7 +68,7 @@ These instructions apply across all workspaces and maintain your preferences reg
 
 How to set them:
 
-![descript](./img/rules/image2.png)
+![descript](./img/rules/image2.webp)
 
 1\. Open Prompts Tab: Click the icon in the CoStrict top menu bar
 
@@ -262,7 +262,7 @@ Mode-specific instructions can be set in two independent ways that can be used s
 
 1.  Using the Prompts Tab:
 
-![descript](./img/rules/image3.png)
+![descript](./img/rules/image3.webp)
 
 - Open Tab: Click the icon in the CoStrict top menu bar
 

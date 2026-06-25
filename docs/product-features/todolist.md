@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ToDo List is a task list designed to clearly reflect CoStrict's upcoming tasks and track the progress of current workflows. It is automatically created in the following scenarios: when handling complex tasks, managing multi-step workflows, or when using the Architect mode. You can also manually trigger them by asking CoStrict: "Use to do list". Example:Please create a Snake game and use the to-do list.
 
-![descript](./img/todolist/image1.png)
+![descript](./img/todolist/image1.webp)
 
 ### 
 
@@ -42,7 +42,7 @@ Todo lists appear in multiple places:
 
 - **Persistent state**: Maintains your scroll position when reopening
 
-![descript](./img/todolist/image2.png)
+![descript](./img/todolist/image2.webp)
 
 **2.Interactive Tool Block**: An interface within the chat via the UpdateTodoListToolBlock component that allows you to:
 
@@ -60,7 +60,7 @@ Todo lists appear in multiple places:
 
 - View the progression as Roo manages the todo workflow
 
-![descript](./img/todolist/image3.png)
+![descript](./img/todolist/image3.webp)
 
 ### **Task Status**
 
@@ -68,10 +68,10 @@ Roo Code automatically manages status progression based on task progress. Each t
 
 - **Pending**: Shows an empty circle with a border, indicating the task hasn't been started yet
 
-> ![descript](./img/todolist/image4.png)
+> ![descript](./img/todolist/image4.webp)
 
 - **In Progress**: Displays a filled yellow circle, showing the task is currently being worked on
 
-> ![descript](./img/todolist/image5.png)
+> ![descript](./img/todolist/image5.webp)
 
-**Completed**: Features a filled green circle, confirming the task is fully finished![descript](./img/todolist/image6.png)
+**Completed**: Features a filled green circle, confirming the task is fully finished![descript](./img/todolist/image6.webp)

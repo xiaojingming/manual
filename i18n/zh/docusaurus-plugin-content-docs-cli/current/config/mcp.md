@@ -70,6 +70,6 @@ oauth配置：
 
 执行： `cs  mcp list `
 
-![img](img/mcp/png.png)
+![img](img/mcp/png.webp)
 
-![img](img/mcp/png-17700898121932.png)
+![img](img/mcp/png-17700898121932.webp)

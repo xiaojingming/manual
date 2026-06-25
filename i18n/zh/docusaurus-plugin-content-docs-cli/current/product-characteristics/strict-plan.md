@@ -9,33 +9,33 @@ sidebar_position: 2
 
 Tab 切换到 StrictPlan 模式。并使用/new 开启新会话，避免历史上下文影响，以便取得更好效果
 
-![img](img/strict-plan/strict.png)
+![img](img/strict-plan/strict.webp)
 
 ## 输入需求
 
 可以直接输入你的需求
 
-![img](img/strict-plan/png-17700916650421.png)
+![img](img/strict-plan/png-17700916650421.webp)
 
 或者@出需求文档或者输入需求文档相对路径。
 
-![img](img/strict-plan/png-17700916650422.png)
+![img](img/strict-plan/png-17700916650422.webp)
 
 **Tips:**
 
 1. 如果出现无法粘贴的情况,在终端点击鼠标右键 → 编辑 → 粘贴:
 
-![img](img/strict-plan/png-17700916650423.png)
+![img](img/strict-plan/png-17700916650423.webp)
 
 ## 项目探索
 
 AI会根据你的需求自动发起多个探索子Agent进行项目探索，了解当前项目情况
 
-![img](img/strict-plan/png-17700916650424.png)
+![img](img/strict-plan/png-17700916650424.webp)
 
 上一步双击子Agent对话框，可以进入到探索Agent查看进度，点击Parent可以返回
 
-![img](img/strict-plan/png-17700916650425.png)
+![img](img/strict-plan/png-17700916650425.webp)
 
 ## 需求澄清
 
@@ -43,17 +43,17 @@ AI会根据需求和探索结果让用户选择修改方向
 
 切换问题推荐用左右键`<-` `->`或者鼠标点击，以免用Tab误触切换了模式。每个问题选择后切换到Confirm按Enter提交
 
-![img](img/strict-plan/png-17700916650426.png)
+![img](img/strict-plan/png-17700916650426.webp)
 
 ## 生成提案和任务，用户检查任务
 
 至此，AI根据用户原始问题、代码探索结果和用户问卷选择，列出一个变更清单和开发任务清单。
 
-![img](img/strict-plan/png-17700916650427.png)
+![img](img/strict-plan/png-17700916650427.webp)
 
 生成开发任务清单，可以人工或者AI提问修改（StrictPlan模式下）
 
-![img](img/strict-plan/png-17700916650438.png)
+![img](img/strict-plan/png-17700916650438.webp)
 
 ## 触发编码任务（支持多种方式唤醒）
 
@@ -61,17 +61,17 @@ AI会根据需求和探索结果让用户选择修改方向
 
 AI驱动时候弹出选择框，点击立即实施
 
-![img](img/strict-plan/png-17700916650439.png)
+![img](img/strict-plan/png-17700916650439.webp)
 
 **方法二：**
 
-@PlanApply和提案文件夹地址（只有一个提案的时候可以省略@）![img](img/strict-plan/png-177009166504310.png)
+@PlanApply和提案文件夹地址（只有一个提案的时候可以省略@）![img](img/strict-plan/png-177009166504310.webp)
 
 **方法三：**
 
 @提案文件夹地址（只有一个提案的时候可以省略@）直接会话
 
-![img](img/strict-plan/png-177009166504311.png)
+![img](img/strict-plan/png-177009166504311.webp)
 
 ## 实施任务
 
@@ -79,35 +79,35 @@ AI驱动时候弹出选择框，点击立即实施
 
 出现子Agent:PlanApply则代表唤醒了编码任务进行具体编码，双击该Agent可以看到详情
 
-![img](img/strict-plan/png-177009166504312.png)
+![img](img/strict-plan/png-177009166504312.webp)
 
 PlanApply是一个管理任务Agent，会下发到具体SubCodingAgent，执行前序task.md每一个编码任务
 
-![img](img/strict-plan/png-177009166504313.png)
+![img](img/strict-plan/png-177009166504313.webp)
 
 点击上一步SubCodingAgent可以看到具体执行流程
 
-![img](img/strict-plan/png-177009166504314.png)
+![img](img/strict-plan/png-177009166504314.webp)
 
 每完成一个或者一批任务会在task.md打上完成标记
 
-![img](img/strict-plan/png-177009166504315.png)
+![img](img/strict-plan/png-177009166504315.webp)
 
 ## 编码结束
 
 对话界面完成
 
-![img](img/strict-plan/png-177009166504316.png)
+![img](img/strict-plan/png-177009166504316.webp)
 
 task.md中任务全部标记完成
 
-![img](img/strict-plan/png-177009166504317.png)
+![img](img/strict-plan/png-177009166504317.webp)
 
 ## 检查和问题修复
 
 如果发现任务未完成或需要调整可以@ReviewAndFix进行通用修复或指定问题修复，也可以直接进入后续TDD环境进行编译测试
 
-![img](img/strict-plan/png-177009166504318.png)
+![img](img/strict-plan/png-177009166504318.webp)
 
 
 
