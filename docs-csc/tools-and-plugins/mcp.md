@@ -25,7 +25,7 @@ With MCP servers connected, you can ask CSC to:
 
 Here are some commonly used MCP servers you can connect to CSC:
 
-> **⚠️ Warning:** Use third party MCP servers at your own risk - Anthropic has not verified the correctness or security of all these servers. Make sure you trust MCP servers you are installing. Be especially careful when using MCP servers that could fetch untrusted content, as these can expose you to prompt injection risk.
+> **⚠️ Warning:** Use third party MCP servers at your own risk - CoStrict has not verified the correctness or security of all these servers. Make sure you trust MCP servers you are installing. Be especially careful when using MCP servers that could fetch untrusted content, as these can expose you to prompt injection risk.
 
 > **Note:** **Need a specific integration?** Find hundreds of MCP servers on GitHub, or build your own using the MCP SDK.
 
@@ -208,15 +208,15 @@ MCP servers can be configured at three scopes. The scope you choose controls whi
 
 | Scope                     | Loads in             | Shared with team         | Stored in                   |
 | ------------------------- | -------------------- | ------------------------ | --------------------------- |
-| Local     | Current project only | No                       | `~/.claude.json`            |
+| Local     | Current project only | No                       | `~/.costrict.json`            |
 | Project | Current project only | Yes, via version control | `.mcp.json` in project root |
-| User       | All your projects    | No                       | `~/.claude.json`            |
+| User       | All your projects    | No                       | `~/.costrict.json`            |
 
 ### Local scope
 
-Local scope is the default. A local-scoped server loads only in the project where you added it and stays private to you. CSC stores it in `~/.claude.json` under that project's path, so the same server won't appear in your other projects. Use local scope for personal development servers, experimental configurations, or servers with credentials you don't want in version control.
+Local scope is the default. A local-scoped server loads only in the project where you added it and stays private to you. CSC stores it in `~/.costrict.json` under that project's path, so the same server won't appear in your other projects. Use local scope for personal development servers, experimental configurations, or servers with credentials you don't want in version control.
 
-> **Note:** The term "local scope" for MCP servers differs from general local settings. MCP local-scoped servers are stored in `~/.claude.json` (your home directory), while general local settings use `.claude/settings.local.json` (in the project directory). See Settings for details on settings file locations.
+> **Note:** The term "local scope" for MCP servers differs from general local settings. MCP local-scoped servers are stored in `~/.costrict.json` (your home directory), while general local settings use `.costrict/settings.local.json` (in the project directory). See Settings for details on settings file locations.
 
 ```bash
 # Add a local-scoped server (default)
@@ -226,7 +226,7 @@ csc mcp add --transport http stripe https://mcp.stripe.com
 csc mcp add --transport http stripe --scope local https://mcp.stripe.com
 ```
 
-The command writes the server into the entry for your current project inside `~/.claude.json`. The example below shows the result when you run it from `/path/to/your/project`:
+The command writes the server into the entry for your current project inside `~/.costrict.json`. The example below shows the result when you run it from `/path/to/your/project`:
 
 ```json
 {
@@ -270,7 +270,7 @@ For security reasons, CSC prompts for approval before using project-scoped serve
 
 ### User scope
 
-User-scoped servers are stored in `~/.claude.json` and provide cross-project accessibility, making them available across all projects on your machine while remaining private to your user account. This scope works well for personal utility servers, development tools, or services you frequently use across different projects.
+User-scoped servers are stored in `~/.costrict.json` and provide cross-project accessibility, making them available across all projects on your machine while remaining private to your user account. This scope works well for personal utility servers, development tools, or services you frequently use across different projects.
 
 ```bash
 # Add a user server
@@ -285,7 +285,7 @@ When the same server is defined in more than one place, CSC connects to it once,
 2. Project scope
 3. User scope
 4. Plugin-provided servers
-5. claude.ai connectors
+5. costrict.ai connectors
 
 The three scopes match duplicates by name. Plugins and connectors match by endpoint, so one that points at the same URL or command as a server above is treated as a duplicate.
 
@@ -868,9 +868,9 @@ When you deploy a `managed-mcp.json` file, it takes **exclusive control** over a
 
 System administrators deploy the configuration file to a system-wide directory:
 
-* macOS: `/Library/Application Support/ClaudeCode/managed-mcp.json`
+* macOS: `/Library/Application Support/CoStrict/managed-mcp.json`
 * Linux and WSL: `/etc/claude-code/managed-mcp.json`
-* Windows: `C:\Program Files\ClaudeCode\managed-mcp.json`
+* Windows: `C:\Program Files\CoStrict\managed-mcp.json`
 
 > **Note:** These are system-wide paths (not user home directories like `~/Library/...`) that require administrator privileges. They are designed to be deployed by IT administrators.
 

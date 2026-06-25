@@ -292,7 +292,7 @@ When working on complex, multi-step work, CSC creates a task list to track progr
 * Press `Ctrl+T` to toggle the task list view. The display shows up to 10 tasks at a time
 * To see all tasks or clear them, ask CSC directly: "show me all tasks" or "clear all tasks"
 * Tasks persist across context compactions, helping CSC stay organized on larger projects
-* To share a task list across sessions, set `CLAUDE_CODE_TASK_LIST_ID` to use a named directory in `~/.claude/tasks/`: `CLAUDE_CODE_TASK_LIST_ID=my-project csc`
+* To share a task list across sessions, set `CLAUDE_CODE_TASK_LIST_ID` to use a named directory in `~/.costrict/tasks/`: `CLAUDE_CODE_TASK_LIST_ID=my-project csc`
 
 ## PR review status
 

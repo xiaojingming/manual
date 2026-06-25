@@ -147,7 +147,7 @@ csc --permission-mode plan
 
 窄范围规则如 `Bash(npm test)` 会保留。丢弃的规则在你离开自动模式时恢复。
 
-分类器可以看到用户消息、工具调用和你的 CLAUDE.md 内容。工具结果被剥离，因此文件或网页中的恶意内容无法直接操纵它。一个单独的服务器端探针在 CSC 读取之前扫描传入的工具结果并标记可疑内容。
+分类器可以看到用户消息、工具调用和你的 AGENTS.md 内容。工具结果被剥离，因此文件或网页中的恶意内容无法直接操纵它。一个单独的服务器端探针在 CSC 读取之前扫描传入的工具结果并标记可疑内容。
 
 ### 自动模式如何处理子代理
 
@@ -195,12 +195,12 @@ csc --permission-mode bypassPermissions
 * `.vscode`
 * `.idea`
 * `.husky`
-* `.claude`，除了 `.claude/commands`、`.claude/agents`、`.claude/skills` 和 `.claude/worktrees`（CSC 常规创建内容的位置）
+* `.costrict`，除了 `.costrict/commands`、`.costrict/agents`、`.costrict/skills` 和 `.costrict/worktrees`（CSC 常规创建内容的位置）
 
 受保护文件：
 
 * `.gitconfig`、`.gitmodules`
 * `.bashrc`、`.bash_profile`、`.zshrc`、`.zprofile`、`.profile`
 * `.ripgreprc`
-* `.mcp.json`、`.claude.json`
+* `.mcp.json`、`.costrict.json`
 

@@ -22,7 +22,7 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `CLAUDE_AUTO_BACKGROUND_TASKS` | 设置为 `1` 以强制启用长时间运行代理任务的自动后台化。启用后，子代理在运行约两分钟后移至后台 |
 | `CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR` | 在主会话中每次执行 Bash 或 PowerShell 命令后返回原始工作目录 |
 | `CLAUDE_CODE_ACCESSIBILITY` | 设置为 `1` 以保持原生终端光标可见并禁用反转文本光标指示器。允许 macOS Zoom 等屏幕放大器跟踪光标位置 |
-| `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` | 设置为 `1` 以从 `--add-dir` 指定的目录加载 CLAUDE.md 文件。默认情况下，额外目录不加载记忆文件 |
+| `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD` | 设置为 `1` 以从 `--add-dir` 指定的目录加载 AGENTS.md 文件。默认情况下，额外目录不加载记忆文件 |
 | `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` | 凭据刷新间隔（毫秒）（使用 `apiKeyHelper` 时） |
 | `CLAUDE_CODE_AUTO_COMPACT_WINDOW` | 设置用于自动压缩计算的上下文容量（以 token 为单位）。默认为模型的上下文窗口：标准模型为 200K，扩展上下文模型为 1M。在 1M 模型上使用较低的值如 `500000` 可将窗口视为 500K 进行压缩。该值上限为模型的实际上下文窗口。`CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` 作为此值的百分比应用。设置此变量会将压缩阈值与状态行的 `used_percentage` 解耦，后者始终使用模型的完整上下文窗口 |
 | `CLAUDE_CODE_AUTO_CONNECT_IDE` | 覆盖自动 IDE 连接。默认情况下，CSC 在支持的 IDE 集成终端中启动时自动连接。设置为 `false` 以阻止此行为。设置为 `true` 以在自动检测失败时强制尝试连接，例如当 tmux 遮蔽了父终端时 |
@@ -30,21 +30,21 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `CLAUDE_CODE_CLIENT_CERT` | 用于 mTLS 认证的客户端证书文件路径 |
 | `CLAUDE_CODE_CLIENT_KEY` | 用于 mTLS 认证的客户端私钥文件路径 |
 | `CLAUDE_CODE_CLIENT_KEY_PASSPHRASE` | 加密的 CLAUDE\_CODE\_CLIENT\_KEY 的密码短语（可选） |
-| `CLAUDE_CODE_DEBUG_LOGS_DIR` | 覆盖调试日志文件路径。尽管名称如此，这是一个文件路径，而非目录。需要通过 `--debug` 或 `/debug` 单独启用调试模式：仅设置此变量不会启用日志。`--debug-file` 标志可同时完成两者。默认为 `~/.claude/debug/<session-id>.txt` |
+| `CLAUDE_CODE_DEBUG_LOGS_DIR` | 覆盖调试日志文件路径。尽管名称如此，这是一个文件路径，而非目录。需要通过 `--debug` 或 `/debug` 单独启用调试模式：仅设置此变量不会启用日志。`--debug-file` 标志可同时完成两者。默认为 `~/.costrict/debug/<session-id>.txt` |
 | `CLAUDE_CODE_DEBUG_LOG_LEVEL` | 写入调试日志文件的最低日志级别。值：`verbose`、`debug`（默认）、`info`、`warn`、`error`。设置为 `verbose` 以包含大量诊断信息（如完整状态行命令输出），或提升至 `error` 以减少噪音 |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT` | 设置为 `1` 以禁用 1M 上下文窗口支持。设置后，1M 模型变体在模型选择器中不可用。适用于有合规要求的企业环境 |
 | `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING` | 设置为 `1` 以禁用 Opus 4.6 和 Sonnet 4.6 的自适应推理。禁用后，这些模型回退到由 `MAX_THINKING_TOKENS` 控制的固定思考预算 |
 | `CLAUDE_CODE_DISABLE_ATTACHMENTS` | 设置为 `1` 以禁用附件处理。使用 `@` 语法的文件提及以纯文本发送，而不是扩展为文件内容 |
-| `CLAUDE_CODE_DISABLE_AUTO_MEMORY` | 设置为 `1` 以禁用自动记忆。设置为 `0` 以在逐步推出期间强制启用自动记忆。禁用后，Claude 不会创建或加载自动记忆文件 |
+| `CLAUDE_CODE_DISABLE_AUTO_MEMORY` | 设置为 `1` 以禁用自动记忆。设置为 `0` 以在逐步推出期间强制启用自动记忆。禁用后，CSC 不会创建或加载自动记忆文件 |
 | `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | 设置为 `1` 以禁用所有后台任务功能，包括 Bash 和子代理工具上的 `run_in_background` 参数、自动后台化和 Ctrl+B 快捷键 |
-| `CLAUDE_CODE_DISABLE_CLAUDE_MDS` | 设置为 `1` 以阻止将任何 CLAUDE.md 记忆文件加载到上下文中，包括用户、项目和自动记忆文件 |
+| `CLAUDE_CODE_DISABLE_CLAUDE_MDS` | 设置为 `1` 以阻止将任何 AGENTS.md 记忆文件加载到上下文中，包括用户、项目和自动记忆文件 |
 | `CLAUDE_CODE_DISABLE_CRON` | 设置为 `1` 以禁用计划任务。`/loop` 技能和 cron 工具将不可用，任何已计划的任务将停止触发，包括会话中已在运行的任务 |
-| `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` | 设置为 `1` 以从 API 请求中剥离 Anthropic 特定的 `anthropic-beta` 请求头和 beta 工具模式字段（如 `defer_loading` 和 `eager_input_streaming`）。当代理网关拒绝请求并出现类似"Unexpected value(s) for the `anthropic-beta` header"或"Extra inputs are not permitted"的错误时使用此选项。标准字段（`name`、`description`、`input_schema`、`cache_control`）将被保留 |
+| `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` | 设置为 `1` 以从 API 请求中剥离 CoStrict 特定的 `anthropic-beta` 请求头和 beta 工具模式字段（如 `defer_loading` 和 `eager_input_streaming`）。当代理网关拒绝请求并出现类似"Unexpected value(s) for the `anthropic-beta` header"或"Extra inputs are not permitted"的错误时使用此选项。标准字段（`name`、`description`、`input_schema`、`cache_control`）将被保留 |
 | `CLAUDE_CODE_DISABLE_FAST_MODE` | 设置为 `1` 以禁用快速模式 |
 | `CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY` | 设置为 `1` 以禁用"Claude 表现如何？"会话质量调查。当设置了 `DISABLE_TELEMETRY` 或 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` 时，调查也会被禁用。参见会话质量调查 |
 | `CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING` | 设置为 `1` 以禁用文件检查点。`/rewind` 命令将无法恢复代码更改 |
-| `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | 设置为 `1` 以从 Claude 的系统提示中移除内置的提交和 PR 工作流指令以及 git 状态快照。使用自己的 git 工作流技能时有用。设置时优先于 `includeGitInstructions` 设置 |
-| `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | 设置为 `1` 以防止在 Anthropic API 上将 Opus 4.0 和 4.1 自动重映射到当前 Opus 版本。当你有意要固定使用旧模型时使用。重映射不会在 Bedrock、Vertex 或 Foundry 上运行 |
+| `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS` | 设置为 `1` 以从 CSC 的系统提示中移除内置的提交和 PR 工作流指令以及 git 状态快照。使用自己的 git 工作流技能时有用。设置时优先于 `includeGitInstructions` 设置 |
+| `CLAUDE_CODE_DISABLE_LEGACY_MODEL_REMAP` | 设置为 `1` 以防止在 CoStrict API 上将 Opus 4.0 和 4.1 自动重映射到当前 Opus 版本。当你有意要固定使用旧模型时使用。重映射不会在 Bedrock、Vertex 或 Foundry 上运行 |
 | `CLAUDE_CODE_DISABLE_MOUSE` | 设置为 `1` 以在全屏渲染中禁用鼠标跟踪。使用 `PgUp` 和 `PgDn` 的键盘滚动仍然有效。使用此选项以保持终端的原生选中即复制行为 |
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | 等同于设置 `DISABLE_AUTOUPDATER`、`DISABLE_FEEDBACK_COMMAND`、`DISABLE_ERROR_REPORTING` 和 `DISABLE_TELEMETRY` |
 | `CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK` | 设置为 `1` 以在流式请求中途失败时禁用非流式回退。流式错误会传播到重试层。当代理或网关导致回退产生重复的工具执行时有用 |
@@ -52,15 +52,15 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `CLAUDE_CODE_DISABLE_TERMINAL_TITLE` | 设置为 `1` 以禁用基于对话上下文的自动终端标题更新 |
 | `CLAUDE_CODE_DISABLE_THINKING` | 设置为 `1` 以强制禁用扩展思维，无论模型支持或其他设置如何。比 `MAX_THINKING_TOKENS=0` 更直接 |
 | `CLAUDE_CODE_EFFORT_LEVEL` | 设置支持模型的努力级别。值：`low`、`medium`、`high`、`max`（仅 Opus 4.6）或 `auto` 使用模型默认值。优先于 `/effort` 和 `effortLevel` 设置。参见调整努力级别 |
-| `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | 设置为 `1` 以强制启用细粒度工具输入流式传输。没有此设置时，API 在发送增量事件之前完全缓冲工具输入参数，这可能会延迟大型工具输入的显示。仅限 Anthropic API：对 Bedrock、Vertex 或 Foundry 无效 |
-| `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | 设置为 `false` 以禁用提示建议（`/config` 中的"提示建议"切换开关）。这些是 Claude 回复后出现在提示输入框中的灰色预测。参见提示建议 |
+| `CLAUDE_CODE_ENABLE_FINE_GRAINED_TOOL_STREAMING` | 设置为 `1` 以强制启用细粒度工具输入流式传输。没有此设置时，API 在发送增量事件之前完全缓冲工具输入参数，这可能会延迟大型工具输入的显示。仅限 CoStrict API：对 Bedrock、Vertex 或 Foundry 无效 |
+| `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | 设置为 `false` 以禁用提示建议（`/config` 中的"提示建议"切换开关）。这些是 CSC 回复后出现在提示输入框中的灰色预测。参见提示建议 |
 | `CLAUDE_CODE_ENABLE_TASKS` | 设置为 `1` 以在非交互模式（`-p` 标志）下启用任务跟踪系统。交互模式下任务默认开启。参见任务列表 |
 | `CLAUDE_CODE_ENABLE_TELEMETRY` | 设置为 `1` 以启用 OpenTelemetry 数据收集用于指标和日志记录。在配置 OTel 导出器之前需要。参见监控 |
 | `CLAUDE_CODE_EXIT_AFTER_STOP_DELAY` | 查询循环空闲后自动退出前等待的时间（毫秒）。适用于使用 SDK 模式的自动化工作流和脚本 |
 | `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | 设置为 `1` 以启用代理团队。代理团队是实验性功能，默认禁用 |
 | `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS` | 覆盖文件读取的默认 token 限制。当需要完整读取较大文件时有用 |
 | `CLAUDE_CODE_GIT_BASH_PATH` | 仅限 Windows：Git Bash 可执行文件（`bash.exe`）的路径。当 Git Bash 已安装但不在 PATH 中时使用。参见 Windows 设置 |
-| `CLAUDE_CODE_GLOB_HIDDEN` | 设置为 `false` 以在 Claude 调用 Glob 工具时从结果中排除点文件。默认包含。不影响 `@` 文件自动补全、`ls`、Grep 或 Read |
+| `CLAUDE_CODE_GLOB_HIDDEN` | 设置为 `false` 以在 CSC 调用 Glob 工具时从结果中排除点文件。默认包含。不影响 `@` 文件自动补全、`ls`、Grep 或 Read |
 | `CLAUDE_CODE_GLOB_NO_IGNORE` | 设置为 `false` 以使 Glob 工具遵循 `.gitignore` 模式。默认情况下，Glob 返回所有匹配文件，包括 gitignored 文件。不影响 `@` 文件自动补全，它有自己的 `respectGitignore` 设置 |
 | `CLAUDE_CODE_GLOB_TIMEOUT_SECONDS` | Glob 工具文件发现的超时时间（秒）。大多数平台默认 20 秒，WSL 上默认 60 秒 |
 | `CLAUDE_CODE_IDE_HOST_OVERRIDE` | 覆盖用于连接 IDE 扩展的主机地址。默认情况下，CSC 自动检测正确的地址，包括 WSL 到 Windows 的路由 |
@@ -69,16 +69,16 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | 设置大多数请求的最大输出 token 数。默认值和上限因模型而异；参见最大输出 token。增加此值会减少自动压缩触发前可用的有效上下文窗口 |
 | `CLAUDE_CODE_MAX_RETRIES` | 覆盖失败 API 请求的重试次数（默认：10） |
 | `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` | 可并行执行的最大只读工具和子代理数量（默认：10）。较高的值增加并行度但消耗更多资源 |
-| `CLAUDE_CODE_NEW_INIT` | 设置为 `1` 以使 `/init` 运行交互式设置流程。该流程在探索代码库并写入文件之前，会询问要生成哪些文件，包括 CLAUDE.md、技能和钩子。没有此变量时，`/init` 会自动生成 CLAUDE.md 而不提示 |
+| `CLAUDE_CODE_NEW_INIT` | 设置为 `1` 以使 `/init` 运行交互式设置流程。该流程在探索代码库并写入文件之前，会询问要生成哪些文件，包括 AGENTS.md、技能和钩子。没有此变量时，`/init` 会自动生成 AGENTS.md 而不提示 |
 | `CLAUDE_CODE_NO_FLICKER` | 设置为 `1` 以启用全屏渲染，这是一个减少闪烁并在长对话中保持内存平稳的研究预览功能 |
-| `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | 用于 Claude.ai 认证的 OAuth 刷新令牌。设置后，`csc auth login` 直接交换此令牌而不是打开浏览器。需要 `CLAUDE_CODE_OAUTH_SCOPES`。适用于在自动化环境中提供认证 |
+| `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` | 用于 costrict.ai 认证的 OAuth 刷新令牌。设置后，`csc auth login` 直接交换此令牌而不是打开浏览器。需要 `CLAUDE_CODE_OAUTH_SCOPES`。适用于在自动化环境中提供认证 |
 | `CLAUDE_CODE_OAUTH_SCOPES` | 刷新令牌颁发时的空格分隔 OAuth 范围，例如 `"user:profile user:inference user:sessions:claude_code"`。设置 `CLAUDE_CODE_OAUTH_REFRESH_TOKEN` 时必需 |
-| `CLAUDE_CODE_OAUTH_TOKEN` | 用于 Claude.ai 认证的 OAuth 访问令牌。SDK 和自动化环境中 `/login` 的替代方案。优先于钥匙串存储的凭据。使用 `csc setup-token` 生成 |
+| `CLAUDE_CODE_OAUTH_TOKEN` | 用于 costrict.ai 认证的 OAuth 访问令牌。SDK 和自动化环境中 `/login` 的替代方案。优先于钥匙串存储的凭据。使用 `csc setup-token` 生成 |
 | `CLAUDE_CODE_OTEL_FLUSH_TIMEOUT_MS` | 刷新待处理 OpenTelemetry span 的超时时间（毫秒）（默认：5000）。参见监控 |
 | `CLAUDE_CODE_OTEL_HEADERS_HELPER_DEBOUNCE_MS` | 刷新动态 OpenTelemetry 头的间隔（毫秒）（默认：1740000 / 29 分钟）。参见动态头 |
 | `CLAUDE_CODE_OTEL_SHUTDOWN_TIMEOUT_MS` | OpenTelemetry 导出器在关闭时完成的超时时间（毫秒）（默认：2000）。如果在退出时指标丢失则增加此值。参见监控 |
 | `CLAUDE_CODE_PERFORCE_MODE` | 设置为 `1` 以启用 Perforce 感知的写保护。设置后，如果目标文件缺少所有者写入位（Perforce 在同步文件上清除该位，直到 `p4 edit` 打开它们），Edit、Write 和 NotebookEdit 将失败并提示 `p4 edit <file>`。这防止 CSC 绕过 Perforce 更改跟踪 |
-| `CLAUDE_CODE_PLUGIN_CACHE_DIR` | 覆盖插件根目录。尽管名称如此，这设置的是父目录，而非缓存本身：市场和插件缓存位于此路径的子目录中。默认为 `~/.claude/plugins` |
+| `CLAUDE_CODE_PLUGIN_CACHE_DIR` | 覆盖插件根目录。尽管名称如此，这设置的是父目录，而非缓存本身：市场和插件缓存位于此路径的子目录中。默认为 `~/.costrict/plugins` |
 | `CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS` | 安装或更新插件时 git 操作的超时时间（毫秒）（默认：120000）。对于大型仓库或慢速网络连接，增加此值。参见 Git 操作超时 |
 | `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` | 设置为 `1` 以在 `git pull` 失败时保留现有市场缓存，而不是擦除并重新克隆。在离线或隔离环境中重新克隆会以相同方式失败时有用。参见离线环境中市场更新失败 |
 | `CLAUDE_CODE_PLUGIN_SEED_DIR` | 一个或多个只读插件种子目录的路径，在 Unix 上用 `:` 分隔，在 Windows 上用 `;` 分隔。使用此选项将预填充的插件目录捆绑到容器镜像中。CSC 在启动时从这些目录注册市场，并使用预缓存的插件而无需重新克隆。参见为容器预填充插件 |
@@ -89,13 +89,13 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS` | SessionEnd 钩子完成的最大时间（毫秒）（默认：`1500`）。适用于会话退出、`/clear` 以及通过交互式 `/resume` 切换会话。每个钩子的 `timeout` 值也受此预算上限约束 |
 | `CLAUDE_CODE_SHELL` | 覆盖自动 shell 检测。当你的登录 shell 与首选工作 shell 不同时有用（例如，`bash` 与 `zsh`） |
 | `CLAUDE_CODE_SHELL_PREFIX` | 包装所有 bash 命令的命令前缀（例如，用于日志记录或审计）。示例：`/path/to/logger.sh` 将执行 `/path/to/logger.sh <command>` |
-| `CLAUDE_CODE_SIMPLE` | 设置为 `1` 以使用最小系统提示和仅 Bash、文件读取和文件编辑工具运行。`--mcp-config` 的 MCP 工具仍然可用。禁用钩子、技能、插件、MCP 服务器、自动记忆和 CLAUDE.md 的自动发现。`--bare` CLI 标志设置此选项 |
+| `CLAUDE_CODE_SIMPLE` | 设置为 `1` 以使用最小系统提示和仅 Bash、文件读取和文件编辑工具运行。`--mcp-config` 的 MCP 工具仍然可用。禁用钩子、技能、插件、MCP 服务器、自动记忆和 AGENTS.md 的自动发现。`--bare` CLI 标志设置此选项 |
 | `CLAUDE_CODE_SKIP_BEDROCK_AUTH` | 跳过 Bedrock 的 AWS 认证（例如，使用 LLM 网关时） |
 | `CLAUDE_CODE_SKIP_FOUNDRY_AUTH` | 跳过 Microsoft Foundry 的 Azure 认证（例如，使用 LLM 网关时） |
 | `CLAUDE_CODE_SKIP_MANTLE_AUTH` | 跳过 Bedrock Mantle 的 AWS 认证（例如，使用 LLM 网关时） |
 | `CLAUDE_CODE_SKIP_VERTEX_AUTH` | 跳过 Vertex 的 Google 认证（例如，使用 LLM 网关时） |
 | `CLAUDE_CODE_SUBAGENT_MODEL` | 参见模型配置 |
-| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | 设置为 `1` 以从子进程环境（Bash 工具、钩子、MCP stdio 服务器）中剥离 Anthropic 和云提供商凭据。父 Claude 进程保留这些凭据用于 API 调用，但子进程无法读取它们，从而减少通过 shell 展开尝试窃取秘密的提示注入攻击的暴露。在 Linux 上，这还在隔离的 PID 命名空间中运行 Bash 子进程，使其无法通过 `/proc` 读取主机进程环境；副作用是 `ps`、`pgrep` 和 `kill` 无法看到或向主机进程发送信号。当配置了 `allowed_non_write_users` 时，`claude-code-action` 会自动设置此选项 |
+| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | 设置为 `1` 以从子进程环境（Bash 工具、钩子、MCP stdio 服务器）中剥离 CoStrict 和云提供商凭据。父 CSC 进程保留这些凭据用于 API 调用，但子进程无法读取它们，从而减少通过 shell 展开尝试窃取秘密的提示注入攻击的暴露。在 Linux 上，这还在隔离的 PID 命名空间中运行 Bash 子进程，使其无法通过 `/proc` 读取主机进程环境；副作用是 `ps`、`pgrep` 和 `kill` 无法看到或向主机进程发送信号。当配置了 `allowed_non_write_users` 时，`claude-code-action` 会自动设置此选项 |
 | `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` | 在非交互模式（`-p` 标志）下设置为 `1` 以在第一次查询之前等待插件安装完成。没有此设置时，插件在后台安装，可能在第一轮不可用。与 `CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS` 结合使用以限制等待时间 |
 | `CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS` | 同步插件安装的超时时间（毫秒）。超过时，CSC 继续运行而不使用插件并记录错误。无默认值：没有此变量时，同步安装会等待直到完成 |
 | `CLAUDE_CODE_SYNTAX_HIGHLIGHT` | 设置为 `false` 以禁用差异输出中的语法高亮。当颜色干扰你的终端设置时有用 |
@@ -105,9 +105,9 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `CLAUDE_CODE_USE_BEDROCK` | 使用 Bedrock |
 | `CLAUDE_CODE_USE_FOUNDRY` | 使用 Microsoft Foundry |
 | `CLAUDE_CODE_USE_MANTLE` | 使用 Bedrock Mantle 端点 |
-| `CLAUDE_CODE_USE_POWERSHELL_TOOL` | 设置为 `1` 以在 Windows 上启用 PowerShell 工具（选择加入预览）。启用后，Claude 可以原生运行 PowerShell 命令，而不是通过 Git Bash 路由。仅在原生 Windows 上支持，不支持 WSL。参见 PowerShell 工具 |
+| `CLAUDE_CODE_USE_POWERSHELL_TOOL` | 设置为 `1` 以在 Windows 上启用 PowerShell 工具（选择加入预览）。启用后，CSC 可以原生运行 PowerShell 命令，而不是通过 Git Bash 路由。仅在原生 Windows 上支持，不支持 WSL。参见 PowerShell 工具 |
 | `CLAUDE_CODE_USE_VERTEX` | 使用 Vertex |
-| `CLAUDE_CONFIG_DIR` | 覆盖配置目录（默认：`~/.claude`）。所有设置、凭据、会话历史和插件都存储在此路径下。适用于并行运行多个账户：例如，`alias csc-work='CLAUDE_CONFIG_DIR=~/.claude-work csc'` |
+| `CLAUDE_CONFIG_DIR` | 覆盖配置目录（默认：`~/.costrict`）。所有设置、凭据、会话历史和插件都存储在此路径下。适用于并行运行多个账户：例如，`alias csc-work='CLAUDE_CONFIG_DIR=~/.claude-work csc'` |
 | `CLAUDE_ENABLE_STREAM_WATCHDOG` | 设置为 `1` 以中止停滞 90 秒无数据的 API 响应流。在自动化环境中（挂起的会话不会被注意到）或在静默断开连接的代理后面有用。没有此设置时，停滞的流可能会无限期挂起会话，因为请求超时仅覆盖初始连接。使用 `CLAUDE_STREAM_IDLE_TIMEOUT_MS` 配置超时 |
 | `CLAUDE_ENV_FILE` | CSC 在每次 Bash 命令之前 source 的 shell 脚本路径。用于在命令之间持久化 virtualenv 或 conda 激活。也由 SessionStart、CwdChanged 和 FileChanged 钩子动态填充 |
 | `CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX` | 未提供显式名称时自动生成的远程控制会话名称的前缀。默认为机器的主机名，产生类似 `myhost-graceful-unicorn` 的名称。`--remote-control-session-name-prefix` CLI 标志为单次调用设置相同的值 |
@@ -131,7 +131,7 @@ CSC 支持以下环境变量来控制其行为。在启动 `csc` 之前在 shell
 | `DISABLE_PROMPT_CACHING_SONNET` | 设置为 `1` 以禁用 Sonnet 模型的提示缓存 |
 | `DISABLE_TELEMETRY` | 设置为 `1` 以退出 Statsig 遥测（注意 Statsig 事件不包含用户数据，如代码、文件路径或 bash 命令） |
 | `DISABLE_UPGRADE_COMMAND` | 设置为 `1` 以隐藏 `/upgrade` 命令 |
-| `ENABLE_CLAUDEAI_MCP_SERVERS` | 设置为 `false` 以在 CSC 中禁用 claude.ai MCP 服务器。登录用户默认启用 |
+| `ENABLE_CLAUDEAI_MCP_SERVERS` | 设置为 `false` 以在 CSC 中禁用 costrict.ai MCP 服务器。登录用户默认启用 |
 | `ENABLE_PROMPT_CACHING_1H_BEDROCK` | 使用 Bedrock 时设置为 `1` 以请求 1 小时的提示缓存 TTL 而非默认的 5 分钟。仅限 Bedrock |
 | `ENABLE_TOOL_SEARCH` | 控制 MCP 工具搜索。未设置：所有 MCP 工具默认延迟加载，但当 `ANTHROPIC_BASE_URL` 指向非第一方主机时提前加载。值：`true`（始终延迟，包括代理）、`auto`（阈值模式：如果工具在上下文的 10% 内则提前加载）、`auto:N`（自定义阈值，例如 `auto:5` 为 5%）、`false`（全部提前加载） |
 | `FALLBACK_FOR_ALL_PRIMARY_MODELS` | 设置为任何非空值以在任何主模型上出现重复过载错误后触发回退到 `--fallback-model`。默认情况下，仅 Opus 模型触发回退 |

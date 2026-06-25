@@ -8,17 +8,17 @@ sidebar_position: 3
 
 Skills extend what CSC can do. Create a `SKILL.md` file with instructions, and CSC adds it to its toolkit. CSC uses Skills when relevant, or you can invoke one directly with `/skill-name`.
 
-Create a Skill when you keep pasting the same playbook, checklist, or multi-step procedure into chat, or when a section of CLAUDE.md has grown into a procedure rather than a fact. Unlike CLAUDE.md content, a Skill's body loads only when it's used, so long reference material costs almost nothing until you need it.
+Create a Skill when you keep pasting the same playbook, checklist, or multi-step procedure into chat, or when a section of AGENTS.md has grown into a procedure rather than a fact. Unlike AGENTS.md content, a Skill's body loads only when it's used, so long reference material costs almost nothing until you need it.
 
 > **Note:** For built-in commands like `/help` and `/compact`, and bundled Skills like `/debug` and `/simplify`, see the commands reference.
 >
-> **Custom commands have been merged into Skills.** A file at `.claude/commands/deploy.md` and a Skill at `.claude/skills/deploy/SKILL.md` both create `/deploy` and work the same way. Your existing `.claude/commands/` files keep working. Skills add optional features: a directory for supporting files, frontmatter to control whether you or CSC invokes them, and the ability for CSC to load them automatically when relevant.
+> **Custom commands have been merged into Skills.** A file at `.costrict/commands/deploy.md` and a Skill at `.costrict/skills/deploy/SKILL.md` both create `/deploy` and work the same way. Your existing `.costrict/commands/` files keep working. Skills add optional features: a directory for supporting files, frontmatter to control whether you or CSC invokes them, and the ability for CSC to load them automatically when relevant.
 
 CSC Skills follow the Agent Skills open standard, which works across multiple AI tools. CSC extends the standard with additional features like invocation control, Subagent execution, and dynamic context injection.
 
 ## Bundled Skills
 
-CSC includes a set of bundled Skills that are available in every session, including `/simplify`, `/batch`, `/debug`, `/loop`, and `/claude-api`. Unlike built-in commands, which execute fixed logic directly, bundled Skills are prompt-based: they give CSC a detailed playbook and let it orchestrate the work using its tools. You invoke them the same way as any other Skill, by typing `/` followed by the Skill name.
+CSC includes a set of bundled Skills that are available in every session, including `/simplify`, `/batch`, `/debug`, `/loop`, and `/csc-api`. Unlike built-in commands, which execute fixed logic directly, bundled Skills are prompt-based: they give CSC a detailed playbook and let it orchestrate the work using its tools. You invoke them the same way as any other Skill, by typing `/` followed by the Skill name.
 
 Bundled Skills are listed alongside built-in commands in the commands reference, marked **Skill** in the Purpose column.
 
@@ -33,14 +33,14 @@ This example creates a Skill that teaches CSC to explain code using visual diagr
 Create a directory for the Skill in your personal Skills folder. Personal Skills are available across all your projects.
 
 ```bash
-mkdir -p ~/.claude/skills/explain-code
+mkdir -p ~/.costrict/skills/explain-code
 ```
 
 ### Write SKILL.md
 
 Every Skill needs a `SKILL.md` file with two parts: YAML frontmatter (between `---` markers) that tells CSC when to use the Skill, and markdown content with instructions CSC follows when the Skill is invoked. The `name` field becomes the `/slash-command`, and the `description` helps CSC decide when to load it automatically.
 
-Create `~/.claude/skills/explain-code/SKILL.md`:
+Create `~/.costrict/skills/explain-code/SKILL.md`:
 
 ```yaml
 ---
@@ -83,15 +83,15 @@ Where you store a Skill determines who can use it:
 | Location   | Path                                    | Applies to           |
 | :--------- | :-------------------------------------- | :------------------- |
 | Enterprise | See managed settings                    | All users in your organization |
-| Personal   | `~/.claude/skills/<skill-name>/SKILL.md` | All your projects    |
-| Project    | `.claude/skills/<skill-name>/SKILL.md`   | This project only    |
+| Personal   | `~/.costrict/skills/<skill-name>/SKILL.md` | All your projects    |
+| Project    | `.costrict/skills/<skill-name>/SKILL.md`   | This project only    |
 | Plugins    | `<plugin>/skills/<skill-name>/SKILL.md`  | Where Plugins are enabled |
 
-When Skills share the same name across levels, higher-priority locations win: enterprise > personal > project. Plugin skills use a `plugin-name:skill-name` namespace, so they cannot conflict with other levels. If you have files in `.claude/commands/`, those work the same way, but if a Skill and a command share the same name, the Skill takes precedence.
+When Skills share the same name across levels, higher-priority locations win: enterprise > personal > project. Plugin skills use a `plugin-name:skill-name` namespace, so they cannot conflict with other levels. If you have files in `.costrict/commands/`, those work the same way, but if a Skill and a command share the same name, the Skill takes precedence.
 
 #### Automatic discovery from nested directories
 
-When you work with files in subdirectories, CSC automatically discovers Skills from nested `.claude/skills/` directories. For example, if you're editing a file in `packages/frontend/`, CSC also looks for Skills in `packages/frontend/.claude/skills/`. This supports monorepo setups where packages have their own Skills.
+When you work with files in subdirectories, CSC automatically discovers Skills from nested `.costrict/skills/` directories. For example, if you're editing a file in `packages/frontend/`, CSC also looks for Skills in `packages/frontend/.costrict/skills/`. This supports monorepo setups where packages have their own Skills.
 
 Each Skill is a directory with `SKILL.md` as the entrypoint:
 
@@ -107,15 +107,15 @@ my-skill/
 
 The `SKILL.md` contains the main instructions and is required. Other files are optional and let you build more powerful Skills: templates for CSC to fill in, example outputs showing the expected format, scripts CSC can execute, or detailed reference documentation. Reference these files from your `SKILL.md` so CSC knows what they contain and when to load them. See adding supporting files for more details.
 
-> **Note:** Files in `.claude/commands/` still work and support the same frontmatter. Skills are recommended since they support additional features like supporting files.
+> **Note:** Files in `.costrict/commands/` still work and support the same frontmatter. Skills are recommended since they support additional features like supporting files.
 
 #### Skills from additional directories
 
-The `--add-dir` flag grants file access rather than configuration discovery, but Skills are an exception: `.claude/skills/` within an added directory is loaded automatically and picked up by live change detection, so you can edit those Skills during a session without restarting.
+The `--add-dir` flag grants file access rather than configuration discovery, but Skills are an exception: `.costrict/skills/` within an added directory is loaded automatically and picked up by live change detection, so you can edit those Skills during a session without restarting.
 
-Other `.claude/` configuration such as Subagents, commands, and output styles is not loaded from additional directories. See the exceptions table for the complete list of what is and isn't loaded, and the recommended ways to share configuration across projects.
+Other `.costrict/` configuration such as Subagents, commands, and output styles is not loaded from additional directories. See the exceptions table for the complete list of what is and isn't loaded, and the recommended ways to share configuration across projects.
 
-> **Note:** CLAUDE.md files from `--add-dir` directories are not loaded by default. To load them, set `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`. See loading from additional directories.
+> **Note:** AGENTS.md files from `--add-dir` directories are not loaded by default. To load them, set `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`. See loading from additional directories.
 
 ## Configure Skills
 
@@ -410,8 +410,8 @@ Skills and Subagents work together in two directions:
 
 | Approach                     | System prompt                             | Task                        | Also loads                   |
 | :--------------------------- | :---------------------------------------- | :-------------------------- | :--------------------------- |
-| Skill with `context: fork`   | From agent type (`Explore`, `Plan`, etc.) | SKILL.md content            | CLAUDE.md                    |
-| Subagent with `skills` field | Subagent's markdown body                  | CSC's delegation message    | Preloaded Skills + CLAUDE.md |
+| Skill with `context: fork`   | From agent type (`Explore`, `Plan`, etc.) | SKILL.md content            | AGENTS.md                    |
+| Subagent with `skills` field | Subagent's markdown body                  | CSC's delegation message    | Preloaded Skills + AGENTS.md |
 
 With `context: fork`, you write the task in your Skill and pick an agent type to execute it. For the inverse (defining a custom Subagent that uses Skills as reference material), see Subagents.
 
@@ -441,7 +441,7 @@ When this Skill runs:
 3. The `agent` field determines the execution environment (model, tools, and permissions)
 4. Results are summarized and returned to your main conversation
 
-The `agent` field specifies which Subagent configuration to use. Options include built-in agents (`Explore`, `Plan`, `general-purpose`) or any custom Subagent from `.claude/agents/`. If omitted, uses `general-purpose`.
+The `agent` field specifies which Subagent configuration to use. Options include built-in agents (`Explore`, `Plan`, `general-purpose`) or any custom Subagent from `.costrict/agents/`. If omitted, uses `general-purpose`.
 
 ### Restrict CSC's Skill access
 
@@ -477,7 +477,7 @@ Permission syntax: `Skill(name)` for exact match, `Skill(name *)` for prefix mat
 
 Skills can be distributed at different scopes depending on your audience:
 
-* **Project Skills**: Commit `.claude/skills/` to version control
+* **Project Skills**: Commit `.costrict/skills/` to version control
 * **Plugins**: Create a `skills/` directory in your Plugin
 * **Managed**: Deploy organization-wide through managed settings
 
@@ -490,10 +490,10 @@ This example creates a codebase explorer: an interactive tree view where you can
 Create the Skill directory:
 
 ```bash
-mkdir -p ~/.claude/skills/codebase-visualizer/scripts
+mkdir -p ~/.costrict/skills/codebase-visualizer/scripts
 ```
 
-Create `~/.claude/skills/codebase-visualizer/SKILL.md`. The description tells CSC when to activate this Skill, and the instructions tell CSC to run the bundled script:
+Create `~/.costrict/skills/codebase-visualizer/SKILL.md`. The description tells CSC when to activate this Skill, and the instructions tell CSC to run the bundled script:
 
 ````yaml
 ---
@@ -511,7 +511,7 @@ Generate an interactive HTML tree view that shows your project's file structure 
 Run the visualization script from your project root:
 
 ```bash
-python ~/.claude/skills/codebase-visualizer/scripts/visualize.py .
+python ~/.costrict/skills/codebase-visualizer/scripts/visualize.py .
 ```
 
 This creates `codebase-map.html` in the current directory and opens it in your default browser.
@@ -524,7 +524,7 @@ This creates `codebase-map.html` in the current directory and opens it in your d
 - **Directory totals**: Shows aggregate size of each folder
 ````
 
-Create `~/.claude/skills/codebase-visualizer/scripts/visualize.py`. This script scans a directory tree and generates a self-contained HTML file with:
+Create `~/.costrict/skills/codebase-visualizer/scripts/visualize.py`. This script scans a directory tree and generates a self-contained HTML file with:
 
 * A **summary sidebar** showing file count, directory count, total size, and number of file types
 * A **bar chart** breaking down the codebase by file type (top 8 by size)

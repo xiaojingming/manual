@@ -56,7 +56,7 @@ When you run `csc` in a directory, CSC gains access to:
 * **Your project.** Files in your directory and subdirectories, plus files elsewhere with your permission.
 * **Your terminal.** Any command you could run: build tools, git, package managers, system utilities, scripts. If you can do it from the command line, CSC can too.
 * **Your git state.** Current branch, uncommitted changes, and recent commit history.
-* **Your CLAUDE.md.** A markdown file where you store project-specific instructions, conventions, and context that CSC should know every session.
+* **Your AGENTS.md.** A markdown file where you store project-specific instructions, conventions, and context that CSC should know every session.
 * **Auto memory.** Learnings CSC saves automatically as you work, like project patterns and your preferences. The first 200 lines or 25KB of MEMORY.md, whichever comes first, load at the start of each session.
 * **Extensions you configure.** MCP servers for external services, skills for workflows, subagents for delegated work, and CSC in Chrome for browser interaction.
 
@@ -64,9 +64,9 @@ Because CSC sees your whole project, it can work across it. When you ask CSC to 
 
 ## Work with sessions
 
-CSC saves your conversation locally as you work. Each message, tool use, and result is written to a plaintext JSONL file under `~/.claude/projects/`, which enables rewinding changes, resuming, and forking sessions. Before Claude makes code changes, it also snapshots the affected files so you can revert if needed. For paths, retention, and how to clear this data, see application data in `~/.claude`.
+CSC saves your conversation locally as you work. Each message, tool use, and result is written to a plaintext JSONL file under `~/.costrict/projects/`, which enables rewinding changes, resuming, and forking sessions. Before CSC makes code changes, it also snapshots the affected files so you can revert if needed. For paths, retention, and how to clear this data, see application data in `~/.costrict`.
 
-**Sessions are independent.** Each new session starts with a fresh context window, without the conversation history from previous sessions. Claude can persist learnings across sessions using auto memory, and you can add your own persistent instructions in CLAUDE.md.
+**Sessions are independent.** Each new session starts with a fresh context window, without the conversation history from previous sessions. CSC can persist learnings across sessions using auto memory, and you can add your own persistent instructions in AGENTS.md.
 
 ### Work across branches
 
@@ -92,15 +92,15 @@ This creates a new session ID while preserving the conversation history up to th
 
 ### The context window
 
-CSC's context window holds your conversation history, file contents, command outputs, CLAUDE.md, auto memory, loaded skills, and system instructions. As you work, context fills up. CSC compacts automatically, but instructions from early in the conversation can get lost. Put persistent rules in CLAUDE.md, and run `/context` to see what's using space.
+CSC's context window holds your conversation history, file contents, command outputs, AGENTS.md, auto memory, loaded skills, and system instructions. As you work, context fills up. CSC compacts automatically, but instructions from early in the conversation can get lost. Put persistent rules in AGENTS.md, and run `/context` to see what's using space.
 
 For an interactive walkthrough of what loads and when, see Explore the context window.
 
 #### When context fills up
 
-CSC manages context automatically as you approach the limit. It clears older tool outputs first, then summarizes the conversation if needed. Your requests and key code snippets are preserved; detailed instructions from early in the conversation may be lost. Put persistent rules in CLAUDE.md rather than relying on conversation history.
+CSC manages context automatically as you approach the limit. It clears older tool outputs first, then summarizes the conversation if needed. Your requests and key code snippets are preserved; detailed instructions from early in the conversation may be lost. Put persistent rules in AGENTS.md rather than relying on conversation history.
 
-To control what's preserved during compaction, add a "Compact Instructions" section to CLAUDE.md or run `/compact` with a focus (like `/compact focus on the API changes`).
+To control what's preserved during compaction, add a "Compact Instructions" section to AGENTS.md or run `/compact` with a focus (like `/compact focus on the API changes`).
 
 If a single file or tool output is so large that context refills immediately after each summary, CSC stops auto-compacting after a few attempts and shows an error instead of looping. See Auto-compaction stops with a thrashing error for recovery steps.
 
@@ -133,7 +133,7 @@ Press `Shift+Tab` to cycle through permission modes:
 * **Plan mode**: CSC uses read-only tools only, creating a plan you can approve before execution
 * **Auto mode**: CSC evaluates all actions with background safety checks. Currently a research preview
 
-You can also allow specific commands in `.claude/settings.json` so CSC doesn't ask each time. This is useful for trusted commands like `npm test` or `git status`. Settings can be scoped from organization-wide policies down to personal preferences. See Permissions for details.
+You can also allow specific commands in `.costrict/settings.json` so CSC doesn't ask each time. This is useful for trusted commands like `npm test` or `git status`. Settings can be scoped from organization-wide policies down to personal preferences. See Permissions for details.
 
 ***
 
@@ -143,11 +143,11 @@ These tips help you get better results from CSC.
 
 ### Ask CSC for help
 
-CSC can teach you how to use it. Ask questions like "how do I set up hooks?" or "what's the best way to structure my CLAUDE.md?" and CSC will explain.
+CSC can teach you how to use it. Ask questions like "how do I set up hooks?" or "what's the best way to structure my AGENTS.md?" and CSC will explain.
 
 Built-in commands also guide you through setup:
 
-* `/init` walks you through creating a CLAUDE.md for your project
+* `/init` walks you through creating a AGENTS.md for your project
 * `/agents` helps you configure custom subagents
 * `/doctor` diagnoses common issues with your installation
 
@@ -209,7 +209,7 @@ Review the plan, refine it through conversation, then let CSC implement. This tw
 
 ### Delegate, don't dictate
 
-Think of delegating to a capable colleague. Give context and direction, then trust Claude to figure out the details:
+Think of delegating to a capable colleague. Give context and direction, then trust CSC to figure out the details:
 
 ```text
 The checkout flow is broken for users with expired cards.

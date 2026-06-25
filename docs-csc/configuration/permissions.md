@@ -41,7 +41,7 @@ CSC supports several permission modes that control how tools are approved. See P
 | `dontAsk`           | Auto-denies tools unless pre-approved via `/permissions` or `permissions.allow` rules                                                                              |
 | `bypassPermissions` | Skips permission prompts except for writes to protected directories (see warning below)                                                                            |
 
-> **⚠️ Warning:** `bypassPermissions` mode skips permission prompts. Writes to `.git`, `.claude`, `.vscode`, `.idea`, and `.husky` directories still prompt for confirmation to prevent accidental corruption of repository state, editor configuration, and git hooks. Writes to `.claude/commands`, `.claude/agents`, and `.claude/skills` are exempt and do not prompt, because CSC routinely writes there when creating skills, subagents, and commands. Only use this mode in isolated environments like containers or VMs where CSC cannot cause damage. Administrators can prevent this mode by setting `permissions.disableBypassPermissionsMode` to `"disable"` in managed settings.
+> **⚠️ Warning:** `bypassPermissions` mode skips permission prompts. Writes to `.git`, `.costrict`, `.vscode`, `.idea`, and `.husky` directories still prompt for confirmation to prevent accidental corruption of repository state, editor configuration, and git hooks. Writes to `.costrict/commands`, `.costrict/agents`, and `.costrict/skills` are exempt and do not prompt, because CSC routinely writes there when creating skills, subagents, and commands. Only use this mode in isolated environments like containers or VMs where CSC cannot cause damage. Administrators can prevent this mode by setting `permissions.disableBypassPermissionsMode` to `"disable"` in managed settings.
 
 To prevent `bypassPermissions` or `auto` mode from being used, set `permissions.disableBypassPermissionsMode` or `permissions.disableAutoMode` to `"disable"` in any settings file. These are most useful in managed settings where they cannot be overridden.
 
@@ -124,7 +124,7 @@ When you approve a compound command with "Yes, don't ask again", CSC saves a sep
 >
 >   * **Restrict Bash network tools**: use deny rules to block `curl`, `wget`, and similar commands, then use the WebFetch tool with `WebFetch(domain:github.com)` permission for allowed domains
 >   * **Use PreToolUse hooks**: implement a hook that validates URLs in Bash commands and blocks disallowed domains
->   * Instructing CSC about your allowed curl patterns via CLAUDE.md
+>   * Instructing CSC about your allowed curl patterns via AGENTS.md
 >
 >   Note that using WebFetch alone does not prevent network access. If Bash is allowed, CSC can still use `curl`, `wget`, or other tools to reach any URL.
 
@@ -149,7 +149,7 @@ On Windows, paths are normalized to POSIX form before matching. `C:\Users\alice`
 
 Examples:
 
-* `Edit(/docs/**)`: edits in `<project>/docs/` (NOT `/docs/` and NOT `<project>/.claude/docs/`)
+* `Edit(/docs/**)`: edits in `<project>/docs/` (NOT `/docs/` and NOT `<project>/.costrict/docs/`)
 * `Read(~/.zshrc)`: reads your home directory's `.zshrc`
 * `Edit(//tmp/scratch.txt)`: edits the absolute path `/tmp/scratch.txt`
 * `Read(src/**)`: reads from `<current-directory>/src/`
@@ -204,21 +204,21 @@ Files in additional directories follow the same permission rules as the original
 
 ### Additional directories grant file access, not configuration
 
-Adding a directory extends where CSC can read and edit files. It does not make that directory a full configuration root: most `.claude/` configuration is not discovered from additional directories, though a few types are loaded as exceptions.
+Adding a directory extends where CSC can read and edit files. It does not make that directory a full configuration root: most `.costrict/` configuration is not discovered from additional directories, though a few types are loaded as exceptions.
 
 The following configuration types are loaded from `--add-dir` directories:
 
 | Configuration                                      | Loaded from `--add-dir`                                           |
 | :------------------------------------------------- | :---------------------------------------------------------------- |
-| Skills in `.claude/skills/`          | Yes, with live reload                                             |
-| Plugin settings in `.claude/settings.json`         | `enabledPlugins` and `extraKnownMarketplaces` only                |
-| CLAUDE.md files and `.claude/rules/` | Only when `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1` is set |
+| Skills in `.costrict/skills/`          | Yes, with live reload                                             |
+| Plugin settings in `.costrict/settings.json`         | `enabledPlugins` and `extraKnownMarketplaces` only                |
+| AGENTS.md files and `.costrict/rules/` | Only when `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1` is set |
 
-Everything else, including subagents, commands, output styles, hooks, and other settings, is discovered only from the current working directory and its parents, your user directory at `~/.claude/`, and managed settings. To share that configuration across projects, use one of these approaches:
+Everything else, including subagents, commands, output styles, hooks, and other settings, is discovered only from the current working directory and its parents, your user directory at `~/.costrict/`, and managed settings. To share that configuration across projects, use one of these approaches:
 
-* **User-level configuration**: place files in `~/.claude/agents/`, `~/.claude/output-styles/`, or `~/.claude/settings.json` to make them available in every project
+* **User-level configuration**: place files in `~/.costrict/agents/`, `~/.costrict/output-styles/`, or `~/.costrict/settings.json` to make them available in every project
 * **Plugins**: package and distribute configuration as a plugin that teams can install
-* **Launch from the config directory**: run CSC from the directory containing the `.claude/` configuration you want
+* **Launch from the config directory**: run CSC from the directory containing the `.costrict/` configuration you want
 
 ## How permissions interact with sandboxing
 
@@ -272,12 +272,12 @@ To react to denials programmatically, use the `PermissionDenied` hook.
 
 Auto mode uses a classifier model to decide whether each action is safe to run without prompting. Out of the box it trusts only the working directory and, if present, the current repo's remotes. Actions like pushing to your company's source control org or writing to a team cloud bucket will be blocked as potential data exfiltration. The `autoMode` settings block lets you tell the classifier which infrastructure your organization trusts.
 
-The classifier reads `autoMode` from user settings, `.claude/settings.local.json`, and managed settings. It does not read from shared project settings in `.claude/settings.json`, because a checked-in repo could otherwise inject its own allow rules.
+The classifier reads `autoMode` from user settings, `.costrict/settings.local.json`, and managed settings. It does not read from shared project settings in `.costrict/settings.json`, because a checked-in repo could otherwise inject its own allow rules.
 
 | Scope                      | File                          | Use for                                             |
 | :------------------------- | :---------------------------- | :-------------------------------------------------- |
-| One developer              | `~/.claude/settings.json`     | Personal trusted infrastructure                     |
-| One project, one developer | `.claude/settings.local.json` | Per-project trusted buckets or services, gitignored |
+| One developer              | `~/.costrict/settings.json`     | Personal trusted infrastructure                     |
+| One project, one developer | `.costrict/settings.local.json` | Per-project trusted buckets or services, gitignored |
 | Organization-wide          | Managed settings              | Trusted infrastructure enforced for all developers  |
 
 Entries from each scope are combined. A developer can extend `environment`, `allow`, and `soft_deny` with personal entries but cannot remove entries that managed settings provide. Because allow rules act as exceptions to block rules inside the classifier, a developer-added `allow` entry can override an organization `soft_deny` entry: the combination is additive, not a hard policy boundary. If you need a rule that developers cannot work around, use `permissions.deny` in managed settings instead, which blocks actions before the classifier is consulted.
@@ -379,9 +379,9 @@ Permission rules follow the same settings precedence as all other CSC settings:
 
 1. **Managed settings**: cannot be overridden by any other level, including command line arguments
 2. **Command line arguments**: temporary session overrides
-3. **Local project settings** (`.claude/settings.local.json`)
-4. **Shared project settings** (`.claude/settings.json`)
-5. **User settings** (`~/.claude/settings.json`)
+3. **Local project settings** (`.costrict/settings.local.json`)
+4. **Shared project settings** (`.costrict/settings.json`)
+5. **User settings** (`~/.costrict/settings.json`)
 
 If a tool is denied at any level, no other level can allow it. For example, a managed settings deny cannot be overridden by `--allowedTools`, and `--disallowedTools` can add restrictions beyond what managed settings define.
 

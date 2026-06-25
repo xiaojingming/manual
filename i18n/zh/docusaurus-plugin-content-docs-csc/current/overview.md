@@ -62,7 +62,7 @@ csc "commit my changes with a descriptive message"
 
 ### 使用指令、skills和hooks进行自定义
 
-`CLAUDE.md` 是你添加到项目根目录的 Markdown 文件，CSC 在每次会话开始时读取它。使用它来设置编码标准、架构决策、首选库和审查清单。CSC 还会在工作中构建自动记忆，跨会话保存构建命令和调试见解等学习内容，无需你手动编写。
+`AGENTS.md` 是你添加到项目根目录的 Markdown 文件，CSC 在每次会话开始时读取它。使用它来设置编码标准、架构决策、首选库和审查清单。CSC 还会在工作中构建自动记忆，跨会话保存构建命令和调试见解等学习内容，无需你手动编写。
 
 创建自定义命令来打包可重复的工作流，供团队共享，如 `/review-pr` 或 `/deploy-staging`。
 

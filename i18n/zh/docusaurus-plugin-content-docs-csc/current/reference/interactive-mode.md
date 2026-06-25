@@ -292,7 +292,7 @@ export CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false
 * 按 `Ctrl+T` 切换任务列表视图。显示一次最多显示 10 个任务
 * 要查看所有任务或清除它们，直接询问 CSC："显示所有任务" 或 "清除所有任务"
 * 任务在上下文压缩后仍然保留，帮助 CSC 在较大的项目中保持组织
-* 要跨会话共享任务列表，设置 `CLAUDE_CODE_TASK_LIST_ID` 以使用 `~/.claude/tasks/` 中的命名目录：`CLAUDE_CODE_TASK_LIST_ID=my-project csc`
+* 要跨会话共享任务列表，设置 `CLAUDE_CODE_TASK_LIST_ID` 以使用 `~/.costrict/tasks/` 中的命名目录：`CLAUDE_CODE_TASK_LIST_ID=my-project csc`
 
 ## PR 审查状态
 

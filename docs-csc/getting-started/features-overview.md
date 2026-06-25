@@ -4,19 +4,19 @@ sidebar_position: 2
 
 # Extend CSC
 
-> Understand when to use CLAUDE.md, Skills, Subagents, Hooks, MCP, and Plugins.
+> Understand when to use AGENTS.md, Skills, Subagents, Hooks, MCP, and Plugins.
 
 CSC combines a model that reasons about your code with built-in tools for file operations, search, execution, and web access. The built-in tools cover most coding tasks. This guide covers the extension layer: features you add to customize what CSC knows, connect it to external services, and automate workflows.
 
 > **Note:** For how the core agentic loop works, see how CSC works.
 
-**New to CSC?** Start with CLAUDE.md for project conventions, then add other extensions as specific triggers come up.
+**New to CSC?** Start with AGENTS.md for project conventions, then add other extensions as specific triggers come up.
 
 ## Overview
 
 Extensions plug into different parts of the agentic loop:
 
-* **CLAUDE.md** adds persistent context CSC sees every session
+* **AGENTS.md** adds persistent context CSC sees every session
 * **Skills** add reusable knowledge and invocable workflows
 * **MCP** connects CSC to external services and tools
 * **Subagents** run their own loops in isolated context, returning summaries
@@ -32,7 +32,7 @@ Features range from always-on context that CSC sees every session, to on-demand 
 
 | Feature           | What it does                                               | When to use it                                                                  | Example                                                                         |
 | ----------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| **CLAUDE.md**     | Persistent context loaded every conversation               | Project conventions, "always do X" rules                                        | "Use pnpm, not npm. Run tests before committing."                               |
+| **AGENTS.md**     | Persistent context loaded every conversation               | Project conventions, "always do X" rules                                        | "Use pnpm, not npm. Run tests before committing."                               |
 | **Skills**        | Instructions, knowledge, and workflows CSC can use         | Reusable content, reference docs, repeatable tasks                              | `/deploy` runs your deployment checklist; API docs skill with endpoint patterns |
 | **Subagents**     | Isolated execution context that returns summarized results | Context isolation, parallel tasks, specialized workers                          | Research task that reads many files but returns only key findings               |
 | **Agent teams**   | Coordinate multiple independent CSC sessions               | Parallel research, new feature development, debugging with competing hypotheses | Spawn reviewers to check security, performance, and tests simultaneously        |
@@ -47,7 +47,7 @@ You don't need to configure everything up front. Each feature has a recognizable
 
 | Trigger                                                                          | Add                                             |
 | :------------------------------------------------------------------------------- | :---------------------------------------------- |
-| CSC gets a convention or command wrong twice                                     | Add it to CLAUDE.md                             |
+| CSC gets a convention or command wrong twice                                     | Add it to AGENTS.md                             |
 | You keep typing the same prompt to start a task                                  | Save it as a user-invocable Skill               |
 | You paste the same playbook or multi-step procedure into chat for the third time | Capture it as a Skill                           |
 | You keep copying data from a browser tab CSC can't see                           | Connect that system as an MCP server            |
@@ -55,7 +55,7 @@ You don't need to configure everything up front. Each feature has a recognizable
 | You want something to happen every time without asking                           | Write a Hook                                    |
 | A second repository needs the same setup                                         | Package it as a Plugin                          |
 
-The same triggers tell you when to update what you already have. A repeated mistake or a recurring review comment is a CLAUDE.md edit, not a one-off correction in chat. A workflow you keep tweaking by hand is a Skill that needs another revision.
+The same triggers tell you when to update what you already have. A repeated mistake or a recurring review comment is a AGENTS.md edit, not a one-off correction in chat. A workflow you keep tweaking by hand is a Skill that needs another revision.
 
 ### Compare similar features
 
@@ -80,36 +80,36 @@ Skills and Subagents solve different problems:
 
 **They can combine.** A Subagent can preload specific Skills (`skills:` field). A Skill can run in isolated context using `context: fork`. See Skills for details.
 
-### CLAUDE.md vs Skills
+### AGENTS.md vs Skills
 
 Both store instructions, but they load differently and serve different purposes.
 
-| Aspect                    | CLAUDE.md                    | Skills                                   |
+| Aspect                    | AGENTS.md                    | Skills                                   |
 | ------------------------- | ---------------------------- | --------------------------------------- |
 | **Loads**                 | Every session, automatically | On demand                               |
 | **Can include files**     | Yes, with `@path` imports    | Yes, with `@path` imports               |
 | **Can trigger workflows** | No                           | Yes, with `/<name>`                     |
 | **Best for**              | "Always do X" rules          | Reference material, invocable workflows |
 
-**Put it in CLAUDE.md** if CSC should always know it: coding conventions, build commands, project structure, "never do X" rules.
+**Put it in AGENTS.md** if CSC should always know it: coding conventions, build commands, project structure, "never do X" rules.
 
 **Put it in a Skill** if it's reference material CSC needs sometimes (API docs, style guides) or a workflow you trigger with `/<name>` (deploy, review, release).
 
-**Rule of thumb:** Keep CLAUDE.md under 200 lines. If it's growing, move reference content to Skills or split into `.claude/rules/` files.
+**Rule of thumb:** Keep AGENTS.md under 200 lines. If it's growing, move reference content to Skills or split into `.costrict/rules/` files.
 
-### CLAUDE.md vs Rules vs Skills
+### AGENTS.md vs Rules vs Skills
 
 All three store instructions, but they load differently:
 
-| Aspect       | CLAUDE.md                           | `.claude/rules/`                                   | Skills                                    |
+| Aspect       | AGENTS.md                           | `.costrict/rules/`                                   | Skills                                    |
 | ------------ | ----------------------------------- | -------------------------------------------------- | ---------------------------------------- |
 | **Loads**    | Every session                       | Every session, or when matching files are opened   | On demand, when invoked or relevant      |
 | **Scope**    | Whole project                       | Can be scoped to file paths                        | Task-specific                            |
 | **Best for** | Core conventions and build commands | Language-specific or directory-specific guidelines | Reference material, repeatable workflows |
 
-**Use CLAUDE.md** for instructions every session needs: build commands, test conventions, project architecture.
+**Use AGENTS.md** for instructions every session needs: build commands, test conventions, project architecture.
 
-**Use rules** to keep CLAUDE.md focused. Rules with `paths` frontmatter only load when CSC works with matching files, saving context.
+**Use rules** to keep AGENTS.md focused. Rules with `paths` frontmatter only load when CSC works with matching files, saving context.
 
 **Use Skills** for content CSC only needs sometimes, like API documentation or a deployment checklist you trigger with `/<name>`.
 
@@ -126,7 +126,7 @@ Both parallelize work, but they're architecturally different:
 | **Communication** | Reports results back to the main agent only      | Teammates message each other directly               |
 | **Coordination**  | Main agent manages all work                      | Shared task list with self-coordination             |
 | **Best for**      | Focused tasks where only the result matters      | Complex work requiring discussion and collaboration |
-| **Token cost**    | Lower: results summarized back to main context   | Higher: each teammate is a separate Claude instance |
+| **Token cost**    | Lower: results summarized back to main context   | Higher: each teammate is a separate CSC instance |
 
 **Use a Subagent** when you need a quick, focused worker: research a question, verify a claim, review a file. The Subagent does the work and returns a summary. Your main conversation stays clean.
 
@@ -156,24 +156,24 @@ Example: An MCP server connects CSC to your database. A Skill teaches CSC your d
 
 ### Understand how features layer
 
-Features can be defined at multiple levels: user-wide, per-project, via Plugins, or through managed policies. You can also nest CLAUDE.md files in subdirectories or place Skills in specific packages of a monorepo. When the same feature exists at multiple levels, here's how they layer:
+Features can be defined at multiple levels: user-wide, per-project, via Plugins, or through managed policies. You can also nest AGENTS.md files in subdirectories or place Skills in specific packages of a monorepo. When the same feature exists at multiple levels, here's how they layer:
 
-* **CLAUDE.md files** are additive: all levels contribute content to CSC's context simultaneously. Files from your working directory and above load at launch; subdirectories load as you work in them. When instructions conflict, CSC uses judgment to reconcile them, with more specific instructions typically taking precedence. See how CLAUDE.md files load.
+* **AGENTS.md files** are additive: all levels contribute content to CSC's context simultaneously. Files from your working directory and above load at launch; subdirectories load as you work in them. When instructions conflict, CSC uses judgment to reconcile them, with more specific instructions typically taking precedence. See how AGENTS.md files load.
 * **Skills and Subagents** override by name: when the same name exists at multiple levels, one definition wins based on priority (Skills: managed > user > project; Subagents: managed > CLI flag > project > user > Plugins). Plugin Skills are namespaced to avoid conflicts. See Skills discovery and Subagents scope.
 * **MCP servers** override by name: local > project > user. See MCP scope.
 * **Hooks** merge: all registered Hooks fire for their matching events regardless of source. See Hooks.
 
 ### Combine features
 
-Each extension solves a different problem: CLAUDE.md handles always-on context, Skills handle on-demand knowledge and workflows, MCP handles external connections, Subagents handle isolation, and Hooks handle automation. Real setups combine them based on your workflow.
+Each extension solves a different problem: AGENTS.md handles always-on context, Skills handle on-demand knowledge and workflows, MCP handles external connections, Subagents handle isolation, and Hooks handle automation. Real setups combine them based on your workflow.
 
-For example, you might use CLAUDE.md for project conventions, a Skill for your deployment workflow, MCP to connect to your database, and a Hook to run linting after every edit. Each feature handles what it's best at.
+For example, you might use AGENTS.md for project conventions, a Skill for your deployment workflow, MCP to connect to your database, and a Hook to run linting after every edit. Each feature handles what it's best at.
 
 | Pattern                | How it works                                                                     | Example                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **Skills + MCP**       | MCP provides the connection; a Skill teaches CSC how to use it well              | MCP connects to your database, a Skill documents your schema and query patterns                   |
 | **Skills + Subagents** | A Skill spawns Subagents for parallel work                                       | `/audit` Skill kicks off security, performance, and style Subagents that work in isolated context |
-| **CLAUDE.md + Skills** | CLAUDE.md holds always-on rules; Skills hold reference material loaded on demand | CLAUDE.md says "follow our API conventions," a Skill contains the full API style guide            |
+| **AGENTS.md + Skills** | AGENTS.md holds always-on rules; Skills hold reference material loaded on demand | AGENTS.md says "follow our API conventions," a Skill contains the full API style guide            |
 | **Hooks + MCP**        | A Hook triggers external actions through MCP                                     | Post-edit Hook sends a Slack notification when CSC modifies critical files                        |
 
 ## Understand context costs
@@ -186,7 +186,7 @@ Each feature has a different loading strategy and context cost:
 
 | Feature         | When it loads             | What loads                                    | Context cost                                 |
 | --------------- | ------------------------- | --------------------------------------------- | -------------------------------------------- |
-| **CLAUDE.md**   | Session start             | Full content                                  | Every request                                |
+| **AGENTS.md**   | Session start             | Full content                                  | Every request                                |
 | **Skills**      | Session start + when used | Descriptions at start, full content when used | Low (descriptions every request)\*           |
 | **MCP servers** | Session start             | Tool names; full schemas on demand            | Low until a tool is used                     |
 | **Subagents**   | When spawned              | Fresh context with specified Skills           | Isolated from main session                   |
@@ -198,15 +198,15 @@ Each feature has a different loading strategy and context cost:
 
 Each feature loads at different points in your session. The sections below explain when each one loads and what goes into context.
 
-### CLAUDE.md
+### AGENTS.md
 
 **When:** Session start
 
-**What loads:** Full content of all CLAUDE.md files (managed, user, and project levels).
+**What loads:** Full content of all AGENTS.md files (managed, user, and project levels).
 
-**Inheritance:** CSC reads CLAUDE.md files from your working directory up to the root, and discovers nested ones in subdirectories as it accesses those files. See how CLAUDE.md files load for details.
+**Inheritance:** CSC reads AGENTS.md files from your working directory up to the root, and discovers nested ones in subdirectories as it accesses those files. See how AGENTS.md files load for details.
 
-> **Tip:** Keep CLAUDE.md under 200 lines. Move reference material to Skills, which load on-demand.
+> **Tip:** Keep AGENTS.md under 200 lines. Move reference material to Skills, which load on-demand.
 
 ### Skills
 
@@ -244,7 +244,7 @@ Skills are extra capabilities in CSC's toolkit. They can be reference material (
 
 * The system prompt (shared with parent for cache efficiency)
 * Full content of Skills listed in the agent's `skills:` field
-* CLAUDE.md and git status (inherited from parent)
+* AGENTS.md and git status (inherited from parent)
 * Whatever context the lead agent passes in the prompt
 
 **Context cost:** Isolated from main session. Subagents don't inherit your conversation history or invoked Skills.

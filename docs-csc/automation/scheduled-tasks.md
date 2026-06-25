@@ -92,12 +92,12 @@ CSC looks for the file in two locations and uses the first one it finds.
 
 | Path                | Scope                                                            |
 | :------------------ | :--------------------------------------------------------------- |
-| `.claude/loop.md`   | Project-level. Takes precedence when both files exist.           |
-| `~/.claude/loop.md` | User-level. Applies in any project that does not define its own. |
+| `.costrict/loop.md`   | Project-level. Takes precedence when both files exist.           |
+| `~/.costrict/loop.md` | User-level. Applies in any project that does not define its own. |
 
 The file is plain Markdown with no required structure. Write it as if you were typing the `/loop` prompt directly. The following example keeps a release branch healthy:
 
-```markdown title=".claude/loop.md"
+```markdown title=".costrict/loop.md"
 Check the `release/next` PR. If CI is red, pull the failing job log,
 diagnose, and push a minimal fix. If new review comments have arrived,
 address each one and resolve the thread. If everything is green and

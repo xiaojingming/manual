@@ -68,7 +68,7 @@ You can log in using any of these account types:
 
 **Fill in information in the UI**
 
-For individual users or self-hosted API services. Select **Anthropic Compatible / OpenAI / Gemini**, and fill in the following:
+For individual users or self-hosted API services. Select **CoStrict Compatible / OpenAI / Gemini**, and fill in the following:
 
 | **Field**     | **Description** | **Example**                |
 | ------------- | --------------- | -------------------------- |
@@ -80,7 +80,7 @@ For individual users or self-hosted API services. Select **Anthropic Compatible 
 
 **You can also edit the config file directly**
 
-Skip the interactive login and edit ~/.claude/settings.json directly:
+Skip the interactive login and edit ~/.costrict/settings.json directly:
 
 ```
 {

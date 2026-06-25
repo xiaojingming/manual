@@ -136,13 +136,13 @@ CSC 提供两种沙箱模式：
 | :---------------- | :------------------------------------------------------ | :------------------------------------------------------------------------ |
 | `/`               | 从文件系统根目录的绝对路径                               | `/tmp/build` 保持为 `/tmp/build`                                          |
 | `~/`              | 相对于主目录                                            | `~/.kube` 变为 `$HOME/.kube`                                              |
-| `./` 或无前缀     | 对于项目设置相对于项目根目录，对于用户设置相对于 `~/.claude` | `.claude/settings.json` 中的 `./output` 解析为 `<project-root>/output`    |
+| `./` 或无前缀     | 对于项目设置相对于项目根目录，对于用户设置相对于 `~/.costrict` | `.costrict/settings.json` 中的 `./output` 解析为 `<project-root>/output`    |
 
 旧的 `//path` 前缀用于绝对路径仍然有效。如果你之前使用单斜杠 `/path` 期望项目相对解析，请切换到 `./path`。此语法不同于读取和编辑权限规则，后者使用 `//path` 表示绝对路径，`/path` 表示项目相对路径。沙箱文件系统路径使用标准约定：`/tmp/build` 是绝对路径。
 
 你还可以使用 `sandbox.filesystem.denyWrite` 和 `sandbox.filesystem.denyRead` 拒绝写入或读取访问。这些与 `Edit(...)` 和 `Read(...)` 权限规则中的任何路径合并。要重新允许读取被拒绝区域内的特定路径，请使用 `sandbox.filesystem.allowRead`，它优先于 `denyRead`。当在托管设置中启用 `allowManagedReadPathsOnly` 时，仅尊重托管的 `allowRead` 条目；用户、项目和本地的 `allowRead` 条目将被忽略。`denyRead` 仍然从所有来源合并。
 
-例如，要阻止从整个主目录读取，同时仍允许从当前项目读取，请将以下内容添加到项目的 `.claude/settings.json` 中：
+例如，要阻止从整个主目录读取，同时仍允许从当前项目读取，请将以下内容添加到项目的 `.costrict/settings.json` 中：
 
 ```json
 {
@@ -156,7 +156,7 @@ CSC 提供两种沙箱模式：
 }
 ```
 
-`allowRead` 中的 `.` 解析为项目根目录，因为此配置位于项目设置中。如果你将相同的配置放在 `~/.claude/settings.json` 中，`.` 将解析为 `~/.claude`，项目文件仍将被 `denyRead` 规则阻止。
+`allowRead` 中的 `.` 解析为项目根目录，因为此配置位于项目设置中。如果你将相同的配置放在 `~/.costrict/settings.json` 中，`.` 将解析为 `~/.costrict`，项目文件仍将被 `denyRead` 规则阻止。
 
 > **💡 提示：** 并非所有命令都与沙箱化开箱即用兼容。以下提示可能有助于你充分利用沙箱：
 

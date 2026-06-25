@@ -68,7 +68,7 @@ csc
 
 **界面填写信息**
 
-适用于个人用户或自建 API 服务。选择 **Anthropic Compatible / OpenAI / Gemini**，填写以下信息：
+适用于个人用户或自建 API 服务。选择 **CoStrict Compatible / OpenAI / Gemini**，填写以下信息：
 
 | **字段**     | **说明**     | **示例**                   |
 | ------------ | ------------ | -------------------------- |
@@ -80,7 +80,7 @@ csc
 
 **也可以直接编辑配置文件**
 
-跳过交互式登录，直接编辑 ~/.claude/settings.json：
+跳过交互式登录，直接编辑 ~/.costrict/settings.json：
 
 ```
 {

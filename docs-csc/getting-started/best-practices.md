@@ -124,17 +124,17 @@ You can provide rich data to CSC in several ways:
 
 A few setup steps make CSC significantly more effective across all your sessions. For a full overview of extension features and when to use each one, see Extend CSC.
 
-### Write an effective CLAUDE.md
+### Write an effective AGENTS.md
 
-> **💡 Tip:** Run `/init` to generate a starter CLAUDE.md file based on your current project structure, then refine over time.
+> **💡 Tip:** Run `/init` to generate a starter AGENTS.md file based on your current project structure, then refine over time.
 
-CLAUDE.md is a special file that CSC reads at the start of every conversation. Include Bash commands, code style, and workflow rules. This gives CSC persistent context it can't infer from code alone.
+AGENTS.md is a special file that CSC reads at the start of every conversation. Include Bash commands, code style, and workflow rules. This gives CSC persistent context it can't infer from code alone.
 
 The `/init` command analyzes your codebase to detect build systems, test frameworks, and code patterns, giving you a solid foundation to refine.
 
-There's no required format for CLAUDE.md files, but keep it short and human-readable. For example:
+There's no required format for AGENTS.md files, but keep it short and human-readable. For example:
 
-```markdown CLAUDE.md
+```markdown AGENTS.md
 # Code style
 - Use ES modules (import/export) syntax, not CommonJS (require)
 - Destructure imports when possible (eg. import { foo } from 'bar')
@@ -144,9 +144,9 @@ There's no required format for CLAUDE.md files, but keep it short and human-read
 - Prefer running single tests, and not the whole test suite, for performance
 ```
 
-CLAUDE.md is loaded every session, so only include things that apply broadly. For domain knowledge or workflows that are only relevant sometimes, use Skills instead. CSC loads them on demand without bloating every conversation.
+AGENTS.md is loaded every session, so only include things that apply broadly. For domain knowledge or workflows that are only relevant sometimes, use Skills instead. CSC loads them on demand without bloating every conversation.
 
-Keep it concise. For each line, ask: *"Would removing this cause CSC to make mistakes?"* If not, cut it. Bloated CLAUDE.md files cause CSC to ignore your actual instructions!
+Keep it concise. For each line, ask: *"Would removing this cause CSC to make mistakes?"* If not, cut it. Bloated AGENTS.md files cause CSC to ignore your actual instructions!
 
 | ✅ Include | ❌ Exclude |
 | --- | --- |
@@ -158,27 +158,27 @@ Keep it concise. For each line, ask: *"Would removing this cause CSC to make mis
 | Developer environment quirks (required env vars) | File-by-file descriptions of the codebase |
 | Common gotchas or non-obvious behaviors | Self-evident practices like "write clean code" |
 
-If CSC keeps doing something you don't want despite having a rule against it, the file is probably too long and the rule is getting lost. If CSC asks you questions that are answered in CLAUDE.md, the phrasing might be ambiguous. Treat CLAUDE.md like code: review it when things go wrong, prune it regularly, and test changes by observing whether CSC's behavior actually shifts.
+If CSC keeps doing something you don't want despite having a rule against it, the file is probably too long and the rule is getting lost. If CSC asks you questions that are answered in AGENTS.md, the phrasing might be ambiguous. Treat AGENTS.md like code: review it when things go wrong, prune it regularly, and test changes by observing whether CSC's behavior actually shifts.
 
-You can tune instructions by adding emphasis (e.g., "IMPORTANT" or "YOU MUST") to improve adherence. Check CLAUDE.md into git so your team can contribute. The file compounds in value over time.
+You can tune instructions by adding emphasis (e.g., "IMPORTANT" or "YOU MUST") to improve adherence. Check AGENTS.md into git so your team can contribute. The file compounds in value over time.
 
-CLAUDE.md files can import additional files using `@path/to/import` syntax:
+AGENTS.md files can import additional files using `@path/to/import` syntax:
 
-```markdown CLAUDE.md
+```markdown AGENTS.md
 See @README.md for project overview and @package.json for available npm commands.
 
 # Additional Instructions
 - Git workflow: @docs/git-instructions.md
-- Personal overrides: @~/.claude/my-project-instructions.md
+- Personal overrides: @~/.costrict/my-project-instructions.md
 ```
 
-You can place CLAUDE.md files in several locations:
+You can place AGENTS.md files in several locations:
 
-* **Home folder (`~/.claude/CLAUDE.md`)**: applies to all CSC sessions
-* **Project root (`./CLAUDE.md`)**: check into git to share with your team
-* **Project root (`./CLAUDE.local.md`)**: personal project-specific notes; add this file to your `.gitignore` so it isn't shared with your team
-* **Parent directories**: useful for monorepos where both `root/CLAUDE.md` and `root/foo/CLAUDE.md` are pulled in automatically
-* **Child directories**: CSC pulls in child CLAUDE.md files on demand when working with files in those directories
+* **Home folder (`~/.costrict/AGENTS.md`)**: applies to all CSC sessions
+* **Project root (`./AGENTS.md`)**: check into git to share with your team
+* **Project root (`./AGENTS.local.md`)**: personal project-specific notes; add this file to your `.gitignore` so it isn't shared with your team
+* **Parent directories**: useful for monorepos where both `root/AGENTS.md` and `root/foo/AGENTS.md` are pulled in automatically
+* **Child directories**: CSC pulls in child AGENTS.md files on demand when working with files in those directories
 
 ### Configure permissions
 
@@ -210,19 +210,19 @@ With MCP servers, you can ask CSC to implement features from issue trackers, que
 
 > **💡 Tip:** Use Hooks for actions that must happen every time with zero exceptions.
 
-Hooks run scripts automatically at specific points in CSC's workflow. Unlike CLAUDE.md instructions which are advisory, Hooks are deterministic and guarantee the action happens.
+Hooks run scripts automatically at specific points in CSC's workflow. Unlike AGENTS.md instructions which are advisory, Hooks are deterministic and guarantee the action happens.
 
-CSC can write Hooks for you. Try prompts like *"Write a hook that runs eslint after every file edit"* or *"Write a hook that blocks writes to the migrations folder."* Edit `.claude/settings.json` directly to configure Hooks by hand, and run `/hooks` to browse what's configured.
+CSC can write Hooks for you. Try prompts like *"Write a hook that runs eslint after every file edit"* or *"Write a hook that blocks writes to the migrations folder."* Edit `.costrict/settings.json` directly to configure Hooks by hand, and run `/hooks` to browse what's configured.
 
 ### Create Skills
 
-> **💡 Tip:** Create `SKILL.md` files in `.claude/skills/` to give CSC domain knowledge and reusable workflows.
+> **💡 Tip:** Create `SKILL.md` files in `.costrict/skills/` to give CSC domain knowledge and reusable workflows.
 
 Skills extend CSC's knowledge with information specific to your project, team, or domain. CSC applies them automatically when relevant, or you can invoke them directly with `/skill-name`.
 
-Create a skill by adding a directory with a `SKILL.md` to `.claude/skills/`:
+Create a skill by adding a directory with a `SKILL.md` to `.costrict/skills/`:
 
-```markdown .claude/skills/api-conventions/SKILL.md
+```markdown .costrict/skills/api-conventions/SKILL.md
 ---
 name: api-conventions
 description: REST API design conventions for our services
@@ -236,7 +236,7 @@ description: REST API design conventions for our services
 
 Skills can also define repeatable workflows you invoke directly:
 
-```markdown .claude/skills/fix-issue/SKILL.md
+```markdown .costrict/skills/fix-issue/SKILL.md
 ---
 name: fix-issue
 description: Fix a GitHub issue
@@ -258,11 +258,11 @@ Run `/fix-issue 1234` to invoke it. Use `disable-model-invocation: true` for wor
 
 ### Create custom Subagents
 
-> **💡 Tip:** Define specialized assistants in `.claude/agents/` that CSC can delegate to for isolated tasks.
+> **💡 Tip:** Define specialized assistants in `.costrict/agents/` that CSC can delegate to for isolated tasks.
 
 Subagents run in their own context with their own set of allowed tools. They're useful for tasks that read many files or need specialized focus without cluttering your main conversation.
 
-```markdown .claude/agents/security-reviewer.md
+```markdown .costrict/agents/security-reviewer.md
 ---
 name: security-reviewer
 description: Reviews code for security vulnerabilities
@@ -284,7 +284,7 @@ Tell CSC to use Subagents explicitly: *"Use a subagent to review this code for s
 
 > **💡 Tip:** Run `/plugin` to browse the marketplace. Plugins add Skills, tools, and integrations without configuration.
 
-Plugins bundle Skills, Hooks, Subagents, and MCP servers into a single installable unit from the community and Anthropic. If you work with a typed language, install a code intelligence plugin to give CSC precise symbol navigation and automatic error detection after edits.
+Plugins bundle Skills, Hooks, Subagents, and MCP servers into a single installable unit from the community and CoStrict. If you work with a typed language, install a code intelligence plugin to give CSC precise symbol navigation and automatic error detection after edits.
 
 For guidance on choosing between Skills, Subagents, Hooks, and MCP, see Extend CSC.
 
@@ -355,7 +355,7 @@ During long sessions, CSC's context window can fill with irrelevant conversation
 * When auto compaction triggers, CSC summarizes what matters most, including code patterns, file states, and key decisions
 * For more control, run `/compact <instructions>`, like `/compact Focus on the API changes`
 * To compact only part of the conversation, use `Esc + Esc` or `/rewind`, select a message checkpoint, and choose **Summarize from here**. This condenses messages from that point forward while keeping earlier context intact.
-* Customize compaction behavior in CLAUDE.md with instructions like `"When compacting, always preserve the full list of modified files and any test commands"` to ensure critical context survives summarization
+* Customize compaction behavior in AGENTS.md with instructions like `"When compacting, always preserve the full list of modified files and any test commands"` to ensure critical context survives summarization
 * For quick questions that don't need to stay in context, use `/btw`. The answer appears in a dismissible overlay and never enters conversation history, so you can check a detail without growing context.
 
 ### Use Subagents for investigation
@@ -432,7 +432,7 @@ csc -p "Analyze this log file" --output-format stream-json
 There are three main ways to run parallel sessions:
 
 * CSC desktop app: Manage multiple local sessions visually. Each session gets its own isolated worktree.
-* CSC on the web: Run on Anthropic's secure cloud infrastructure in isolated VMs.
+* CSC on the web: Run on CoStrict's secure cloud infrastructure in isolated VMs.
 * Agent teams: Automated coordination of multiple sessions with shared tasks, messaging, and a team lead.
 
 Beyond parallelizing work, multiple sessions enable quality-focused workflows. A fresh context improves code review since CSC won't be biased toward code it just wrote.
@@ -498,7 +498,7 @@ These are common mistakes. Recognizing them early saves time:
   > **Fix**: `/clear` between unrelated tasks.
 * **Correcting over and over.** CSC does something wrong, you correct it, it's still wrong, you correct again. Context is polluted with failed approaches.
   > **Fix**: After two failed corrections, `/clear` and write a better initial prompt incorporating what you learned.
-* **The over-specified CLAUDE.md.** If your CLAUDE.md is too long, CSC ignores half of it because important rules get lost in the noise.
+* **The over-specified AGENTS.md.** If your AGENTS.md is too long, CSC ignores half of it because important rules get lost in the noise.
   > **Fix**: Ruthlessly prune. If CSC already does something correctly without the instruction, delete it or convert it to a hook.
 * **The trust-then-verify gap.** CSC produces a plausible-looking implementation that doesn't handle edge cases.
   > **Fix**: Always provide verification (tests, scripts, screenshots). If you can't verify it, don't ship it.
