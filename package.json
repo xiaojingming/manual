@@ -14,7 +14,9 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "install-hooks": "bash scripts/install-git-hooks.sh"
+    "install-hooks": "bash scripts/install-git-hooks.sh",
+    "convert-images": "node scripts/convert-images.mjs",
+    "convert-images:check": "node scripts/convert-images.mjs --dry-run"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.1",

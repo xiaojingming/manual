@@ -11,7 +11,7 @@ Generate once, reuse multiple times. You can manually edit and modify this file 
 
 {/* ![img](img/init/png.png) */}
 
-![img](img/init/png-17700918603891.png)
+![img](img/init/png-17700918603891.webp)
 
 
 

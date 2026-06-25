@@ -6,7 +6,7 @@ sidebar_position: 0
 
 CoStrict CLI is a terminal-based AI coding assistant that lets you collaborate with large language models on coding tasks without leaving your command line.
 
-![img](img/feature/main.png)
+![img](img/feature/main.webp)
 
 ---
 

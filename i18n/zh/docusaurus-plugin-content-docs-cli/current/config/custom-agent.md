@@ -50,7 +50,7 @@ Provide constructive feedback without making direct changes.
 
 ## 测试
 
-![img](img/custom-agent/png.png)
+![img](img/custom-agent/png.webp)
 
 ## 其它配置
 

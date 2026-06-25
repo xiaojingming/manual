@@ -24,8 +24,8 @@ sidebar_position: 1
 - In the vscode plugin store，search for `zgsm` / `shenma` / `CoStrict` 
 -  Click to install
 
-![img.png](./install/install.png)
+![img.png](./install/install.webp)
 
 - The CoStrict icon will default to appearing on the left side
 
-![img.png](./install/login.png)
+![img.png](./install/login.webp)

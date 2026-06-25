@@ -38,7 +38,7 @@ You can edit both global and project-level MCP configuration files directly from
 
 1.  Click the icon in the top navigation of the CoStrict pane.
 
-![desctiption](./img/mcp/image1.png)
+![desctiption](./img/mcp/image1.webp)
 
 2.  Scroll to the bottom of the MCP settings view.
 
@@ -48,7 +48,7 @@ You can edit both global and project-level MCP configuration files directly from
 
     2.  Edit Project MCP: Opens the project-specific .roo/mcp.json file. If this file doesn't exist, CoStrict will create it for you.
 
-![desctiption](./img/mcp/image2.png)
+![desctiption](./img/mcp/image2.webp)
 
 Both files use a JSON format with a mcpServers object containing named server configurations:
 
@@ -254,7 +254,7 @@ Disabling your MCP Servers here will remove all MCP related logic and definition
 
 2.  Check/Uncheck Enable MCP Servers
 
-![desctiption](./img/mcp/image3.png)
+![desctiption](./img/mcp/image3.webp)
 
 #### Enabling or Disabling MCP Server Creation
 
@@ -264,7 +264,7 @@ Disabling your MCP Server Creation here will just remove the instructions from y
 
 2.  Check/Uncheck Enable MCP Server Creation
 
-![desctiption](./img/mcp/image4.png)
+![desctiption](./img/mcp/image4.webp)
 
 #### How to Use CoStrict to Create an MCP Server
 
@@ -300,7 +300,7 @@ If you need a specific tool or capability that isn't available through existing 
 
 #### Managing Individual MCP Servers
 
-![desctiption](./img/mcp/image5.png)
+![desctiption](./img/mcp/image5.webp)
 
 Each MCP server has its own configuration panel where you can modify settings, manage tools, and control its operation. To access these settings:
 
@@ -308,7 +308,7 @@ Each MCP server has its own configuration panel where you can modify settings, m
 
 2.  Locate the MCP server you want to manage in the list
 
-![desctiption](./img/mcp/image6.png)
+![desctiption](./img/mcp/image6.webp)
 
 ##### Deleting a Server
 
@@ -316,7 +316,7 @@ Each MCP server has its own configuration panel where you can modify settings, m
 
 2.  Press the Delete button on the confirmation box
 
-![desctiption](./img/mcp/image7.png)
+![desctiption](./img/mcp/image7.webp)
 
 ##### Restarting a Server
 
@@ -332,7 +332,7 @@ To set the maximum time to wait for a response after a tool call to the MCP serv
 
 1.  Click the Network Timeout pulldown at the bottom of the individual MCP server's config box and change the time. Default is 1 minute but it can be set between 30 seconds and 5 minutes.
 
-![desctiption](./img/mcp/image8.png)
+![desctiption](./img/mcp/image8.webp)
 
 ##### Auto Approve Tools
 
@@ -344,7 +344,7 @@ MCP tool auto-approval works on a per-tool basis and is disabled by default. To 
 
 3.  Check the Always allow checkbox next to the tool name
 
-![desctiption](./img/mcp/image9.png)
+![desctiption](./img/mcp/image9.webp)
 
 When enabled, CoStrict will automatically approve this specific tool without prompting. Note that the global "Use MCP servers" setting takes precedence - if it's disabled, no MCP tools will be auto-approved.
 
@@ -488,7 +488,7 @@ Windows (cmd.exe)
 }
 ```
 
-![desctiption](./img/mcp/image10.png)
+![desctiption](./img/mcp/image10.webp)
 
 When both global and project files define a server with the same name, the project configuration wins.
 
@@ -500,4 +500,4 @@ When both global and project files define a server with the same name, the proje
 
 3.  CoStrict will prompt you the first time a Context7 tool is invoked. Approve the request to continue.
 
-![desctiption](./img/mcp/image11.png)
+![desctiption](./img/mcp/image11.webp)

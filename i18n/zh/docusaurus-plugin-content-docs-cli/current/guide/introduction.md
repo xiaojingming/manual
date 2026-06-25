@@ -6,7 +6,7 @@ sidebar_position: 0
 
 CoStrict CLI（命令行工具）是一款基于终端的 AI 编程助手，让你无需离开命令行即可与大语言模型协作完成编码任务。
 
-![img](img/feature/main.png)
+![img](img/feature/main.webp)
 
 ---
 

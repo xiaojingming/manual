@@ -7,7 +7,7 @@ sidebar_position: 3
 
 Return to **Build** mode (press Tab key to switch) and execute the **/test** command (or combine with input test requirements */test test the TDD agent functionality*) to start self-testing self-loop.
 
-![img](img/tdd/png.png)
+![img](img/tdd/png.webp)
 
 After the previous coding process ends, AI will recommend whether to test immediately based on the specific situation. After selecting, you can start testing with the same effect as /test.
 
@@ -15,13 +15,13 @@ After the previous coding process ends, AI will recommend whether to test immedi
 
 ## /test Command Automation Process Description
 
-![img](img/tdd/png-17700915168522.png)
+![img](img/tdd/png-17700915168522.webp)
 
 1) Runability verification. The RunAndFix agent will be automatically invoked for runability verification to ensure that the current project has no basic running issues. Currently, it mainly verifies **compilation issues** and will execute compilation commands and fix **coding defects** until compilation passes.
 
 2) Test requirement confirmation. Test requirements will be obtained from the plan mode proposal, historical context, current changed files, and recent commit history in order of priority, and user confirmation will be required:
 
-![img](img/tdd/png-17700915168523.png)
+![img](img/tdd/png-17700915168523.webp)
 
 You can select or customize input test requirements.
 

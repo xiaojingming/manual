@@ -8,7 +8,7 @@ Serious programming following the **"Requirement Clarification → Design → Ta
 
 ## New Spec Mode Enhances Understanding of Existing Projects, Making AI Programming More Reliable
 
-![descript](./img/strict-mode/image1.png)
+![descript](./img/strict-mode/image1.webp)
 
 ## Built-in Intelligent Tools to Enhance Generation Quality and Improve Coding Standards
 

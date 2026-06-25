@@ -10,8 +10,8 @@ sidebar_position: 2
 1. Click the `CoStrict` icon in the sidebar to open the `CoStrict` window.
 2. Click`Login to Costric`. You will be redirected to the login page, which supports logging in via `mobile number` or `GitHub`.
 3. After logging in, return to the IDE to start using the `CoStrict`.
-![img.png](./login/login.png)
-![img.png](./login/login2.png)
+![img.png](./login/login.webp)
+![img.png](./login/login2.webp)
 
 **Other Login Entries**
 
@@ -22,8 +22,8 @@ Users who have logged in before can log in again through the following two metho
 
 - **Reset**：Click the `Settings` button to enter the setting page, select `About CoStrict`, and then click the `Reset` button to return to the initial state. Please use this with caution, as it will delete all records. Only perform this action if absolutely necessary.
 
-![img.png](./login/relogin.png)
-![img.png](./login/reset.png)
+![img.png](./login/relogin.webp)
+![img.png](./login/reset.webp)
 
 
 ### Method 2: Third-party API Account Login
@@ -32,7 +32,7 @@ Users who have logged in before can log in again through the following two metho
 2. Select an `API provider`, fill in the `Base URL`, and click `Login to CoStrict`.
 3. After logging in, return to the IDE plugin to start using the CoStrict.
 
-![img.png](./login/other.png)
+![img.png](./login/other.webp)
 
 ---
 

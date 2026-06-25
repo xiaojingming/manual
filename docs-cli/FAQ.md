@@ -11,12 +11,12 @@ Since CS's built-in TUI framework hijacks shortcut keys, direct shortcut key pas
 Windows System (cmd / PowerShell and other terminals)
 At the top of the terminal, right-click → Edit → Paste
 
-![img](img/FAQ/png.png)
+![img](img/FAQ/png.webp)
 
 Linux System
 Depends on the terminal used. Usually, press Shift + right-click to bring up a menu with paste options, then select the corresponding paste item.
 
-![img](img/FAQ/linux-paste.png)
+![img](img/FAQ/linux-paste.webp)
 
 ## 2. Tab Key Cannot Switch Questions in Questionnaire
 

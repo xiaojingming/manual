@@ -25,17 +25,17 @@ sidebar_position: 4
 
 添加的这个组织将会存放所有costrict用户,组织的名称并不重要，可自定义
 
-![image-20260120095700101](./img/1-add_org-1.png)
+![image-20260120095700101](./img/1-add_org-1.webp)
 
-![image-20260120095741985](./img/1-add_org-2.png)
+![image-20260120095741985](./img/1-add_org-2.webp)
 
 ## 添加应用
 
 这将是CoStrict登录用到的应用,应用名称并不重要，可自定义.
-![image-20260120095801365](./img/2-add_app-1.png)
+![image-20260120095801365](./img/2-add_app-1.webp)
 
 
-![image-20260120102644577](./img/2-add_app-2.png)
+![image-20260120102644577](./img/2-add_app-2.webp)
 
 
 > 客户端ID和客户端密钥对应部署目录`configure.sh`  `OIDC_CLIENT_ID` `OIDC_CLIENT_SECRET`两个变量(注意,这两个id和oidc配置中的需要一致,请看部署目录oidc-auth相关配置),如：
@@ -47,7 +47,7 @@ ab5d8ba28b0e6c0d6e971247cdc1deb269c9eea3
 
 > 其中 组织是前面新建的组织
 
-![image-20260120101039642](./img/2-add_app-3.png)
+![image-20260120101039642](./img/2-add_app-3.webp)
 
 
 
@@ -61,7 +61,7 @@ http://ip:port/oidc-auth/api/v1/manager/bind/account/callback
 http://ip:port/oidc-auth/api/v1/manager/login/callback
 ```
 
-![image-20260120100515628](./img/2-add_app-4.png)
+![image-20260120100515628](./img/2-add_app-4.webp)
 
 > 最后，保存当前应用
 
@@ -69,16 +69,16 @@ http://ip:port/oidc-auth/api/v1/manager/login/callback
 
 进入组织的用户，然后点击添加
 
-![image-20260120102919337](./img/3-add_user-1.png)
+![image-20260120102919337](./img/3-add_user-1.webp)
 
 添加demo用户，点击保存&退出。
 
-![image-20260120103025347](./img/3-add_user-2.png)
+![image-20260120103025347](./img/3-add_user-2.webp)
 
 添加后可以修改密码：
-![image-20260120103919026](./img/4-update_user-1.png)
+![image-20260120103919026](./img/4-update_user-1.webp)
 
-![image-20260120103933033](./img/4-update_user-2.png)
+![image-20260120103933033](./img/4-update_user-2.webp)
 
 
 如果你需要批量导入用户，请查看官方教程：[从XLSX文件导入用户](https://www.casdoor.org/zh/docs/user/overview/#%E4%BB%8Exlsx%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5%E7%94%A8%E6%88%B7)
@@ -87,6 +87,6 @@ http://ip:port/oidc-auth/api/v1/manager/login/callback
 
 ## 对接第三方认证系统
 
-![](./img/5-provider-add.png)
+![](./img/5-provider-add.webp)
 
 请根据实际情况配置，其中 客户端ID, 客户端密钥: 和组织中设置的一样即可。

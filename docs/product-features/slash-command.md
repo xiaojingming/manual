@@ -19,7 +19,7 @@ Quick StartType / in chat to select a command. To create or manage commands, ope
 
 Slash commands let you create reusable prompts and workflows that can be triggered instantly. Turn complex multi-step processes into single commands, standardize team practices, and automate repetitive tasks with simple markdown files.
 
-![descript](./img/slash/image1.png)
+![descript](./img/slash/image1.webp)
 
 Key Benefits:
 
@@ -125,7 +125,7 @@ Create and maintain commands from Settings.
 3. Click "New Command", name it, and choose location (Project or Global)
 4. The command file opens with starter template content
 
-![descript](./img/slash/image2.png)
+![descript](./img/slash/image2.webp)
 
 
 ## Using Slash Commands​
@@ -133,7 +133,7 @@ Create and maintain commands from Settings.
 
 Type / in the chat to open the selection-only command menu. Use the gear icon to open Settings > Slash Commands for creating and editing commands.
 
-![descript](./img/slash/image3.png)
+![descript](./img/slash/image3.webp)
 
 1. Selection-only: Pick from existing commands; creation and editing live in Settings
 2. Autocomplete: Start typing to filter commands (e.g., /sam shows sample-command-name)

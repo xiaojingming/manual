@@ -11,7 +11,7 @@ Users only need to describe their requests in natural language, and the AI Agent
 
 When you encounter doubts during coding, you can use the Intelligent AI Agent. It can help answer questions, quickly generate code, add code comments, optimize code, explain code, fix code issues, troubleshoot compilation errors, and more.
 
-![alt text](./img/19.png)
+![alt text](./img/19.webp)
 
 AI Agent Interface Elements
 
@@ -23,8 +23,8 @@ AI Agent Interface Elements
 3. Wait for the model to return results. If you encounter permission issues related to local file access, running commands, file saving, browser access, etc., please approve them as needed.
 
 
-![alt text](./img/20.png)
-![alt text](./img/21.png)
+![alt text](./img/20.webp)
+![alt text](./img/21.webp)
 
 
 
@@ -34,23 +34,23 @@ Context provides CoStrict with specific information about your project, enabling
 
 Use the shortcut `@` to invoke context.
 
-![alt text](./img/22.png)
+![alt text](./img/22.webp)
 
 
 **Overview**
 
-![alt text](./img/23.svg)
+![alt text](./img/23.webp)
 
 
 **Image Context**
 
 When you need to generate code based on images, fix issues, or create graphical expressions, click the button below the dialog box to add image context. The availability of this feature depends on whether the model supports images. If the model does not support images, this function will be unavailable.
 
-![alt text](./img/24.png)
+![alt text](./img/24.webp)
 
 To check a model's image support, go to: `Settings > Providers` page, and view the `Model` description information.
 
-![alt text](./img/25.png)
+![alt text](./img/25.webp)
 
 ## Modes
 
@@ -58,30 +58,30 @@ Modes in CoStrict are personalized roles designed for specific tasks. Each mode 
 
 There are two ways to select a mode: Method 1: Click the first button at the bottom of the input box to manually select a mode. Method 2: Use the shortcut / in the input box to quickly invoke the mode function.
 
-![alt text](./img/26.png)
-![alt text](./img/27.png)
+![alt text](./img/26.webp)
+![alt text](./img/27.webp)
 
 **Mode Function Introductions**
 
 **Architect**
 
-![alt text](./img/28.svg)
+![alt text](./img/28.webp)
 
 **Code**
 
-![alt text](./img/29.svg)
+![alt text](./img/29.webp)
 
 **Ask**
 
-![alt text](./img/30.svg)
+![alt text](./img/30.webp)
 
 **Debug**
 
-![alt text](./img/31.svg)
+![alt text](./img/31.webp)
 
 **Orchestrator**
 
-![alt text](./img/32.svg)
+![alt text](./img/32.webp)
 
 **Mode Customization Settings**
 
@@ -91,4 +91,4 @@ CoStrict supports customizing existing modes or creating new ones. You can defin
 
 The CoStrict plugin provides multiple models for users to use free of charge. The latest version of CoStrict introduces an `Auto mode`. For new users without specific model preferences, using this mode is recommended. `Auto mode` comprehensively considers the effectiveness, speed, and Credit consumption of the current model list, intelligently selecting the most suitable model to complete the task based on the task type. Click the second button below the input box to switch models.
 
-![alt text](./img/33.png)
+![alt text](./img/33.webp)

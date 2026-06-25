@@ -16,21 +16,21 @@ CoStrict version updated to 2.0.24 or higher
 
 #### Click on plan mode and input your requirements in the dialog box
 
-![descript](./img/plan/image1.png)
+![descript](./img/plan/image1.webp)
 
 After AI processes your requirements, it generates proposals, specs, tasks, and designs (AI will determine whether they need to be generated)
 
 #### Generated Proposal
 
-![descript](./img/plan/image2.png)
+![descript](./img/plan/image2.webp)
 
 #### Generated Tasks
 
-![descript](./img/plan/image3.png)
+![descript](./img/plan/image3.webp)
 
 #### Generated Spec
 
-![descript](./img/plan/image4.png)
+![descript](./img/plan/image4.webp)
 
 ### Execute Tasks
 

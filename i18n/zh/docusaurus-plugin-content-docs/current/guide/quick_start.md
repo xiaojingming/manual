@@ -11,8 +11,8 @@ sidebar_position: 2
 2. 点击"登录CoStrict"，页面跳转至登录页面，支持手机号和GitHub两种登录方式
 3. 登录完成后返回IDE插件端即可开始使用
 
-![img.png](install/login.png)
-![alt text](img/3.png)
+![img.png](install/login.webp)
+![alt text](img/3.webp)
 
 
 **其它登录入口**
@@ -24,8 +24,8 @@ sidebar_position: 2
 
 - **重置**：点击"配置"按钮进入配置页面，选中"关于CoStrict"，点击"重置"按钮则进入初始化状态，非必要情况请慎用，该操作会删除所有的记录
 
-![alt text](img/4.png)
-![img.png](install/reset.png)
+![alt text](img/4.webp)
+![img.png](install/reset.webp)
 
 
 ### 方式2：第三方API账号登录
@@ -34,7 +34,7 @@ sidebar_position: 2
 2. 选择API提供商，填写Base URL后点击"登录CoStrict"
 3. 登录完成后返回IDE插件端即可开始使用
 
-![img.png](install/other.png)
+![img.png](install/other.webp)
 
 ---
 

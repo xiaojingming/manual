@@ -10,7 +10,7 @@ sidebar_position: 5
 
 当您进行编码工作遇到疑问时可以使用智能问答模式，能够帮您答疑解惑，快速为您生成代码，添加代码注释、代码优化、解释代码、修复代码问题、排查编译报错等。
 
-![alt text](img/19.png)
+![alt text](img/19.webp)
 
 智能体（智能问答）界面元素
 
@@ -20,8 +20,8 @@ sidebar_position: 5
 2. 找到对话框，输入您的指令并发送，比如：帮我生成一个贪吃蛇小游戏；优化当前代码等等
 3. 等待模型返回结果，如果遇到本地文件访问、运行命令、文件保存、浏览器访问等权限问题，请正常批准即可。
 
-![alt text](img/20.png)
-![alt text](img/21.png)
+![alt text](img/20.webp)
+![alt text](img/21.webp)
 
 ### 上下文
 
@@ -29,22 +29,22 @@ sidebar_position: 5
 
 快捷键 `@` 能调用上下文。
 
-![alt text](img/22.png)
+![alt text](img/22.webp)
 
 **类型概览**
 
-![alt text](img/23.png)
+![alt text](img/23.webp)
 
 **图片上下文**
 
 当需要结合图片生成代码、问题修复、或进行图形化表达时，可点击对话框下方的
 按钮添加图片上下文。该功能是否可用取决于模型是否支持图像，若不支持，此处的图片功能则不支持使用。
 
-![alt text](img/24.png)
+![alt text](img/24.webp)
 
 查看模型对图像的支持情况可前往：设置 > 供应商页面的"模型"描述信息处进行查看。
 
-![alt text](img/25.png)
+![alt text](img/25.webp)
 
 ### 模式选择
 
@@ -52,30 +52,30 @@ CoStrict中的模式是针对特定任务而设计的个性化角色，每种模
 
 模式选择有两种使用方式，方式一：点击输入框底部的第一个按钮可以手动选择模式。方式二：在输入框使用快捷键"/"能快速调用mode功能。
 
-![alt text](img/26.png)
-![alt text](img/27.png)
+![alt text](img/26.webp)
+![alt text](img/27.webp)
 
 **各模式功能介绍**
 
 **Architect模式**
 
-![alt text](img/28.png)
+![alt text](img/28.webp)
 
 **Code模式**
 
-![alt text](img/29.png)
+![alt text](img/29.webp)
 
 **Ask模式**
 
-![alt text](img/30.png)
+![alt text](img/30.webp)
 
 **Debug模式**
 
-![alt text](img/31.png)
+![alt text](img/31.webp)
 
 **Orchestrator模式**
 
-![alt text](img/32.png)
+![alt text](img/32.webp)
 
 **模式自定义设置**
 
@@ -85,4 +85,4 @@ CoStrict支持自定义现有模式或创建新的模式。支持定义模式名
 
 CoStrict插件提供了多种模型供用户免费使用。CoStrict最新版本推出了Auto模式，新手用户如果对模型没有特定的偏好，推荐使用该模式。Auto模式会综合考量当前模型列表的效果、速度、Credit的消耗情况，根据任务类型智能为用户选择合适模型来完成任务。点击输入框下方第二个按钮即可切换模型。
 
-![alt text](img/33.png)
+![alt text](img/33.webp)

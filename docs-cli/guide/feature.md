@@ -18,7 +18,7 @@ Starts the terminal UI (TUI) in the current directory. You can also specify a wo
 cs /path/to/project
 ```
 
-![TUI main screen](img/feature/main.png)
+![TUI main screen](img/feature/main.webp)
 
 ### Non-interactive Mode
 

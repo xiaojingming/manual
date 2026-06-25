@@ -66,4 +66,4 @@ description必须为1-1024个字符。请确保其足够具体，以便智能体
 
 ## 测试
 
-![img](img/skills/png.png)
+![img](img/skills/png.webp)
