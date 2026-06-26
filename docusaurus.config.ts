@@ -120,13 +120,14 @@ const config: Config = {
           label: 'CLI',
           activeBaseRegex: '/cli/(?!product-characteristics/cloud)',
         },
-        {
-          to: '/cli/product-characteristics/cloud',
-          position: 'left',
-          label: 'Cloud',
-          activeBaseRegex: '/cli/product-characteristics/cloud',
-          className: 'navbar-cloud-new-badge',
-        },
+        // Cloud entry temporarily hidden from navbar — page still accessible via URL
+        // {
+        //   to: '/cli/product-characteristics/cloud',
+        //   position: 'left',
+        //   label: 'Cloud',
+        //   activeBaseRegex: '/cli/product-characteristics/cloud',
+        //   className: 'navbar-cloud-new-badge',
+        // },
         {
           type: 'doc',
           docId: 'foreword',
