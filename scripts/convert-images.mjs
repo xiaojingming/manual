@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Convert PNG/SVG images to WebP format and update markdown references.
- * Usage: node scripts/convert-images.mjs [--quality=80] [--dry-run] [--refs-only] [--no-refs] [--clean]
+ * Usage: node scripts/convert-images.mjs [--quality=80] [--dry-run] [--refs-only] [--no-refs] [--clean] [--verify] [--prune-unused]
  */
 
 import sharp from 'sharp';
@@ -14,23 +14,30 @@ const SOURCE_DIRS = [
   'docs-cli',
   'docs-csc',
   'docs-deployment',
+  'docs-ai-knowledge',
   'i18n/zh/docusaurus-plugin-content-docs/current',
   'i18n/zh/docusaurus-plugin-content-docs-cli/current',
   'i18n/zh/docusaurus-plugin-content-docs-csc/current',
   'i18n/zh/docusaurus-plugin-content-docs-deployment/current',
+  'i18n/zh/docusaurus-plugin-content-docs-ai-knowledge',
 ];
 
 const EXCLUDE_DIRS = ['node_modules', '.docusaurus', 'build'];
+const AUDIT_DIRS = [...SOURCE_DIRS, 'i18n', 'static', 'img', 'src'];
+const AUDIT_IMAGE_EXTENSIONS = ['webp', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'avif'];
+const AUDIT_TEXT_PATTERN = '**/*.{md,mdx,ts,tsx,js,jsx,mjs,cjs,css,scss,json,yml,yaml,html,xml,txt}';
+const IMAGE_TOKEN_RE = /((?:@site\/|(?:\.\.\/|\.\/|\/)?)[^"'()\s<>{}\[\]]+?\.(?:webp|png|jpe?g|gif|svg|ico|avif)(?:[?#][^"'()\s<>{}\[\]]*)?)/gi;
 
 function parseArgs() {
   const args = process.argv.slice(2);
-  const opts = { quality: 80, dryRun: false, verbose: false, refsOnly: false, noRefs: false, verify: false, clean: false };
+  const opts = { quality: 80, dryRun: false, verbose: false, refsOnly: false, noRefs: false, verify: false, clean: false, pruneUnused: false };
   for (const arg of args) {
     if (arg === '--dry-run' || arg === '-c') opts.dryRun = true;
     else if (arg === '--verbose' || arg === '-v') opts.verbose = true;
     else if (arg === '--refs-only') opts.refsOnly = true;
     else if (arg === '--no-refs') opts.noRefs = true;
     else if (arg === '--verify') opts.verify = true;
+    else if (arg === '--prune-unused') opts.pruneUnused = true;
     else if (arg === '--clean') opts.clean = true;
     else if (arg.startsWith('--quality=')) opts.quality = parseInt(arg.split('=')[1], 10);
     else if (arg === '-q' || arg === '--quality') {
@@ -201,82 +208,135 @@ async function updateMarkdownReferences(opts) {
   return stats;
 }
 
-async function verifyConversion({ skipOrphan } = {}) {
+function getImageCandidates(token, filePath) {
+  const cleanToken = token.replace(/[),.;:]+$/, '').split(/[?#]/)[0].replace(/\\/g, '/');
+  if (/^(?:https?:|data:|mailto:)/i.test(cleanToken) || cleanToken.startsWith('//')) return [];
+
+  let decodedToken = cleanToken;
+  try {
+    decodedToken = decodeURIComponent(cleanToken);
+  } catch {
+    // Keep the original token when it is not valid URI encoding.
+  }
+
+  if (decodedToken.startsWith('@site/')) {
+    return [path.resolve(decodedToken.slice(6))];
+  }
+  if (decodedToken.startsWith('/')) {
+    return [path.resolve('static', decodedToken.slice(1))];
+  }
+  return [
+    path.resolve(path.dirname(filePath), decodedToken),
+    path.resolve('static', decodedToken),
+    path.resolve(decodedToken),
+  ];
+}
+
+function resolveImageReference(token, filePath, imageFiles) {
+  return getImageCandidates(token, filePath).find(candidate => imageFiles.has(candidate));
+}
+
+async function verifyConversion({ pruneUnused = false, dryRun = false } = {}) {
   const issues = [];
+  const imageFiles = new Set();
 
-  // Collect all .webp files on disk
-  const webpFiles = new Set();
-  for (const dir of SOURCE_DIRS) {
+  for (const dir of AUDIT_DIRS) {
     if (!fs.existsSync(dir)) continue;
-    const files = await glob('**/*.webp', { cwd: dir, nodir: true });
-    for (const f of files) webpFiles.add(path.join(dir, f));
+    const files = await findImageFiles(dir, AUDIT_IMAGE_EXTENSIONS);
+    for (const file of files) imageFiles.add(path.resolve(file));
   }
 
-  // Collect all webp references from markdown
-  const refsTo = new Map(); // path → [file:line]
-  const stalePngRefs = []; // .png refs that have .webp available
-  for (const dir of SOURCE_DIRS) {
-    if (!fs.existsSync(dir)) continue;
-    const mdFiles = await glob('**/*.{md,mdx}', { cwd: dir, nodir: true });
-    for (const f of mdFiles) {
-      const filePath = path.join(dir, f);
-      const content = fs.readFileSync(filePath, 'utf8');
-      const lines = content.split('\n');
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if (line.includes('{/*') || line.includes('*/}')) continue;
+  const webpFiles = new Set(
+    [...imageFiles].filter(file => path.extname(file).toLowerCase() === '.webp'),
+  );
+  const referencedImages = new Set();
+  const refsTo = new Map();
+  const stalePngRefs = [];
+  const textFiles = await glob(AUDIT_TEXT_PATTERN, {
+    cwd: '.',
+    ignore: [...EXCLUDE_DIRS, '.git'].map(dir => `${dir}/**`),
+    nodir: true,
+  });
 
-        // Check webp refs (resolve relative to the markdown file's directory)
-        for (const m of line.matchAll(WEBP_REF_RE)) {
-          const refPath = path.join(path.dirname(filePath), m[2] + '.webp');
-          if (!refsTo.has(refPath)) refsTo.set(refPath, []);
-          refsTo.get(refPath).push(`${filePath}:${i + 1}`);
-        }
+  for (const relativeFile of textFiles) {
+    const filePath = path.resolve(relativeFile);
+    const content = fs.readFileSync(filePath, 'utf8');
 
-        // Check stale png/svg refs — does a .webp counterpart exist?
-        for (const m of line.matchAll(IMAGE_REF_RE)) {
-          const webpPath = path.join(path.dirname(filePath), m[2] + '.webp');
-          if (webpFiles.has(webpPath)) {
-            stalePngRefs.push(`${filePath}:${i + 1}  ${m[0].trim()}`);
-          }
+    for (const match of content.matchAll(IMAGE_TOKEN_RE)) {
+      const resolved = resolveImageReference(match[1], filePath, imageFiles);
+      if (resolved) referencedImages.add(resolved);
+    }
+
+    if (!/\.mdx?$/.test(relativeFile)) continue;
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (line.includes('{/*') || line.includes('*/}')) continue;
+
+      for (const match of line.matchAll(WEBP_REF_RE)) {
+        const token = `${match[2]}.webp`;
+        const candidates = getImageCandidates(token, filePath);
+        const resolved = candidates.find(candidate => webpFiles.has(candidate));
+        const refPath = resolved || candidates[0];
+        if (!refPath) continue;
+        if (!refsTo.has(refPath)) refsTo.set(refPath, []);
+        refsTo.get(refPath).push(`${relativeFile}:${i + 1}`);
+      }
+
+      for (const match of line.matchAll(IMAGE_REF_RE)) {
+        const webpPath = getImageCandidates(`${match[2]}.webp`, filePath)
+          .find(candidate => webpFiles.has(candidate));
+        if (webpPath) {
+          stalePngRefs.push(`${relativeFile}:${i + 1}  ${match[0].trim()}`);
         }
       }
     }
   }
 
-  // 1. Orphan .webp: no source .png/.svg (skip when --clean is used — source deletion is intentional)
-  if (!skipOrphan) {
-    for (const wp of webpFiles) {
-      const stem = wp.replace(/\.webp$/, '');
-      if (!fs.existsSync(stem + '.png') && !fs.existsSync(stem + '.svg')) {
-        issues.push({ type: 'orphan', msg: `Orphan .webp (no source): ${wp}` });
+  let prunedFiles = 0;
+  let prunedBytes = 0;
+  for (const imagePath of imageFiles) {
+    if (referencedImages.has(imagePath)) continue;
+    const displayPath = path.relative('.', imagePath);
+    if (pruneUnused) {
+      try {
+        prunedBytes += fs.statSync(imagePath).size;
+        prunedFiles++;
+        if (dryRun) {
+          console.log(`  [would prune] ${displayPath}`);
+        } else {
+          fs.unlinkSync(imagePath);
+          console.log(`  [pruned] ${displayPath}`);
+        }
+      } catch (error) {
+        issues.push({ type: 'delete-error', msg: `Failed to delete ${displayPath}: ${error.message}` });
       }
+    } else {
+      issues.push({ type: 'unreferenced', msg: `Unreferenced image: ${displayPath}` });
     }
   }
 
-  // 2. Unreferenced .webp: exists but no markdown points to it
-  for (const wp of webpFiles) {
-    if (!refsTo.has(wp)) {
-      issues.push({ type: 'unreferenced', msg: `Unreferenced .webp: ${wp}` });
-    }
-  }
-
-  // 3. Missing .webp: referenced but doesn't exist
   for (const [refPath, locations] of refsTo) {
-    if (!webpFiles.has(refPath)) {
-      for (const loc of locations) {
-        issues.push({ type: 'missing', msg: `Missing .webp: ${refPath}\n    referenced at ${loc}` });
-      }
+    if (webpFiles.has(refPath)) continue;
+    for (const location of locations) {
+      issues.push({
+        type: 'missing',
+        msg: `Missing .webp: ${path.relative('.', refPath)}\n    referenced at ${location}`,
+      });
     }
   }
 
-  // 4. Stale .png/.svg refs that have .webp available
-  for (const s of stalePngRefs) {
-    issues.push({ type: 'stale', msg: `Stale .png/.svg ref (has .webp): ${s}` });
+  for (const staleRef of stalePngRefs) {
+    issues.push({ type: 'stale', msg: `Stale .png/.svg ref (has .webp): ${staleRef}` });
   }
 
-  // Report
-  console.log(`\n=== Verification Report ===`);
+  console.log('\n=== Verification Report ===');
+  console.log(`  Scanned ${imageFiles.size} images and ${textFiles.length} text files.`);
+  if (pruneUnused) {
+    const action = dryRun ? 'Would prune' : 'Pruned';
+    console.log(`  ${action} ${prunedFiles} unreferenced image(s), freeing ${formatBytes(prunedBytes)}.`);
+  }
+
   const byType = {};
   for (const issue of issues) {
     if (!byType[issue.type]) byType[issue.type] = 0;
@@ -284,17 +344,20 @@ async function verifyConversion({ skipOrphan } = {}) {
   }
 
   if (issues.length === 0) {
-    console.log('  All checks passed — conversion and references are consistent.\n');
+    console.log('  All checks passed — image files and references are consistent.\n');
   } else {
     console.log(`  Found ${issues.length} issue(s):`);
     for (const [type, count] of Object.entries(byType)) {
-      const labels = { orphan: 'Orphan .webp (no source)', unreferenced: 'Unreferenced .webp', missing: 'Missing .webp', stale: 'Stale .png/.svg ref' };
+      const labels = {
+        unreferenced: 'Unreferenced image',
+        missing: 'Missing .webp',
+        stale: 'Stale .png/.svg ref',
+        'delete-error': 'Delete error',
+      };
       console.log(`    ${labels[type] || type}: ${count}`);
     }
     console.log('');
-    for (const issue of issues) {
-      console.log(`  [${issue.type}] ${issue.msg}`);
-    }
+    for (const issue of issues) console.log(`  [${issue.type}] ${issue.msg}`);
     console.log('');
   }
 
@@ -308,6 +371,7 @@ async function main() {
   console.log(`Quality: ${opts.quality}`);
   const modes = [];
   if (opts.verify) modes.push('verify');
+  else if (opts.pruneUnused) modes.push('prune-unused');
   else if (opts.refsOnly) modes.push('refs-only');
   else if (opts.noRefs) modes.push('convert-only');
   else modes.push('convert + refs');
@@ -315,9 +379,12 @@ async function main() {
   if (opts.dryRun) modes.push('(dry-run)');
   console.log(`Mode: ${modes.join(' ')}`);
 
-  // Verify mode: cross-check only
-  if (opts.verify) {
-    const issues = await verifyConversion();
+  // Audit-only modes do not convert or rewrite references.
+  if (opts.verify || opts.pruneUnused) {
+    const issues = await verifyConversion({
+      pruneUnused: opts.pruneUnused,
+      dryRun: opts.dryRun,
+    });
     if (issues.length > 0) process.exit(1);
     return;
   }
@@ -351,7 +418,7 @@ async function main() {
 
   // Step 3: Verify after conversion
   if (!opts.dryRun) {
-    await verifyConversion({ skipOrphan: opts.clean });
+    await verifyConversion();
   }
 
   console.log('');

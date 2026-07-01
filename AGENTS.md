@@ -196,7 +196,8 @@ project_root/
 - 脚本会扫描以下8个目录（英文源 + i18n 中文镜像）：docs/、docs-cli/、docs-csc/、docs-deployment/ 及其对应的 i18n/zh/ 副本
 - 引用更新只处理 Markdown `![alt](path)` 语法，排除 `https?://` 外部链接和 `{/* */}` MDX 注释行
 - 使用 `npm run convert-images:check` 可仅扫描并预览，不做实际修改
-- 使用 `npm run convert-images -- --verify` 可校验 WebP 文件与 Markdown 引用的一致性
+- 使用 `npm run convert-images -- --verify` 可校验全项目图片引用、缺失文件和未使用资源
+- 使用 `npm run convert-images:prune` 可删除未被文档、组件、样式或配置引用的图片
 
 ## 常用命令
 
@@ -224,8 +225,9 @@ npm run install-hooks  # 安装 Git pre-push 钩子
 # 图片转换
 npm run convert-images              # 转换PNG/SVG为WebP + 更新Markdown引用（增量，已转换的跳过）
 npm run convert-images:check        # 仅扫描并输出报告，不实际修改（--dry-run）
+npm run convert-images:prune        # 删除全项目未引用图片
 npm run convert-images -- --clean   # 转换 + 更新引用 + 删除原始PNG/SVG文件
-npm run convert-images -- --verify  # 校验WebP文件与Markdown引用的一致性
+npm run convert-images -- --verify  # 校验全项目图片引用、缺失文件和未使用资源
 npm run convert-images -- --refs-only  # 仅更新Markdown引用，跳过转换
 npm run convert-images -- --no-refs    # 仅转换，跳过引用更新
 npm run convert-images -- --quality=90  # 指定WebP质量（默认80）
