@@ -1,0 +1,11 @@
+.git
+.github
+.agents
+.claude
+.costrict
+.docusaurus
+build
+node_modules
+
+*.log
+.DS_Store
