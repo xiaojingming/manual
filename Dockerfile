@@ -23,19 +23,18 @@ RUN rm -f pnpm-workspace.yaml
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CI=true
 
-RUN pnpm run build
-FROM --platform=$BUILDPLATFORM nginx:stable-alpine AS runner
+# Deduplicate locale-independent assets before the final COPY so the removed
+# files do not remain in an earlier image layer.
+RUN pnpm run build \
+    && rm -rf /workshop/build/en/videos /workshop/build/en/img \
+    && ln -s ../videos /workshop/build/en/videos \
+    && ln -s ../img /workshop/build/en/img
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/
+FROM nginx:stable-alpine-slim AS runner
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /workshop/build /usr/share/nginx/html
-
-# Eliminate duplicate static assets across locales (saves ~35MB+)
-RUN rm -rf /usr/share/nginx/html/en/videos \
-    && ln -s /usr/share/nginx/html/videos /usr/share/nginx/html/en/videos \
-    && rm -rf /usr/share/nginx/html/en/img \
-    && ln -s /usr/share/nginx/html/img /usr/share/nginx/html/en/img
 
 EXPOSE 80
 
